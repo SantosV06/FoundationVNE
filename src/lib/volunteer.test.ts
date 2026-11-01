@@ -68,7 +68,10 @@ test("session tokens are random, hashed in storage, and credentials rotate their
   assert.ok(!validSessionToken("v1.old-cookie"));
   assert.notEqual(tokenHash(first), first);
   assert.ok(constantEquals("secret", "secret"));
+  assert.ok(constantEquals("", ""));
   assert.ok(!constantEquals("secret", "different"));
+  assert.ok(!constantEquals("secret", "secret-longer"));
+  assert.ok(!constantEquals("prefix", "prefix-and-more"));
   assert.notEqual(credentialVersion("first", "secret"), credentialVersion("second", "secret"));
 });
 

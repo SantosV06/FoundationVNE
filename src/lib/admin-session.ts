@@ -14,14 +14,25 @@ export function adminSettings() {
     throw new Error("Configura ADMIN_PASSWORD con al menos 14 caracteres en Vercel.");
   return { password, secret };
 }
+// Equal-length compare. Do not hash the inputs: these are cleartext secrets,
+// and a fast hash is not how passwords are stored (see password.server.ts).
 export function constantEquals(a: string, b: string): boolean {
-  return timingSafeEqual(
-    createHash("sha256").update(a).digest(),
-    createHash("sha256").update(b).digest(),
-  );
+  const left = Buffer.from(a);
+  const right = Buffer.from(b);
+  const length = Math.max(left.length, right.length, 1);
+  const paddedLeft = Buffer.alloc(length);
+  const paddedRight = Buffer.alloc(length);
+  left.copy(paddedLeft);
+  right.copy(paddedRight);
+  const sameLength = left.length === right.length;
+  const sameBytes = timingSafeEqual(paddedLeft, paddedRight);
+  return sameLength && sameBytes;
 }
 export const tokenHash = (token: string) => createHash("sha256").update(token).digest("hex");
 export const newSessionToken = () => randomBytes(32).toString("base64url");
 export const validSessionToken = (token: string) => /^[A-Za-z0-9_-]{43}$/.test(token);
-export const credentialVersion = (password: string, secret: string) =>
-  createHmac("sha256", secret).update(password).digest("hex");
+// Session binder over the stored scrypt verifier. Not a password hash: the
+// verifier is already slow, and this only changes when that verifier or the
+// server secret changes.
+export const credentialVersion = (storedHash: string, secret: string) =>
+  createHmac("sha256", secret).update(storedHash).digest("hex");

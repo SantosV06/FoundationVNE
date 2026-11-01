@@ -3,7 +3,7 @@
 ## Controles implementados
 
 - Validación Zod del lado servidor y consultas parametrizadas. La búsqueda escapa los operadores de `LIKE`.
-- Contraseñas con scrypt, sal aleatoria y parámetros fijos. Nunca se devuelve el hash ni la contraseña al navegador.
+- Contraseñas con scrypt, sal aleatoria y parámetros fijos. Nunca se devuelve el hash ni la contraseña al navegador. La comparación en tiempo constante no hashea la contraseña. La versión de sesión es un HMAC del verificador scrypt ya guardado, no un segundo hash de la contraseña.
 - Sesiones aleatorias de 256 bits, almacenadas como hash, duración máxima de ocho horas, cookies HttpOnly, SameSite Strict y Secure en producción.
 - Verificación de sesión y rol en las funciones del servidor. Una política de 2FA activa restringe las sesiones sin factor a su configuración/cierre; ocultar un botón no es el control de acceso.
 - Cierre de sesión con revocación en la base; cambios de contraseña, desactivación y cambios de factor invalidan sesiones.
