@@ -19,6 +19,8 @@ export const publicPages = [
   "/",
   "/casas",
   "/genesis",
+  "/punto-de-comida",
+  "/construccion",
   "/liderazgo",
   "/soporte",
   "/donaciones",

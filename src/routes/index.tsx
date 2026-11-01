@@ -93,29 +93,64 @@ function Home() {
               </Link>
             </div>
             <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/20 pt-6 text-sm text-cream/75">
-              <span><strong className="font-display text-xl text-gold">01</strong><span className="ml-3"><T>Autonomía</T></span></span>
-              <span><strong className="font-display text-xl text-gold">02</strong><span className="ml-3"><T>Emprendimiento</T></span></span>
-              <span><strong className="font-display text-xl text-gold">03</strong><span className="ml-3"><T>Impacto sostenible</T></span></span>
+              <span>
+                <strong className="font-display text-xl text-gold">01</strong>
+                <span className="ml-3">
+                  <T>Autonomía</T>
+                </span>
+              </span>
+              <span>
+                <strong className="font-display text-xl text-gold">02</strong>
+                <span className="ml-3">
+                  <T>Emprendimiento</T>
+                </span>
+              </span>
+              <span>
+                <strong className="font-display text-xl text-gold">03</strong>
+                <span className="ml-3">
+                  <T>Impacto sostenible</T>
+                </span>
+              </span>
             </div>
           </div>
           <aside className="hidden lg:col-span-4 lg:block">
             <div className="ml-auto max-w-xs rounded-2xl border border-white/20 bg-navy-deep/55 p-6 shadow-2xl shadow-black/20 backdrop-blur-md">
-              <p className="text-[10px] font-bold tracking-[0.24em] text-gold uppercase"><T>Una visión a largo plazo</T></p>
-              <p className="mt-4 font-display text-3xl leading-tight text-cream"><T>Construir oportunidades. Crear futuro.</T></p>
+              <p className="text-[10px] font-bold tracking-[0.24em] text-gold uppercase">
+                <T>Una visión a largo plazo</T>
+              </p>
+              <p className="mt-4 font-display text-3xl leading-tight text-cream">
+                <T>Construir oportunidades. Crear futuro.</T>
+              </p>
               <div className="mt-6 border-t border-white/15 pt-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-cream/60"><T>Figura institucional</T></p>
-                <p className="mt-2 text-sm font-semibold"><T>LLC con propósito social</T></p>
-                <p className="mt-1 text-sm text-cream/70"><T>Registrada en Nueva York,</T><T>{org.founded}</T></p>
+                <p className="text-xs uppercase tracking-[0.18em] text-cream/60">
+                  <T>Figura institucional</T>
+                </p>
+                <p className="mt-2 text-sm font-semibold">
+                  <T>LLC con propósito social</T>
+                </p>
+                <p className="mt-1 text-sm text-cream/70">
+                  <T>Registrada en Nueva York,</T>
+                  <T>{org.founded}</T>
+                </p>
               </div>
             </div>
           </aside>
         </div>
-        <a href="#sobre-vne" aria-label={t("Descubrir Fundación VNE")} className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 items-center gap-3 text-[10px] font-semibold tracking-[0.2em] text-cream/65 uppercase lg:flex">
-          <span className="h-px w-8 bg-gold/70" /><T>Descubrir</T><span className="h-px w-8 bg-gold/70" />
+        <a
+          href="#sobre-vne"
+          aria-label={t("Descubrir Fundación VNE")}
+          className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 items-center gap-3 text-[10px] font-semibold tracking-[0.2em] text-cream/65 uppercase lg:flex"
+        >
+          <span className="h-px w-8 bg-gold/70" />
+          <T>Descubrir</T>
+          <span className="h-px w-8 bg-gold/70" />
         </a>
       </section>
 
-      <section id="sobre-vne" className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-6 lg:grid-cols-12 lg:py-28">
+      <section
+        id="sobre-vne"
+        className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-6 lg:grid-cols-12 lg:py-28"
+      >
         <div className="lg:col-span-4">
           <p className="text-xs font-bold tracking-[0.2em] text-gold-deep uppercase">
             <T>Quiénes somos</T>
@@ -242,6 +277,12 @@ function Home() {
                 el modelo, generar ingresos propios y dejar evidencia para escalarlo.
               </T>
             </p>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/70">
+              <T>
+                Génesis es la proyección y el proyecto directo de la fundación, distinto de las dos
+                unidades productivas que la institución financia.
+              </T>
+            </p>
           </div>
           <div className="flex flex-col gap-3 lg:col-span-5 lg:items-start">
             <Link
@@ -257,6 +298,57 @@ function Home() {
               <T>Sumarme como voluntario</T>
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
+        <p className="text-xs font-bold tracking-[0.2em] text-gold-deep uppercase">
+          <T>Unidades productivas</T>
+        </p>
+        <h2 className="mt-3 max-w-3xl font-display text-4xl text-navy dark:text-cream">
+          <T>Dos negocios que la fundación financia.</T>
+        </h2>
+        <p className="editorial-justify mt-4 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
+          <T>
+            Fundación VNE financia dos unidades productivas. El punto de comida genera ingresos para
+            la fundación. Construcción es la segunda unidad de esa visión comercial. Proyecto
+            Génesis no es una de ellas: es el proyecto directo de la fundación.
+          </T>
+        </p>
+        <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          <article className="flex flex-col rounded-card border-t-4 border-gold bg-card p-8 dark:bg-navy">
+            <h3 className="font-display text-3xl text-navy dark:text-cream">
+              <T>Punto de comida</T>
+            </h3>
+            <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/75">
+              <T>
+                Restaurante de Fundación VNE. Su actividad está destinada a financiar a la
+                fundación.
+              </T>
+            </p>
+            <Link
+              to="/punto-de-comida"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy dark:text-gold"
+            >
+              <T>Conocer el punto de comida </T>
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </article>
+          <article className="flex flex-col rounded-card border-t-4 border-clay bg-card p-8 dark:bg-navy">
+            <h3 className="font-display text-3xl text-navy dark:text-cream">
+              <T>Construcción</T>
+            </h3>
+            <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/75">
+              <T>Unidad de obra y encargos. Es el segundo negocio que Fundación VNE financia.</T>
+            </p>
+            <Link
+              to="/construccion"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy dark:text-gold"
+            >
+              <T>Conocer construcción </T>
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </article>
         </div>
       </section>
 

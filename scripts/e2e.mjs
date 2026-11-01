@@ -5,7 +5,6 @@ import { chromium } from "playwright";
 import { TOTP } from "otpauth";
 import { catalog } from "../src/lib/i18n/catalog.ts";
 
-
 const base = process.argv[2] || "http://127.0.0.1:8080";
 const parsedBase = new URL(base);
 if (
@@ -199,6 +198,8 @@ try {
     "/",
     "/casas",
     "/genesis",
+    "/punto-de-comida",
+    "/construccion",
     "/liderazgo",
     "/soporte",
     "/donaciones",
@@ -266,9 +267,8 @@ try {
   await chooseLanguage("Español");
   // A blocked preference store must not break language switching or hydration.
   const blocked = await browser.newContext();
-  await blocked.route(
-    /^https:\/\/(?:www\.google\.com|va\.vercel-scripts\.com)\//,
-    (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }),
+  await blocked.route(/^https:\/\/(?:www\.google\.com|va\.vercel-scripts\.com)\//, (route) =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: "" }),
   );
   await blocked.addInitScript(() => {
     Object.defineProperty(window, "localStorage", {

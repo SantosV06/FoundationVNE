@@ -69,6 +69,13 @@ function Genesis() {
           </T>
         </p>
         <p>
+          <T>
+            Proyecto Génesis es la proyección y el proyecto directo de Fundación VNE. No forma parte
+            de los dos negocios que la fundación financia: el punto de comida y la unidad de
+            construcción.
+          </T>
+        </p>
+        <p>
           <a
             className="font-semibold text-forest underline underline-offset-4 dark:text-gold"
             href={media.genesisPdf}

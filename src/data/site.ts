@@ -2,18 +2,17 @@ export const org = {
   name: "Fundación Venezuela Nueva Esperanza LLC",
   short: "Fundación VNE",
   email: "info@foundationvne.com",
-  adminPhone: "+1 (917) 597 9179",
-  adminTel: "+19175979179",
-  executivePhone: "+1 (347) 819 9521",
-  executiveTel: "+13478199521",
+  adminPhone: "+1 (347) 957 7821",
+  adminTel: "+13479577821",
+  executivePhone: "+1 (347) 819 5521",
+  executiveTel: "+13478195521",
   zelle: "+1 (347) 819 5521",
-  bank: "Bank of America",
+  bank: "City Bank",
   infoWa: "https://wa.me/13479577821",
   webWa: "https://wa.me/50762305711",
   instagram: "https://www.instagram.com/fundacionv.n.e",
   addressNy: "433 Sackett St, Brooklyn, NY 11231",
-  addressCcs:
-    "Av. Andrés Bello, tercera transversal de Guaicaipuro, Quinta Raquel, Caracas 1050",
+  addressCcs: "Av. Andrés Bello, tercera transversal de Guaicaipuro, Quinta Raquel, Caracas 1050",
   ein: "93-4222627",
   founded: "2022",
   hours: "Lunes a viernes, 8:00 a.m. – 5:00 p.m. Fines de semana con cita previa.",
@@ -26,6 +25,8 @@ export const nav = [
   { to: "/", label: "Inicio" },
   { to: "/casas", label: "Casas VNE" },
   { to: "/genesis", label: "Génesis" },
+  { to: "/punto-de-comida", label: "Restaurante" },
+  { to: "/construccion", label: "Construcción" },
   { to: "/liderazgo", label: "Liderazgo" },
   { to: "/soporte", label: "Soporte" },
 ] as const;
@@ -34,7 +35,11 @@ export type LegalSlug = "privacidad" | "terminos" | "conflicto" | "no-discrimina
 
 export const legalPages: Record<
   LegalSlug,
-  { title: string; description: string; blocks: { heading?: string; paragraphs: string[]; list?: string[] }[] }
+  {
+    title: string;
+    description: string;
+    blocks: { heading?: string; paragraphs: string[]; list?: string[] }[];
+  }
 > = {
   privacidad: {
     title: "Política de privacidad",
@@ -48,7 +53,9 @@ export const legalPages: Record<
       },
       {
         heading: "1. Información que podemos recopilar",
-        paragraphs: ["Según las funciones que utilice, podemos tratar las siguientes categorías de información:"],
+        paragraphs: [
+          "Según las funciones que utilice, podemos tratar las siguientes categorías de información:",
+        ],
         list: [
           "Datos de contacto que usted facilita, como nombre, correo electrónico y teléfono.",
           "Contenido que usted envía en formularios, solicitudes de voluntariado, consultas u otras comunicaciones.",
@@ -196,8 +203,14 @@ export const legalPages: Record<
       },
       {
         heading: "2. Divulgación",
-        paragraphs: ["Quienes toman decisiones deben revelar cualquier conflicto real o potencial, incluyendo:"],
-        list: ["Intereses financieros", "Relaciones familiares o personales", "Actividades comerciales externas"],
+        paragraphs: [
+          "Quienes toman decisiones deben revelar cualquier conflicto real o potencial, incluyendo:",
+        ],
+        list: [
+          "Intereses financieros",
+          "Relaciones familiares o personales",
+          "Actividades comerciales externas",
+        ],
       },
       {
         heading: "3. Gestión",
