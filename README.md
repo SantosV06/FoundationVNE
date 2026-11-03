@@ -31,3 +31,4 @@ Páginas públicas (inicio, Casas VNE, Génesis, punto de comida, construcción,
 Correo con Brevo solo si están `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` y, para el aviso interno, `VOLUNTEER_NOTIFICATION_EMAIL`. El pago con tarjeta en `/donaciones` queda cerrado hasta `CITIBANK_GATEWAY_TOKEN` y `CITIBANK_IFRAME_URL` (`CITYBANK_*` sigue valiendo). Zelle no se procesa en el sitio.
 
 Incidencias de seguridad: info@foundationvne.com.
+Incidencias de navegación: soporte@foundationvne.com.
