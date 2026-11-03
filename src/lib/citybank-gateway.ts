@@ -2,7 +2,9 @@
  * City Bank hosted checkout. The bank's embed token is public by nature
  * (the browser must load the iframe) but it is not a secret API key and
  * must never be committed. The iframe URL is a template that includes
- * the literal `{token}` placeholder.
+ * the literal `{token}` placeholder. `{amount}`, `{name}` and `{email}`
+ * are optional; missing ones are appended when the donor continues.
+ * Card numbers never enter this module.
  */
 
 export type CitybankGatewayInput = {
@@ -11,9 +13,24 @@ export type CitybankGatewayInput = {
 };
 
 export type CitybankGatewayView =
-  { status: "ready"; src: string } | { status: "awaiting-token" | "awaiting-url" | "invalid" };
+  { status: "ready"; embed: string } | { status: "awaiting-token" | "awaiting-url" | "invalid" };
+
+export type DonorInput = {
+  amount: string;
+  name: string;
+  email: string;
+};
+
+export type DonorFields = {
+  amount: string;
+  name: string;
+  email: string;
+};
+
+export type DonorFieldError = "amount" | "name" | "email";
 
 const TOKEN_PATTERN = /^[A-Za-z0-9._~+/=-]{8,512}$/;
+const DONOR_PLACEHOLDERS = ["{amount}", "{name}", "{email}"] as const;
 
 function isEmbeddableHttps(url: URL): boolean {
   if (url.protocol !== "https:" || url.username || url.password) return false;
@@ -32,6 +49,29 @@ function isEmbeddableHttps(url: URL): boolean {
   return true;
 }
 
+function originPart(template: string): string {
+  const withoutHash = template.split("#", 1)[0] ?? template;
+  const beforeQuery = withoutHash.split("?", 1)[0] ?? withoutHash;
+  const scheme = beforeQuery.indexOf("//");
+  if (scheme === -1) return beforeQuery;
+  const path = beforeQuery.indexOf("/", scheme + 2);
+  return path === -1 ? beforeQuery : beforeQuery.slice(0, path);
+}
+
+function probeEmbed(embed: string): URL | null {
+  const probed = embed
+    .replaceAll("{amount}", "1.00")
+    .replaceAll("{name}", "Ana")
+    .replaceAll("{email}", "a@b.co");
+  if (probed.includes("{") || probed.includes("%7B")) return null;
+  try {
+    const url = new URL(probed);
+    return isEmbeddableHttps(url) ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 export function resolveCitybankGateway(input: CitybankGatewayInput): CitybankGatewayView {
   const token = input.token?.trim() ?? "";
   const template = input.iframeUrl?.trim() ?? "";
@@ -41,17 +81,15 @@ export function resolveCitybankGateway(input: CitybankGatewayInput): CitybankGat
   if (!tokenOk) return token ? { status: "invalid" } : { status: "awaiting-token" };
   if (!template) return { status: "awaiting-url" };
   if (!template.includes("{token}")) return { status: "invalid" };
+  if (DONOR_PLACEHOLDERS.some((placeholder) => originPart(template).includes(placeholder))) {
+    return { status: "invalid" };
+  }
 
-  let url: URL;
-  try {
-    url = new URL(template.replaceAll("{token}", encodeURIComponent(token)));
-  } catch {
+  const embed = template.replaceAll("{token}", encodeURIComponent(token));
+  if (embed.includes("{token}") || embed.includes("%7Btoken%7D") || !probeEmbed(embed)) {
     return { status: "invalid" };
   }
-  if (!isEmbeddableHttps(url) || url.href.includes("{token}") || url.href.includes("%7Btoken%7D")) {
-    return { status: "invalid" };
-  }
-  return { status: "ready", src: url.href };
+  return { status: "ready", embed };
 }
 
 /** Origin allowed in `frame-src` once the embed URL is valid. Null keeps the baseline CSP. */
@@ -61,5 +99,71 @@ export function citybankFrameOrigin(
 ): string | null {
   const gateway = resolveCitybankGateway({ token, iframeUrl });
   if (gateway.status !== "ready") return null;
-  return new URL(gateway.src).origin;
+  return probeEmbed(gateway.embed)?.origin ?? null;
+}
+
+export function parseDonor(
+  input: DonorInput,
+): { ok: true; donor: DonorFields } | { ok: false; field: DonorFieldError } {
+  const amount = parseAmount(input.amount);
+  if (!amount) return { ok: false, field: "amount" };
+  const name = parseName(input.name);
+  if (!name) return { ok: false, field: "name" };
+  const email = parseEmail(input.email);
+  if (!email) return { ok: false, field: "email" };
+  return { ok: true, donor: { amount, name, email } };
+}
+
+function parseAmount(raw: string): string | null {
+  const trimmed = raw.trim().replace(/\s/g, "");
+  if (!trimmed) return null;
+  const normalized = /^\d{1,5},\d{1,2}$/.test(trimmed) ? trimmed.replace(",", ".") : trimmed;
+  if (!/^\d{1,5}(\.\d{1,2})?$/.test(normalized)) return null;
+  const value = Number(normalized);
+  if (!Number.isFinite(value) || value < 1 || value > 25000) return null;
+  return value.toFixed(2);
+}
+
+function parseName(raw: string): string | null {
+  const name = raw.trim().replace(/\s+/g, " ");
+  if (name.length < 2 || name.length > 80) return null;
+  if (/[<>"{}\\]/.test(name) || [...name].some((char) => char.charCodeAt(0) <= 31)) return null;
+  if (!/^[\p{L}\p{M}][\p{L}\p{M} .'\u2019-]*$/u.test(name)) return null;
+  if (!/[\p{L}]{2}/u.test(name)) return null;
+  return name;
+}
+
+function parseEmail(raw: string): string | null {
+  const email = raw.trim().toLowerCase();
+  if (email.length < 6 || email.length > 120) return null;
+  if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email)) return null;
+  if (email.includes("..")) return null;
+  return email;
+}
+
+/** Builds the iframe URL after the donor confirms. Returns null if the result would leave the bank origin. */
+export function openCitybankEmbed(embed: string, donor: DonorFields): string | null {
+  const base = probeEmbed(embed);
+  if (!base) return null;
+  const present = {
+    amount: embed.includes("{amount}"),
+    name: embed.includes("{name}"),
+    email: embed.includes("{email}"),
+  };
+  const href = embed
+    .replaceAll("{amount}", encodeURIComponent(donor.amount))
+    .replaceAll("{name}", encodeURIComponent(donor.name))
+    .replaceAll("{email}", encodeURIComponent(donor.email));
+  if (href.includes("{") || href.includes("%7B")) return null;
+  let url: URL;
+  try {
+    url = new URL(href);
+  } catch {
+    return null;
+  }
+  if (!present.amount) url.searchParams.set("amount", donor.amount);
+  if (!present.name) url.searchParams.set("name", donor.name);
+  if (!present.email) url.searchParams.set("email", donor.email);
+  if (!isEmbeddableHttps(url) || url.origin !== base.origin) return null;
+  return url.href;
 }

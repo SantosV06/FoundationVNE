@@ -44,7 +44,7 @@ El sitemap incluye las tres variantes y alternativas `hreflang`; necesita un ori
 
 ## Pasarela de City Bank
 
-`/donaciones` pide a `getCitybankGateway` la vista pública del iframe. La función lee `CITYBANK_GATEWAY_TOKEN` y `CITYBANK_IFRAME_URL` solo en el servidor. Si falta el token, falta la plantilla HTTPS o la URL no es válida, la página muestra el espacio reservado y no carga ningún marco externo. Si ambas variables son válidas, el `src` del iframe sale en la respuesta de esa página —el token de embebido es visible para el navegador— y el middleware de seguridad añade únicamente ese origen a `frame-src`. El número de tarjeta no entra en esta aplicación ni en Neon. No hay migración nueva.
+`/donaciones` pide a `getCitybankGateway` solo el estado de la pasarela. La función lee `CITYBANK_GATEWAY_TOKEN` y `CITYBANK_IFRAME_URL` en el servidor y no devuelve la dirección. Si falta el token, falta la plantilla HTTPS o la URL no es válida, la página muestra el formulario de monto, nombre y correo junto al espacio reservado, y no carga ningún marco externo. Si ambas variables son válidas, el iframe sigue cerrado hasta que el visitante confirma esos tres datos. Entonces `openCitybankDonation` devuelve el `src` —el token de embebido y esos datos quedan en la dirección del marco— y el middleware de seguridad añade únicamente ese origen a `frame-src`. El sitio no guarda el intento en Neon. El número de tarjeta no entra en esta aplicación. No hay migración nueva.
 
 ## Datos
 
