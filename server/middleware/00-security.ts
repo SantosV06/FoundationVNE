@@ -9,8 +9,8 @@ interface SecurityEvent {
 
 function withCitybankFrame(policy: string): string {
   const origin = citybankFrameOrigin(
-    process.env.CITYBANK_GATEWAY_TOKEN,
-    process.env.CITYBANK_IFRAME_URL,
+    process.env.CITIBANK_GATEWAY_TOKEN || process.env.CITYBANK_GATEWAY_TOKEN,
+    process.env.CITIBANK_IFRAME_URL || process.env.CITYBANK_IFRAME_URL,
   );
   if (!origin || policy.includes(` ${origin}`)) return policy;
   return policy.replace("frame-src 'self'", `frame-src 'self' ${origin}`);

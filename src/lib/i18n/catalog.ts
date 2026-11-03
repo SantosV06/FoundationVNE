@@ -10,7 +10,7 @@ export const catalog: Record<string, readonly [string, string]> = {
     "We could not load this page. Try again or return home.",
     "Não foi possível carregar esta página. Tente novamente ou volte ao início.",
   ],
-  "City Bank": ["City Bank", "City Bank"],
+  Citibank: ["Citibank", "Citibank"],
   "Lunes a viernes, 8:00 a.m. – 5:00 p.m. Fines de semana con cita previa.": [
     "Monday to Friday, 8:00 a.m. – 5:00 p.m. Weekends by appointment.",
     "Segunda a sexta-feira, das 8h às 17h. Fins de semana com agendamento.",
@@ -272,10 +272,10 @@ export const catalog: Record<string, readonly [string, string]> = {
       "Visitar o site, enviar uma consulta ou uma inscrição de voluntariado não cria uma relação contratual, trabalhista, financeira nem de representação, salvo se formalizada por escrito.",
     ],
   "4. Donaciones": ["4. Donations", "4. Doações"],
-  "Las donaciones son voluntarias. Pueden hacerse por Zelle o, cuando esté habilitada, en la pasarela alojada de City Bank dentro de esta página. Para abrir esa pasarela el sitio pide el monto, el nombre y el correo; el número de la tarjeta lo pide City Bank. La Organización no solicita contraseñas ni códigos de verificación.":
+  "Las donaciones son voluntarias. Pueden hacerse por Zelle, fuera de esta página, o con tarjeta en la pasarela alojada de Citibank cuando el banco la habilite. El sitio pide el monto, el nombre y el correo para abrir ese cobro; el número de la tarjeta lo pide Citibank. La Organización no pide contraseñas ni códigos de verificación, no guarda esos datos y no confirma el pago. El aporte se destina a los programas de la Organización, entre ellos Casas VNE, Proyecto Génesis y las unidades productivas que financia, conforme a sus estatutos. Esta página no emite un comprobante fiscal.":
     [
-      "Donations are voluntary. They can be made by Zelle or, when enabled, on the City Bank hosted gateway inside this page. To open that gateway the site asks for the amount, name and email; City Bank asks for the card number. The Organization does not request passwords or verification codes.",
-      "As doações são voluntárias. Podem ser feitas pelo Zelle ou, quando estiver habilitada, no gateway hospedado do City Bank dentro desta página. Para abrir esse gateway o site pede o valor, o nome e o e-mail; o número do cartão é pedido pelo City Bank. A Organização não solicita senhas nem códigos de verificação.",
+      "Donations are voluntary. They can be made by Zelle, outside this page, or by card on Citibank's hosted gateway once the bank enables it. The site asks for the amount, name and email to open that charge; Citibank asks for the card number. The Organization does not ask for passwords or verification codes, does not store those details and does not confirm the payment. The gift goes to the Organization's programs, including Casas VNE, Proyecto Génesis and the productive units it finances, under its bylaws. This page does not issue a tax receipt.",
+      "As doações são voluntárias. Podem ser feitas pelo Zelle, fora desta página, ou com cartão no gateway hospedado do Citibank quando o banco o habilitar. O site pede o valor, o nome e o e-mail para abrir essa cobrança; o número do cartão é pedido pelo Citibank. A Organização não pede senhas nem códigos de verificação, não guarda esses dados e não confirma o pagamento. A contribuição destina-se aos programas da Organização, entre eles Casas VNE, Proyecto Génesis e as unidades produtivas que financia, conforme os estatutos. Esta página não emite comprovante fiscal.",
     ],
   "5. Limitación de responsabilidad": [
     "5. Limitation of liability",
@@ -845,10 +845,10 @@ export const catalog: Record<string, readonly [string, string]> = {
   "También puedes escribir a": ["You can also write to", "Você também pode escrever para"],
   ". Horario:": [". Hours:", ". Horário:"],
   "Donaciones | Fundación VNE": ["Donations | Fundación VNE", "Doações | Fundación VNE"],
-  "Donaciones voluntarias a Fundación VNE. Monto, nombre y correo en esta página; la tarjeta queda en el iframe de City Bank cuando el banco entrega el token. También hay instrucciones de Zelle.":
+  "Donaciones voluntarias a Fundación VNE. Monto, nombre y correo en esta página; la tarjeta queda en Citibank cuando el banco habilite el cobro. También hay instrucciones de Zelle.":
     [
-      "Voluntary donations to Fundación VNE. Amount, name and email on this page; the card stays in City Bank's iframe once the bank provides the token. Zelle instructions are included too.",
-      "Doações voluntárias à Fundación VNE. Valor, nome e e-mail nesta página; o cartão fica no iframe do City Bank quando o banco entrega o token. Também há instruções do Zelle.",
+      "Voluntary donations to Fundación VNE. Amount, name and email on this page; the card stays with Citibank once the bank enables the charge. Zelle instructions are included too.",
+      "Doações voluntárias à Fundación VNE. Valor, nome e e-mail nesta página; o cartão fica no Citibank quando o banco habilitar a cobrança. Também há instruções do Zelle.",
     ],
   Plataforma: ["Platform", "Plataforma"],
   "Número asociado": ["Linked number", "Número associado"],
@@ -860,10 +860,24 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Your contribution sustains productive programs, beyond a passing campaign.",
     "Sua contribuição sustenta programas produtivos, além de uma campanha passageira.",
   ],
-  "Las donaciones son voluntarias. Esta página pide el monto, el nombre y el correo, y deja el pago con tarjeta en el iframe de City Bank cuando el banco entrega el token. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.":
+  "Las donaciones son voluntarias. Esta página pide el monto, el nombre y el correo, y deja el pago con tarjeta en la página de Citibank cuando el banco la habilite. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.":
     [
-      "Donations are voluntary. This page asks for the amount, name and email, and leaves the card payment in City Bank's iframe once the bank provides the token. Zelle remains available. The foundation does not ask for passwords, codes or the card number.",
-      "As doações são voluntárias. Esta página pede o valor, o nome e o e-mail, e deixa o pagamento com cartão no iframe do City Bank quando o banco entrega o token. O Zelle continua disponível. A fundação não pede senhas, códigos nem o número do cartão.",
+      "Donations are voluntary. This page asks for the amount, name and email, and leaves the card payment on Citibank's page once the bank enables it. Zelle remains available. The foundation does not ask for passwords, codes or the card number.",
+      "As doações são voluntárias. Esta página pede o valor, o nome e o e-mail, e deixa o pagamento com cartão na página do Citibank quando o banco o habilitar. O Zelle continua disponível. A fundação não pede senhas, códigos nem o número do cartão.",
+    ],
+  "De dónde sale y a dónde va": [
+    "Where it comes from and where it goes",
+    "De onde vem e para onde vai",
+  ],
+  "Entra como donación voluntaria: por Zelle, al número de la oficina ejecutiva, o con tarjeta cuando Citibank habilite la pasarela. Este sitio no retiene el dinero.":
+    [
+      "It comes in as a voluntary donation: by Zelle, to the executive office number, or by card once Citibank enables the gateway. This site does not hold the money.",
+      "Entra como doação voluntária: pelo Zelle, para o número do escritório executivo, ou com cartão quando o Citibank habilitar o gateway. Este site não retém o dinheiro.",
+    ],
+  "Va a los programas de la fundación: Casas VNE, Proyecto Génesis, y las unidades de comida y construcción que financia. No es una campaña de un día.":
+    [
+      "It goes to the foundation's programs: Casas VNE, Proyecto Génesis, and the food and construction units it finances. It is not a one-day campaign.",
+      "Vai para os programas da fundação: Casas VNE, Proyecto Génesis e as unidades de alimentação e construção que ela financia. Não é uma campanha de um dia.",
     ],
   "Los fondos se usan exclusivamente para desarrollar y sostener los programas sociales, comunitarios y productivos, conforme a los estatutos y a las políticas internas de gobernanza.":
     [
@@ -875,42 +889,39 @@ export const catalog: Record<string, readonly [string, string]> = {
   "Abrir Zelle": ["Open Zelle", "Abrir Zelle"],
   "Consulta administrativa": ["Administrative inquiry", "Consulta administrativa"],
   "Pasarela de pago": ["Payment gateway", "Gateway de pagamento"],
-  "Pago con tarjeta en City Bank": [
-    "Card payment with City Bank",
-    "Pagamento com cartão no City Bank",
+  "Pago con tarjeta en Citibank": [
+    "Card payment with Citibank",
+    "Pagamento com cartão no Citibank",
   ],
-  "El cobro se abre aquí, en la página de City Bank, después de indicar el monto, el nombre y el correo. Fundación VNE no ve ni guarda el número de la tarjeta.":
+  "El cobro se abre aquí, en la página de Citibank, después de indicar el monto, el nombre y el correo. Fundación VNE no ve ni guarda el número de la tarjeta.":
     [
-      "The charge opens here, on City Bank's page, after you enter the amount, name and email. Fundación VNE does not see or store the card number.",
-      "A cobrança abre aqui, na página do City Bank, depois de indicar o valor, o nome e o e-mail. A Fundación VNE não vê nem guarda o número do cartão.",
+      "The charge opens here, on Citibank's page, after you enter the amount, name and email. Fundación VNE does not see or store the card number.",
+      "A cobrança abre aqui, na página do Citibank, depois de indicar o valor, o nome e o e-mail. A Fundación VNE não vê nem guarda o número do cartão.",
     ],
-  "El token de City Bank ya está configurado. Falta la dirección HTTPS del iframe para abrir la pasarela.":
+  "El token de Citibank ya está configurado. Falta la dirección HTTPS del iframe para abrir la pasarela.":
     [
-      "The City Bank token is already configured. The HTTPS address of the iframe is still missing.",
-      "O token do City Bank já está configurado. Falta o endereço HTTPS do iframe para abrir o gateway.",
+      "The Citibank token is already configured. The HTTPS address of the iframe is still missing.",
+      "O token do Citibank já está configurado. Falta o endereço HTTPS do iframe para abrir o gateway.",
     ],
   "La configuración de la pasarela no es válida. El pago con tarjeta permanece cerrado hasta corregirla.":
     [
       "The gateway configuration is not valid. Card payment stays closed until it is corrected.",
       "A configuração do gateway não é válida. O pagamento com cartão permanece fechado até corrigi-la.",
     ],
-  "Este espacio queda reservado para embeber la pasarela de City Bank. El formulario de tarjeta aparecerá aquí cuando el banco entregue el token y la dirección HTTPS.":
+  "Este espacio queda reservado para embeber la pasarela de Citibank. El formulario de tarjeta aparecerá aquí cuando el banco entregue el token y la dirección HTTPS.":
     [
-      "This space is reserved to embed the City Bank gateway. The card form will appear here when the bank provides the token and the HTTPS address.",
-      "Este espaço fica reservado para incorporar o gateway do City Bank. O formulário do cartão aparecerá aqui quando o banco entregar o token e o endereço HTTPS.",
+      "This space is reserved to embed the Citibank gateway. The card form will appear here when the bank provides the token and the HTTPS address.",
+      "Este espaço fica reservado para incorporar o gateway do Citibank. O formulário do cartão aparecerá aqui quando o banco entregar o token e o endereço HTTPS.",
     ],
-  "Pasarela de pago de City Bank": [
-    "City Bank payment gateway",
-    "Gateway de pagamento do City Bank",
-  ],
+  "Pasarela de pago de Citibank": ["Citibank payment gateway", "Gateway de pagamento do Citibank"],
   "Espacio reservado para el iframe": [
     "Space reserved for the iframe",
     "Espaço reservado para o iframe",
   ],
-  "Aquí se embeberá la pasarela cuando City Bank entregue el token y la dirección HTTPS. Mientras tanto no se abre ningún formulario de tarjeta.":
+  "Aquí se embeberá la pasarela cuando Citibank entregue el token y la dirección HTTPS. Mientras tanto no se abre ningún formulario de tarjeta.":
     [
-      "The gateway will be embedded here when City Bank provides the token and the HTTPS address. Until then, no card form opens.",
-      "O gateway será incorporado aqui quando o City Bank entregar o token e o endereço HTTPS. Até lá, nenhum formulário de cartão é aberto.",
+      "The gateway will be embedded here when Citibank provides the token and the HTTPS address. Until then, no card form opens.",
+      "O gateway será incorporado aqui quando o Citibank entregar o token e o endereço HTTPS. Até lá, nenhum formulário de cartão é aberto.",
     ],
   "Monto a donar": ["Amount to donate", "Valor a doar"],
   "Monto en dólares": ["Amount in dollars", "Valor em dólares"],
@@ -924,14 +935,14 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Enter your name, from 2 to 80 letters.",
     "Escreva seu nome, entre 2 e 80 letras.",
   ],
-  "Escribe un correo válido. City Bank lo usa para el comprobante; este sitio no lo guarda.": [
-    "Enter a valid email. City Bank uses it for the receipt; this site does not store it.",
-    "Escreva um e-mail válido. O City Bank o usa para o comprovante; este site não o guarda.",
+  "Escribe un correo válido. Citibank lo usa para el comprobante; este sitio no lo guarda.": [
+    "Enter a valid email. Citibank uses it for the receipt; this site does not store it.",
+    "Escreva um e-mail válido. O Citibank o usa para o comprovante; este site não o guarda.",
   ],
-  "La pasarela sigue cerrada: City Bank todavía no entregó el token o la dirección HTTPS. No se envió ningún pago y estos datos no se guardan.":
+  "La pasarela sigue cerrada: Citibank todavía no entregó el token o la dirección HTTPS. No se envió ningún pago y estos datos no se guardan.":
     [
-      "The gateway is still closed: City Bank has not provided the token or the HTTPS address yet. No payment was sent and these details are not stored.",
-      "O gateway continua fechado: o City Bank ainda não entregou o token ou o endereço HTTPS. Nenhum pagamento foi enviado e estes dados não são guardados.",
+      "The gateway is still closed: Citibank has not provided the token or the HTTPS address yet. No payment was sent and these details are not stored.",
+      "O gateway continua fechado: o Citibank ainda não entregou o token ou o endereço HTTPS. Nenhum pagamento foi enviado e estes dados não são guardados.",
     ],
   "Continuar al pago": ["Continue to payment", "Continuar para o pagamento"],
   "Abriendo la pasarela": ["Opening the gateway", "Abrindo o gateway"],
@@ -940,10 +951,10 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Não foi possível abrir o gateway. Tente novamente. Nenhum pagamento foi guardado.",
   ],
   "Revisar datos de la donación": ["Review donation details", "Revisar dados da doação"],
-  "Vas a donar USD {amount} como {name}. El número de la tarjeta se escribe en City Bank, no en este sitio.":
+  "Vas a donar USD {amount} como {name}. El número de la tarjeta se escribe en Citibank, no en este sitio.":
     [
-      "You are about to donate USD {amount} as {name}. The card number is entered at City Bank, not on this site.",
-      "Você vai doar USD {amount} como {name}. O número do cartão é escrito no City Bank, não neste site.",
+      "You are about to donate USD {amount} as {name}. The card number is entered at Citibank, not on this site.",
+      "Você vai doar USD {amount} como {name}. O número do cartão é escrito no Citibank, não neste site.",
     ],
   "También puedes donar por Zelle": [
     "You can also donate by Zelle",
@@ -1147,10 +1158,10 @@ export const catalog: Record<string, readonly [string, string]> = {
     "5. Providers and external links",
     "5. Fornecedores e links externos",
   ],
-  "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de City Bank está habilitada, esta página envía a ese banco el monto, el nombre y el correo dentro de la dirección del iframe, y no los guarda. El formulario de tarjeta se muestra en ese iframe: el número de tarjeta lo captura City Bank y no llega a este sitio.":
+  "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de Citibank está habilitada, el cobro con tarjeta ocurre en la página del banco, dentro de esta pantalla. Para abrirlo, el sitio puede enviar el monto, el nombre y el correo, y no los guarda. El número de tarjeta lo captura Citibank y no llega a este sitio. Zelle no se procesa aquí: el donante lo envía desde la aplicación de su banco al número publicado.":
     [
-      "The website relies on technical providers for hosting, application delivery, database services, analytics, and security. When enabled, these may include Vercel, Neon, and Cloudflare. Links to WhatsApp, Instagram, mapping services, or Zelle lead to external platforms governed by their own notices and terms; once opened, information you provide is subject to that provider’s practices. If the City Bank gateway is enabled, this page sends that bank the amount, name and email inside the iframe address, and does not store them. The card form is shown in that iframe: City Bank captures the card number and it does not reach this site.",
-      "O site depende de fornecedores técnicos de hospedagem, entrega da aplicação, banco de dados, análise e segurança. Quando habilitados, eles podem incluir Vercel, Neon e Cloudflare. Links para WhatsApp, Instagram, serviços de mapas ou Zelle levam a plataformas externas regidas por seus próprios avisos e termos; ao acessá-las, as informações fornecidas ficam sujeitas às práticas desse fornecedor. Se o gateway do City Bank estiver habilitado, esta página envia a esse banco o valor, o nome e o e-mail dentro do endereço do iframe, e não os guarda. O formulário do cartão é exibido nesse iframe: o City Bank captura o número do cartão e ele não chega a este site.",
+      "The website relies on technical providers for hosting, application delivery, database services, analytics, and security. When enabled, these may include Vercel, Neon, and Cloudflare. Links to WhatsApp, Instagram, mapping services, or Zelle lead to external platforms governed by their own notices and terms; once opened, information you provide is subject to that provider's practices. If the Citibank gateway is enabled, the card charge happens on the bank's page, inside this screen. To open it, the site may send the amount, name and email, and does not store them. Citibank captures the card number and it does not reach this site. Zelle is not processed here: the donor sends it from their bank's app to the published number.",
+      "O site depende de fornecedores técnicos de hospedagem, entrega da aplicação, banco de dados, análise e segurança. Quando habilitados, eles podem incluir Vercel, Neon e Cloudflare. Links para WhatsApp, Instagram, serviços de mapas ou Zelle levam a plataformas externas regidas por seus próprios avisos e termos; ao acessá-las, as informações fornecidas ficam sujeitas às práticas desse fornecedor. Se o gateway do Citibank estiver habilitado, a cobrança com cartão ocorre na página do banco, dentro desta tela. Para abri-la, o site pode enviar o valor, o nome e o e-mail, e não os guarda. O Citibank captura o número do cartão e ele não chega a este site. O Zelle não é processado aqui: o doador envia pelo aplicativo do banco, para o número publicado.",
     ],
   "La Organización no vende datos personales. Puede compartir información con proveedores que la necesiten para prestar servicios técnicos a la aplicación, bajo las condiciones aplicables, o cuando sea necesario para cumplir la ley, proteger la seguridad o responder a un requerimiento válido.":
     [

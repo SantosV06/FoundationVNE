@@ -10,7 +10,7 @@ import {
 const template = "https://payments.citybank.example/embed?session={token}";
 const token = "citybank_token_01";
 
-test("the donations iframe stays closed until City Bank provides a token and an https template", () => {
+test("the donations iframe stays closed until Citibank provides a token and an https template", () => {
   assert.deepEqual(resolveCitybankGateway({}), { status: "awaiting-token" });
   assert.deepEqual(resolveCitybankGateway({ token: "   " }), { status: "awaiting-token" });
   assert.deepEqual(resolveCitybankGateway({ token }), { status: "awaiting-url" });

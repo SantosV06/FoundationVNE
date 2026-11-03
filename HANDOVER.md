@@ -17,7 +17,7 @@ Copiar Git no copia Neon ni los secretos de Vercel. `ADMIN_PASSWORD` solo crea e
 2. Copiar el repositorio a la cuenta acordada. Registrar el SHA de origen y quién mantendrá la copia. Las instrucciones de importación deben apuntar a esa copia.
 3. Seguir [GUIA_INSTALACION_COMPLETA.md](GUIA_INSTALACION_COMPLETA.md): Node 24.x, npm 11.9.0, raíz del repositorio, `npm run build`, Neon pooled con SSL y secretos distintos para Production/Preview.
 4. Configurar `SITE_URL` con el nuevo dominio. Ajustar `MONITOR_SITE_URL` en GitHub → Settings → Secrets and variables → Actions → Variables; de lo contrario el monitor conserva el dominio original.
-5. Revisar contenido institucional, enlaces de contacto, documentos públicos y destinos de donación con sus responsables. No convertir instrucciones Zelle en un supuesto procesador de pagos. La pasarela de City Bank, si se habilita, pide el monto, el nombre y el correo y abre un iframe del banco: el token y la plantilla HTTPS viven en el entorno de Vercel, no en el repositorio. Esos datos y el número de tarjeta no se guardan en esta aplicación. Ver [docs/PASARELA_CITYBANK.md](docs/PASARELA_CITYBANK.md).
+5. Revisar contenido institucional, enlaces de contacto, documentos públicos y destinos de donación con sus responsables. No convertir instrucciones Zelle en un supuesto procesador de pagos. La pasarela de Citibank, si se habilita, pide el monto, el nombre y el correo. El token y la plantilla HTTPS viven en Vercel, no en el repositorio; también se leen los nombres viejos `CITYBANK_*`. Esos datos y el número de tarjeta no se guardan. Ver [docs/PASARELA_CITIBANK.md](docs/PASARELA_CITIBANK.md) y [docs/ORIGEN_DESTINO_DONACIONES.md](docs/ORIGEN_DESTINO_DONACIONES.md).
 6. Crear el propietario, activar su 2FA, custodiar códigos y clave de cifrado y crear cuentas individuales. Decidir si se exige 2FA al equipo.
 7. Ejecutar la aceptación del apartado 5 con datos ficticios y una rama Neon de prueba.
 
@@ -48,20 +48,20 @@ Esta configuración se realiza en GitHub y no se activa al copiar un archivo del
 
 Realizar las mutaciones en una rama Neon desechable, nunca ejecutar E2E de escritura sobre producción.
 
-| Comprobación             | Resultado esperado                                                                                                                                        |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Instalación limpia       | `npm ci --include=dev` y `npm run build` finalizan; las ocho migraciones de la raíz quedan aplicadas en la base elegida.                                  |
-| Configuración incorrecta | Production rechaza conexión o clave TOTP inválidas, sin imprimir valores privados.                                                                        |
-| Páginas e idiomas        | Navegación móvil/escritorio, imágenes, videos y ES/EN/PT funcionan; canónicas y sitemap apuntan al dominio nuevo.                                         |
-| Formulario               | Solicitud ficticia aparece una sola vez, incluso al reintentar con la misma clave.                                                                        |
-| Correo de estado         | En una base aislada, pasar esa solicitud a `aceptada` o `descartada` intenta un aviso al voluntario. `contactada` no lo envía. Un fallo de Brevo no revierte el estado. |
-| Acceso                   | Contraseña incorrecta rechazada y `login:failure` visible al propietario sin usuario/datos del intento. Solicitar el segundo factor no cuenta como fallo. |
-| Sesiones                 | Cerrar sesión o cambiar contraseña invalida la cookie anterior.                                                                                           |
-| Permisos                 | Administrador puede gestionar solicitudes; no administrar cuentas, política o borrado definitivo.                                                         |
-| 2FA                      | Inscripción, siguiente código, recuperación de un solo uso y rechazo de prueba reutilizada. Política obligatoria restringe cuentas sin factor.            |
-| Gestión                  | Búsqueda, estados, papelera, restauración y CSV funcionan; operaciones quedan auditadas.                                                                  |
-| Contenido                | Portada e idioma predeterminado persisten al reiniciar/republicar porque viven en Neon.                                                                   |
-| Restauración             | `db:verify` correcto, recuentos comparados y login/2FA comprobados en rama restaurada.                                                                    |
+| Comprobación             | Resultado esperado                                                                                                                                                                                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Instalación limpia       | `npm ci --include=dev` y `npm run build` finalizan; las ocho migraciones de la raíz quedan aplicadas en la base elegida.                                                                                                                                  |
+| Configuración incorrecta | Production rechaza conexión o clave TOTP inválidas, sin imprimir valores privados.                                                                                                                                                                        |
+| Páginas e idiomas        | Navegación móvil/escritorio, imágenes, videos y ES/EN/PT funcionan; canónicas y sitemap apuntan al dominio nuevo.                                                                                                                                         |
+| Formulario               | Solicitud ficticia aparece una sola vez, incluso al reintentar con la misma clave.                                                                                                                                                                        |
+| Correo de estado         | En una base aislada, pasar esa solicitud a `aceptada` o `descartada` intenta un aviso al voluntario. `contactada` no lo envía. Un fallo de Brevo no revierte el estado.                                                                                   |
+| Acceso                   | Contraseña incorrecta rechazada y `login:failure` visible al propietario sin usuario/datos del intento. Solicitar el segundo factor no cuenta como fallo.                                                                                                 |
+| Sesiones                 | Cerrar sesión o cambiar contraseña invalida la cookie anterior.                                                                                                                                                                                           |
+| Permisos                 | Administrador puede gestionar solicitudes; no administrar cuentas, política o borrado definitivo.                                                                                                                                                         |
+| 2FA                      | Inscripción, siguiente código, recuperación de un solo uso y rechazo de prueba reutilizada. Política obligatoria restringe cuentas sin factor.                                                                                                            |
+| Gestión                  | Búsqueda, estados, papelera, restauración y CSV funcionan; operaciones quedan auditadas.                                                                                                                                                                  |
+| Contenido                | Portada e idioma predeterminado persisten al reiniciar/republicar porque viven en Neon.                                                                                                                                                                   |
+| Restauración             | `db:verify` correcto, recuentos comparados y login/2FA comprobados en rama restaurada.                                                                                                                                                                    |
 | Operación                | El workflow horario ya existe y, el 28-10-2026, acertó contra `https://prueba-724.vercel.app` sin `MONITOR_SITE_URL`. No hay aviso al responsable: hay que activar notificaciones de Actions o un monitor externo y probar que un fallo controlado llega. |
 
 Para QA local: seguir `.github/workflows/ci.yml`; usa credenciales ficticias. Ejecutar `npm run check`, `npm run build`, `npm run test:postgres` con PostgreSQL local desechable y `npm run test:e2e` contra desarrollo y compilación. Los recursos externos excluidos de las pruebas de navegador deben verificarse por separado antes de aceptar la entrega.
@@ -76,19 +76,19 @@ El monitor de Actions ya corre cada hora contra `https://prueba-724.vercel.app` 
 
 ## 7. Acta de entrega (completar sin secretos)
 
-| Campo                                 | Valor a registrar                                               |
-| ------------------------------------- | --------------------------------------------------------------- |
-| Responsable que entrega / recibe      | Pendiente                                                       |
-| Tipo de entrega y autorización de uso | Pendiente                                                       |
-| Commit y despliegue aceptados         | Pendiente                                                       |
-| Dominio, proyecto y rama Neon         | Identificadores sin credenciales                                |
-| Custodio y ubicación de secretos      | Referencia al gestor, nunca valores                             |
-| Pruebas y CI                          | Enlaces y resultado de cada comprobación                        |
-| Regla de main                         | Activa / pendiente, responsable y fecha                         |
-| Restauración                          | Pendiente / fecha, duración y resultado                         |
-| Capacidad medida                      | Pendiente / entorno, carga, umbrales y resultados               |
-| Monitor y alertas                     | Responsable y prueba de recepción                               |
-| Recuperación y ventana de cambio      | Responsable, plan y resultado                                   |
+| Campo                                 | Valor a registrar                                                                         |
+| ------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Responsable que entrega / recibe      | Pendiente                                                                                 |
+| Tipo de entrega y autorización de uso | Pendiente                                                                                 |
+| Commit y despliegue aceptados         | Pendiente                                                                                 |
+| Dominio, proyecto y rama Neon         | Identificadores sin credenciales                                                          |
+| Custodio y ubicación de secretos      | Referencia al gestor, nunca valores                                                       |
+| Pruebas y CI                          | Enlaces y resultado de cada comprobación                                                  |
+| Regla de main                         | Activa / pendiente, responsable y fecha                                                   |
+| Restauración                          | Pendiente / fecha, duración y resultado                                                   |
+| Capacidad medida                      | Pendiente / entorno, carga, umbrales y resultados                                         |
+| Monitor y alertas                     | Responsable y prueba de recepción                                                         |
+| Recuperación y ventana de cambio      | Responsable, plan y resultado                                                             |
 | Pendientes aceptados                  | Aceptación/configuración de Brevo, pagos, licencia/permisos y otras decisiones aplicables |
 
 No completar estos campos con supuestos. La entrega se acepta cuando ambas partes revisan la evidencia y los pendientes.

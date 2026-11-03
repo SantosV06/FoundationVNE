@@ -24,17 +24,17 @@ const donorInputSchema = z.object({
 
 function gatewayFromEnv() {
   return resolveCitybankGateway({
-    token: process.env.CITYBANK_GATEWAY_TOKEN,
-    iframeUrl: process.env.CITYBANK_IFRAME_URL,
+    token: process.env.CITIBANK_GATEWAY_TOKEN || process.env.CITYBANK_GATEWAY_TOKEN,
+    iframeUrl: process.env.CITIBANK_IFRAME_URL || process.env.CITYBANK_IFRAME_URL,
   });
 }
 
-/** Status only. The embed address is not sent until the donor continues. */
+// Status only. The embed address stays on the server until the donor continues.
 export const getCitybankGateway = createServerFn({ method: "GET" }).handler(
   async (): Promise<CitybankGatewayPublic> => ({ status: gatewayFromEnv().status }),
 );
 
-/** Builds the bank iframe address. Card numbers are not accepted. Nothing is stored. */
+// Builds the bank iframe address. Does not accept card numbers. Nothing is stored.
 export const openCitybankDonation = createServerFn({ method: "POST" })
   .validator(donorInputSchema)
   .handler(async ({ data }): Promise<CitybankDonationResult> => {

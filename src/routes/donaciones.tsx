@@ -16,7 +16,7 @@ export const Route = createFileRoute("/donaciones")({
           {
             name: "description",
             content:
-              "Donaciones voluntarias a Fundación VNE. Monto, nombre y correo en esta página; la tarjeta queda en el iframe de City Bank cuando el banco entrega el token. También hay instrucciones de Zelle.",
+              "Donaciones voluntarias a Fundación VNE. Monto, nombre y correo en esta página; la tarjeta queda en Citibank cuando el banco habilite el cobro. También hay instrucciones de Zelle.",
           },
         ],
       },
@@ -54,7 +54,7 @@ function Donaciones() {
         kicker={t("Transparencia")}
         title={t("Tu aporte sostiene programas productivos, no una campaña pasajera.")}
         lede={t(
-          "Las donaciones son voluntarias. Esta página pide el monto, el nombre y el correo, y deja el pago con tarjeta en el iframe de City Bank cuando el banco entrega el token. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.",
+          "Las donaciones son voluntarias. Esta página pide el monto, el nombre y el correo, y deja el pago con tarjeta en la página de Citibank cuando el banco la habilite. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.",
         )}
       />
       <CitybankGateway gateway={gateway} />
@@ -85,7 +85,22 @@ function Donaciones() {
           ))}
         </div>
 
-        <p className="editorial-justify mt-8 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
+        <h2 className="font-display text-3xl text-navy dark:text-cream">
+          <T>De dónde sale y a dónde va</T>
+        </h2>
+        <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
+          <T>
+            Entra como donación voluntaria: por Zelle, al número de la oficina ejecutiva, o con
+            tarjeta cuando Citibank habilite la pasarela. Este sitio no retiene el dinero.
+          </T>
+        </p>
+        <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
+          <T>
+            Va a los programas de la fundación: Casas VNE, Proyecto Génesis, y las unidades de
+            comida y construcción que financia. No es una campaña de un día.
+          </T>
+        </p>
+        <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
           <T>
             Los fondos se usan exclusivamente para desarrollar y sostener los programas sociales,
             comunitarios y productivos, conforme a los estatutos y a las políticas internas de
