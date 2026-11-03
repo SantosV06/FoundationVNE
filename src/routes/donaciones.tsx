@@ -2,8 +2,10 @@ import { localizedHead } from "@/lib/i18n/seo";
 import { T, useLanguage } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { CitybankGateway } from "@/components/citybank-gateway";
 import { PageIntro, Shell } from "@/components/shell";
 import { org } from "@/data/site";
+import { getCitybankGateway } from "@/lib/citybank-gateway-functions";
 
 export const Route = createFileRoute("/donaciones")({
   head: ({ matches }) =>
@@ -14,12 +16,13 @@ export const Route = createFileRoute("/donaciones")({
           {
             name: "description",
             content:
-              "Donaciones voluntarias a Fundación VNE por Zelle. Número, banco y concepto, sin solicitar datos bancarios.",
+              "Donaciones voluntarias a Fundación VNE. Pasarela embebida de City Bank cuando el banco entrega el token, e instrucciones de Zelle. El sitio no pide el número de la tarjeta.",
           },
         ],
       },
       matches.at(-1)?.search ?? {},
     ),
+  loader: () => getCitybankGateway(),
   component: Donaciones,
 });
 
@@ -32,6 +35,7 @@ const facts = [
 
 function Donaciones() {
   const { t } = useLanguage();
+  const gateway = Route.useLoaderData();
   const [copied, setCopied] = useState(false);
 
   async function copyNumber() {
@@ -50,12 +54,22 @@ function Donaciones() {
         kicker={t("Transparencia")}
         title={t("Tu aporte sostiene programas productivos, no una campaña pasajera.")}
         lede={t(
-          "Las donaciones son voluntarias y se hacen solo desde Zelle. La fundación no pide contraseñas, códigos ni información bancaria.",
+          "Las donaciones son voluntarias. La pasarela de City Bank se abre dentro de esta página solo cuando el banco entrega el token. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.",
         )}
       />
+      <CitybankGateway gateway={gateway} />
 
       <section className="mx-auto max-w-6xl px-5 py-14 sm:px-6">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <h2 className="font-display text-3xl text-navy dark:text-cream">
+          <T>También puedes donar por Zelle</T>
+        </h2>
+        <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
+          <T>
+            Zelle no pasa por esta página: se usa desde la aplicación del banco, con el número
+            publicado.
+          </T>
+        </p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {facts.map((fact) => (
             <article
               key={fact.label}

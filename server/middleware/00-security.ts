@@ -1,9 +1,19 @@
 import { randomBytes } from "node:crypto";
+import { citybankFrameOrigin } from "../../src/lib/citybank-gateway.ts";
 import config from "../../vercel.json";
 
 interface SecurityEvent {
   req: Request;
   url: URL;
+}
+
+function withCitybankFrame(policy: string): string {
+  const origin = citybankFrameOrigin(
+    process.env.CITYBANK_GATEWAY_TOKEN,
+    process.env.CITYBANK_IFRAME_URL,
+  );
+  if (!origin || policy.includes(` ${origin}`)) return policy;
+  return policy.replace("frame-src 'self'", `frame-src 'self' ${origin}`);
 }
 
 export default async function securityHeaders(
@@ -25,9 +35,8 @@ export default async function securityHeaders(
   const baseline = config.headers[0].headers.find(
     (header) => header.key === "Content-Security-Policy",
   )!.value;
-  const policy = baseline.replace(
-    "script-src 'self' 'unsafe-inline'",
-    `script-src 'self' 'nonce-${nonce}'`,
+  const policy = withCitybankFrame(
+    baseline.replace("script-src 'self' 'unsafe-inline'", `script-src 'self' 'nonce-${nonce}'`),
   );
   const headers = new Headers(response.headers);
   headers.set("Content-Security-Policy", policy);
