@@ -4,23 +4,23 @@
 
 TanStack Start combina renderizado de servidor, React y funciones del servidor. Vite compila y Nitro adapta el resultado a Vercel. PostgreSQL de Neon almacena solicitudes y administración. PGLite proporciona una base desechable para desarrollo y pruebas; no es persistencia de producción.
 
-| Ubicación                             | Responsabilidad                                                            |
-| ------------------------------------- | -------------------------------------------------------------------------- |
-| `src/routes/`                         | Páginas, shell del documento y salud HTTP.                                 |
-| `src/components/`                     | Navegación, multimedia y componentes administrativos.                      |
-| `src/lib/volunteer-functions.ts`      | Frontera HTTP: validación y funciones del servidor de solicitudes/cuentas. |
-| `src/lib/brevo-email.server.ts`         | Correo del servidor: confirmación y aviso interno al crear una solicitud; aviso al voluntario al pasar a `aceptada` o `descartada`. |
-| `src/lib/volunteer-service.server.ts` | Acceso, roles, sesiones, límites, consultas y el disparo del aviso de estado.       |
-| `src/lib/admin-totp*`                 | Inscripción, cifrado, validación y recuperación TOTP.                      |
-| `src/lib/admin-operations*`           | Auditoría, política, cambio personal de contraseña y contenido de portada. |
-| `src/lib/home-content*`               | Valores iniciales y lectura pública del contenido editorial.               |
-| `src/lib/i18n/`                       | Catálogos, proveedor, traducción administrativa y SEO por idioma.          |
-| `src/data/`                           | Contenido institucional fijo y catálogo multimedia.                        |
-| `src/lib/db.ts`                       | Pool PostgreSQL/PGLite y normalización de resultados.                      |
-| `migrations/*.sql`                    | Esquema versionado de la aplicación activa.                                |
-| `server/middleware/`                  | Nonce CSP y cabeceras de seguridad de la aplicación.                        |
-| `scripts/`                            | Migraciones, validación, navegador y utilidades de operación.              |
-| `.github/workflows/`                  | Job `validate`, auditoría npm, revisión de dependencias, CodeQL y monitor de disponibilidad. |
+| Ubicación                             | Responsabilidad                                                                                                                     |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `src/routes/`                         | Páginas, shell del documento y salud HTTP.                                                                                          |
+| `src/components/`                     | Navegación, multimedia y componentes administrativos.                                                                               |
+| `src/lib/volunteer-functions.ts`      | Frontera HTTP: validación y funciones del servidor de solicitudes/cuentas.                                                          |
+| `src/lib/brevo-email.server.ts`       | Correo del servidor: confirmación y aviso interno al crear una solicitud; aviso al voluntario al pasar a `aceptada` o `descartada`. |
+| `src/lib/volunteer-service.server.ts` | Acceso, roles, sesiones, límites, consultas y el disparo del aviso de estado.                                                       |
+| `src/lib/admin-totp*`                 | Inscripción, cifrado, validación y recuperación TOTP.                                                                               |
+| `src/lib/admin-operations*`           | Auditoría, política, cambio personal de contraseña y contenido de portada.                                                          |
+| `src/lib/home-content*`               | Valores iniciales y lectura pública del contenido editorial.                                                                        |
+| `src/lib/i18n/`                       | Catálogos, proveedor, traducción administrativa y SEO por idioma.                                                                   |
+| `src/data/`                           | Contenido institucional fijo y catálogo multimedia.                                                                                 |
+| `src/lib/db.ts`                       | Pool PostgreSQL/PGLite y normalización de resultados.                                                                               |
+| `migrations/*.sql`                    | Esquema versionado de la aplicación activa.                                                                                         |
+| `server/middleware/`                  | Nonce CSP y cabeceras de seguridad de la aplicación.                                                                                |
+| `scripts/`                            | Migraciones, validación, navegador y utilidades de operación.                                                                       |
+| `.github/workflows/`                  | Job `validate`, auditoría npm, revisión de dependencias, CodeQL y monitor de disponibilidad.                                        |
 
 ## Autenticación activa
 
@@ -42,9 +42,11 @@ Editor de portada → autorización de propietario → validación de tres idiom
 
 El sitemap incluye las tres variantes y alternativas `hreflang`; necesita un origen de producción configurado. No se generan alternativas del panel privado. Las tarjetas sociales dependen de los metadatos y recursos públicos configurados en la aplicación.
 
-## Pasarela de City Bank
+## Pasarela de Citibank
 
-`/donaciones` pide a `getCitybankGateway` solo el estado de la pasarela. La función lee `CITYBANK_GATEWAY_TOKEN` y `CITYBANK_IFRAME_URL` en el servidor y no devuelve la dirección. Si falta el token, falta la plantilla HTTPS o la URL no es válida, la página muestra el formulario de monto, nombre y correo junto al espacio reservado, y no carga ningún marco externo. Si ambas variables son válidas, el iframe sigue cerrado hasta que el visitante confirma esos tres datos. Entonces `openCitybankDonation` devuelve el `src` —el token de embebido y esos datos quedan en la dirección del marco— y el middleware de seguridad añade únicamente ese origen a `frame-src`. El sitio no guarda el intento en Neon. El número de tarjeta no entra en esta aplicación. No hay migración nueva.
+`/donaciones` pide a `getCitybankGateway` solo el estado. El servidor lee `CITIBANK_GATEWAY_TOKEN` y `CITIBANK_IFRAME_URL`, y si faltan, los nombres viejos `CITYBANK_*`. No devuelve la dirección. Sin token o sin plantilla HTTPS válida, el formulario se muestra y no se carga ningún marco. Si ambas cosas valen, el iframe sigue cerrado hasta que el visitante confirma monto, nombre y correo. Entonces `openCitybankDonation` arma el `src` y el middleware añade solo ese origen a `frame-src`. Nada de eso se guarda en Neon. El número de tarjeta no entra.
+
+Esa plantilla es un respaldo. La guía pública de Spring by Citi (3 de noviembre de 2026) describe otra cosa: Initiate Checkout en el servidor y `Checkout.showEmbeddedPage` con `session.id`. No está encendida. Ver [docs/PASARELA_CITIBANK.md](docs/PASARELA_CITIBANK.md). No hay migración nueva.
 
 ## Datos
 

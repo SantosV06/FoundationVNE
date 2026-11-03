@@ -7,15 +7,15 @@ const presets = ["25", "50", "100", "250"] as const;
 
 function statusCopy(status: CitybankGatewayPublic["status"]): string {
   if (status === "ready") {
-    return "El cobro se abre aquí, en la página de City Bank, después de indicar el monto, el nombre y el correo. Fundación VNE no ve ni guarda el número de la tarjeta.";
+    return "El cobro se abre aquí, en la página de Citibank, después de indicar el monto, el nombre y el correo. Fundación VNE no ve ni guarda el número de la tarjeta.";
   }
   if (status === "awaiting-url") {
-    return "El token de City Bank ya está configurado. Falta la dirección HTTPS del iframe para abrir la pasarela.";
+    return "El token de Citibank ya está configurado. Falta la dirección HTTPS del iframe para abrir la pasarela.";
   }
   if (status === "invalid") {
     return "La configuración de la pasarela no es válida. El pago con tarjeta permanece cerrado hasta corregirla.";
   }
-  return "Este espacio queda reservado para embeber la pasarela de City Bank. El formulario de tarjeta aparecerá aquí cuando el banco entregue el token y la dirección HTTPS.";
+  return "Este espacio queda reservado para embeber la pasarela de Citibank. El formulario de tarjeta aparecerá aquí cuando el banco entregue el token y la dirección HTTPS.";
 }
 
 function fieldError(field: DonorFieldError): string {
@@ -23,7 +23,7 @@ function fieldError(field: DonorFieldError): string {
     return "Revisa el monto. Usa dólares, entre 1 y 25 000, con hasta dos decimales.";
   }
   if (field === "name") return "Escribe tu nombre, entre 2 y 80 letras.";
-  return "Escribe un correo válido. City Bank lo usa para el comprobante; este sitio no lo guarda.";
+  return "Escribe un correo válido. Citibank lo usa para el comprobante; este sitio no lo guarda.";
 }
 
 export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic }) {
@@ -71,7 +71,7 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
 
   const summary = opened
     ? t(
-        "Vas a donar USD {amount} como {name}. El número de la tarjeta se escribe en City Bank, no en este sitio.",
+        "Vas a donar USD {amount} como {name}. El número de la tarjeta se escribe en Citibank, no en este sitio.",
       )
         .replace("{amount}", opened.amount)
         .replace("{name}", opened.name)
@@ -89,7 +89,7 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
           <T>Pasarela de pago</T>
         </p>
         <h2 id="pasarela-citybank" className="mt-2 font-display text-3xl text-navy dark:text-cream">
-          <T>Pago con tarjeta en City Bank</T>
+          <T>Pago con tarjeta en Citibank</T>
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
           <T>{statusCopy(gateway.status)}</T>
@@ -159,7 +159,7 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
           {closed ? (
             <p role="status" className="mt-3 text-sm font-semibold text-navy dark:text-gold">
               <T>
-                La pasarela sigue cerrada: City Bank todavía no entregó el token o la dirección
+                La pasarela sigue cerrada: Citibank todavía no entregó el token o la dirección
                 HTTPS. No se envió ningún pago y estos datos no se guardan.
               </T>
             </p>
@@ -188,7 +188,7 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
                 {summary}
               </p>
               <iframe
-                title={t("Pasarela de pago de City Bank")}
+                title={t("Pasarela de pago de Citibank")}
                 src={src}
                 className="h-[720px] w-full bg-white"
                 allow="payment"
@@ -198,14 +198,14 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
           ) : (
             <div className="flex h-[280px] flex-col items-center justify-center px-6 text-center sm:h-[360px]">
               <p className="text-xs font-bold tracking-[0.16em] text-gold-deep uppercase">
-                <T>City Bank</T>
+                <T>Citibank</T>
               </p>
               <p className="mt-3 max-w-md font-display text-2xl text-navy dark:text-cream">
                 <T>Espacio reservado para el iframe</T>
               </p>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-mist dark:text-cream/70">
                 <T>
-                  Aquí se embeberá la pasarela cuando City Bank entregue el token y la dirección
+                  Aquí se embeberá la pasarela cuando Citibank entregue el token y la dirección
                   HTTPS. Mientras tanto no se abre ningún formulario de tarjeta.
                 </T>
               </p>

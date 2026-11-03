@@ -7,7 +7,7 @@ export const org = {
   executivePhone: "+1 (347) 819 5521",
   executiveTel: "+13478195521",
   zelle: "+1 (347) 819 5521",
-  bank: "City Bank",
+  bank: "Citibank",
   infoWa: "https://wa.me/13479577821",
   webWa: "https://wa.me/50762305711",
   instagram: "https://www.instagram.com/fundacionv.n.e",
@@ -94,7 +94,7 @@ export const legalPages: Record<
       {
         heading: "5. Proveedores y enlaces externos",
         paragraphs: [
-          "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de City Bank está habilitada, esta página envía a ese banco el monto, el nombre y el correo dentro de la dirección del iframe, y no los guarda. El formulario de tarjeta se muestra en ese iframe: el número de tarjeta lo captura City Bank y no llega a este sitio.",
+          "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de Citibank está habilitada, el cobro con tarjeta ocurre en la página del banco, dentro de esta pantalla. Para abrirlo, el sitio puede enviar el monto, el nombre y el correo, y no los guarda. El número de tarjeta lo captura Citibank y no llega a este sitio. Zelle no se procesa aquí: el donante lo envía desde la aplicación de su banco al número publicado.",
           "La Organización no vende datos personales. Puede compartir información con proveedores que la necesiten para prestar servicios técnicos a la aplicación, bajo las condiciones aplicables, o cuando sea necesario para cumplir la ley, proteger la seguridad o responder a un requerimiento válido.",
         ],
       },
@@ -162,7 +162,7 @@ export const legalPages: Record<
       {
         heading: "4. Donaciones",
         paragraphs: [
-          "Las donaciones son voluntarias. Pueden hacerse por Zelle o, cuando esté habilitada, en la pasarela alojada de City Bank dentro de esta página. Para abrir esa pasarela el sitio pide el monto, el nombre y el correo; el número de la tarjeta lo pide City Bank. La Organización no solicita contraseñas ni códigos de verificación.",
+          "Las donaciones son voluntarias. Pueden hacerse por Zelle, fuera de esta página, o con tarjeta en la pasarela alojada de Citibank cuando el banco la habilite. El sitio pide el monto, el nombre y el correo para abrir ese cobro; el número de la tarjeta lo pide Citibank. La Organización no pide contraseñas ni códigos de verificación, no guarda esos datos y no confirma el pago. El aporte se destina a los programas de la Organización, entre ellos Casas VNE, Proyecto Génesis y las unidades productivas que financia, conforme a sus estatutos. Esta página no emite un comprobante fiscal.",
         ],
       },
       {
@@ -181,7 +181,7 @@ export const legalPages: Record<
         heading: "7. Ley aplicable",
         paragraphs: [
           "Estos términos se rigen por las leyes del Estado de Nueva York, Estados Unidos.",
-          "Última actualización: 2026.",
+          "Última actualización: 3 de noviembre de 2026.",
         ],
       },
     ],
