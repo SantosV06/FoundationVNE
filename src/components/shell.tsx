@@ -1,7 +1,7 @@
 import { T, useLanguage } from "@/lib/i18n";
 import { LanguageSelector } from "./language-selector";
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
+import { Camera, Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
 import { media } from "@/data/media";
@@ -251,7 +251,7 @@ export function Footer() {
               aria-label={t("Instagram de Fundación VNE")}
               className="grid size-11 place-items-center rounded-full border border-gold/50"
             >
-              <Instagram className="size-4" />
+              <Camera className="size-4" aria-hidden="true" />
             </a>
             <a
               href={`https://wa.me/${org.adminTel.replace("+", "")}`}

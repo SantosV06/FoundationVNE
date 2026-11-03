@@ -69,7 +69,7 @@
     "jose": "6.2.14",
     "kysely": "0.29.7",
     "lightningcss": "1.33.0",
-    "lucide-react": "0.510.0",
+    "lucide-react": "1.65.0",
     "nitro": "3.0.260610-beta",
     "otpauth": "9.5.2",
     "pg": "8.23.1",
