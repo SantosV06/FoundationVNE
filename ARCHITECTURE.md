@@ -42,6 +42,10 @@ Editor de portada → autorización de propietario → validación de tres idiom
 
 El sitemap incluye las tres variantes y alternativas `hreflang`; necesita un origen de producción configurado. No se generan alternativas del panel privado. Las tarjetas sociales dependen de los metadatos y recursos públicos configurados en la aplicación.
 
+## Pasarela de City Bank
+
+`/donaciones` pide a `getCitybankGateway` la vista pública del iframe. La función lee `CITYBANK_GATEWAY_TOKEN` y `CITYBANK_IFRAME_URL` solo en el servidor. Si falta el token, falta la plantilla HTTPS o la URL no es válida, la página muestra el espacio reservado y no carga ningún marco externo. Si ambas variables son válidas, el `src` del iframe sale en la respuesta de esa página —el token de embebido es visible para el navegador— y el middleware de seguridad añade únicamente ese origen a `frame-src`. El número de tarjeta no entra en esta aplicación ni en Neon. No hay migración nueva.
+
 ## Datos
 
 Las tablas centrales son `volunteer_requests`, `admin_users`, `admin_sessions`, `admin_events`, `request_limits`, `admin_totp_pending`, `admin_recovery_codes`, `admin_policy`, `site_content` y `site_language`. `_migrations` registra archivos aplicados. `volunteer_export_revision` protege la consistencia de los lotes CSV.

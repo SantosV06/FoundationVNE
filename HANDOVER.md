@@ -17,7 +17,7 @@ Copiar Git no copia Neon ni los secretos de Vercel. `ADMIN_PASSWORD` solo crea e
 2. Copiar el repositorio a la cuenta acordada. Registrar el SHA de origen y quién mantendrá la copia. Las instrucciones de importación deben apuntar a esa copia.
 3. Seguir [GUIA_INSTALACION_COMPLETA.md](GUIA_INSTALACION_COMPLETA.md): Node 24.x, npm 11.9.0, raíz del repositorio, `npm run build`, Neon pooled con SSL y secretos distintos para Production/Preview.
 4. Configurar `SITE_URL` con el nuevo dominio. Ajustar `MONITOR_SITE_URL` en GitHub → Settings → Secrets and variables → Actions → Variables; de lo contrario el monitor conserva el dominio original.
-5. Revisar contenido institucional, enlaces de contacto, documentos públicos y destinos de donación con sus responsables. No convertir instrucciones Zelle en un supuesto procesador de pagos.
+5. Revisar contenido institucional, enlaces de contacto, documentos públicos y destinos de donación con sus responsables. No convertir instrucciones Zelle en un supuesto procesador de pagos. La pasarela de City Bank, si se habilita, es un iframe del banco: el token y la plantilla HTTPS viven en el entorno de Vercel, no en el repositorio, y el número de tarjeta no entra en esta aplicación. Ver [docs/PASARELA_CITYBANK.md](docs/PASARELA_CITYBANK.md).
 6. Crear el propietario, activar su 2FA, custodiar códigos y clave de cifrado y crear cuentas individuales. Decidir si se exige 2FA al equipo.
 7. Ejecutar la aceptación del apartado 5 con datos ficticios y una rama Neon de prueba.
 

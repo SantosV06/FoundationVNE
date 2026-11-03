@@ -272,10 +272,10 @@ export const catalog: Record<string, readonly [string, string]> = {
       "Visitar o site, enviar uma consulta ou uma inscrição de voluntariado não cria uma relação contratual, trabalhista, financeira nem de representação, salvo se formalizada por escrito.",
     ],
   "4. Donaciones": ["4. Donations", "4. Doações"],
-  "Las donaciones son voluntarias y se realizan solo desde la plataforma oficial de Zelle, bajo responsabilidad del donante. La Organización no solicita contraseñas, códigos de verificación ni datos bancarios.":
+  "Las donaciones son voluntarias. Pueden hacerse por Zelle o, cuando esté habilitada, en la pasarela alojada de City Bank dentro de esta página. La Organización no solicita contraseñas, códigos de verificación ni el número de la tarjeta.":
     [
-      "Donations are voluntary and made only through the official Zelle platform, at the donor's responsibility. The Organization does not request passwords, verification codes or bank details.",
-      "As doações são voluntárias e realizadas somente pela plataforma oficial do Zelle, sob responsabilidade do doador. A Organização não solicita senhas, códigos de verificação nem dados bancários.",
+      "Donations are voluntary. They can be made by Zelle or, when enabled, on the City Bank hosted gateway inside this page. The Organization does not request passwords, verification codes or the card number.",
+      "As doações são voluntárias. Podem ser feitas pelo Zelle ou, quando estiver habilitada, no gateway hospedado do City Bank dentro desta página. A Organização não solicita senhas, códigos de verificação nem o número do cartão.",
     ],
   "5. Limitación de responsabilidad": [
     "5. Limitation of liability",
@@ -845,10 +845,10 @@ export const catalog: Record<string, readonly [string, string]> = {
   "También puedes escribir a": ["You can also write to", "Você também pode escrever para"],
   ". Horario:": [". Hours:", ". Horário:"],
   "Donaciones | Fundación VNE": ["Donations | Fundación VNE", "Doações | Fundación VNE"],
-  "Donaciones voluntarias a Fundación VNE por Zelle. Número, banco y concepto, sin solicitar datos bancarios.":
+  "Donaciones voluntarias a Fundación VNE. Pasarela embebida de City Bank cuando el banco entrega el token, e instrucciones de Zelle. El sitio no pide el número de la tarjeta.":
     [
-      "Voluntary donations to Fundación VNE via Zelle. Number, bank and suggested reference, without requesting bank details.",
-      "Doações voluntárias à Fundación VNE pelo Zelle. Número, banco e finalidade sugerida, sem solicitar dados bancários.",
+      "Voluntary donations to Fundación VNE. City Bank's embedded gateway once the bank provides the token, plus Zelle instructions. The site does not ask for the card number.",
+      "Doações voluntárias à Fundación VNE. Gateway incorporado do City Bank quando o banco entrega o token, e instruções do Zelle. O site não pede o número do cartão.",
     ],
   Plataforma: ["Platform", "Plataforma"],
   "Número asociado": ["Linked number", "Número associado"],
@@ -860,10 +860,10 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Your contribution sustains productive programs, beyond a passing campaign.",
     "Sua contribuição sustenta programas produtivos, além de uma campanha passageira.",
   ],
-  "Las donaciones son voluntarias y se hacen solo desde Zelle. La fundación no pide contraseñas, códigos ni información bancaria.":
+  "Las donaciones son voluntarias. La pasarela de City Bank se abre dentro de esta página solo cuando el banco entrega el token. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.":
     [
-      "Donations are voluntary and made only through Zelle. The foundation does not ask for passwords, codes or banking information.",
-      "As doações são voluntárias e realizadas somente pelo Zelle. A fundação não pede senhas, códigos nem informações bancárias.",
+      "Donations are voluntary. The City Bank gateway opens inside this page only after the bank provides the token. Zelle remains available. The foundation does not ask for passwords, codes or the card number.",
+      "As doações são voluntárias. O gateway do City Bank abre dentro desta página somente quando o banco entrega o token. O Zelle continua disponível. A fundação não pede senhas, códigos nem o número do cartão.",
     ],
   "Los fondos se usan exclusivamente para desarrollar y sostener los programas sociales, comunitarios y productivos, conforme a los estatutos y a las políticas internas de gobernanza.":
     [
@@ -874,6 +874,52 @@ export const catalog: Record<string, readonly [string, string]> = {
   "Copiar número de Zelle": ["Copy Zelle number", "Copiar número do Zelle"],
   "Abrir Zelle": ["Open Zelle", "Abrir Zelle"],
   "Consulta administrativa": ["Administrative inquiry", "Consulta administrativa"],
+  "Pasarela de pago": ["Payment gateway", "Gateway de pagamento"],
+  "Pago con tarjeta en City Bank": [
+    "Card payment with City Bank",
+    "Pagamento com cartão no City Bank",
+  ],
+  "El cobro se abre aquí, en la página de City Bank. Fundación VNE no ve ni guarda el número de la tarjeta.":
+    [
+      "The charge opens here, on City Bank's page. Fundación VNE does not see or store the card number.",
+      "A cobrança abre aqui, na página do City Bank. A Fundación VNE não vê nem guarda o número do cartão.",
+    ],
+  "El token de City Bank ya está configurado. Falta la dirección HTTPS del iframe para abrir la pasarela.":
+    [
+      "The City Bank token is already configured. The HTTPS address of the iframe is still missing.",
+      "O token do City Bank já está configurado. Falta o endereço HTTPS do iframe para abrir o gateway.",
+    ],
+  "La configuración de la pasarela no es válida. El pago con tarjeta permanece cerrado hasta corregirla.":
+    [
+      "The gateway configuration is not valid. Card payment stays closed until it is corrected.",
+      "A configuração do gateway não é válida. O pagamento com cartão permanece fechado até corrigi-la.",
+    ],
+  "Este espacio queda reservado para embeber la pasarela de City Bank. El formulario de tarjeta aparecerá aquí cuando el banco entregue el token y la dirección HTTPS.":
+    [
+      "This space is reserved to embed the City Bank gateway. The card form will appear here when the bank provides the token and the HTTPS address.",
+      "Este espaço fica reservado para incorporar o gateway do City Bank. O formulário do cartão aparecerá aqui quando o banco entregar o token e o endereço HTTPS.",
+    ],
+  "Pasarela de pago de City Bank": [
+    "City Bank payment gateway",
+    "Gateway de pagamento do City Bank",
+  ],
+  "Espacio reservado para el iframe": [
+    "Space reserved for the iframe",
+    "Espaço reservado para o iframe",
+  ],
+  "Aquí se embeberá la pasarela cuando City Bank entregue el token y la dirección HTTPS. Mientras tanto no se abre ningún formulario de tarjeta.":
+    [
+      "The gateway will be embedded here when City Bank provides the token and the HTTPS address. Until then, no card form opens.",
+      "O gateway será incorporado aqui quando o City Bank entregar o token e o endereço HTTPS. Até lá, nenhum formulário de cartão é aberto.",
+    ],
+  "También puedes donar por Zelle": [
+    "You can also donate by Zelle",
+    "Você também pode doar pelo Zelle",
+  ],
+  "Zelle no pasa por esta página: se usa desde la aplicación del banco, con el número publicado.": [
+    "Zelle does not run through this page: it is used from the bank's app, with the published number.",
+    "O Zelle não passa por esta página: usa-se no aplicativo do banco, com o número publicado.",
+  ],
   "Voluntariado | Proyecto Génesis · Fundación VNE": [
     "Volunteering | Proyecto Génesis · Fundación VNE",
     "Voluntariado | Proyecto Génesis · Fundación VNE",
@@ -1068,10 +1114,10 @@ export const catalog: Record<string, readonly [string, string]> = {
     "5. Providers and external links",
     "5. Fornecedores e links externos",
   ],
-  "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor.":
+  "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de City Bank está habilitada, el formulario de tarjeta se muestra en un iframe de ese banco: el número de tarjeta lo captura City Bank y no llega a este sitio.":
     [
-      "The website relies on technical providers for hosting, application delivery, database services, analytics, and security. When enabled, these may include Vercel, Neon, and Cloudflare. Links to WhatsApp, Instagram, mapping services, or Zelle lead to external platforms governed by their own notices and terms; once opened, information you provide is subject to that provider’s practices.",
-      "O site depende de fornecedores técnicos de hospedagem, entrega da aplicação, banco de dados, análise e segurança. Quando habilitados, eles podem incluir Vercel, Neon e Cloudflare. Links para WhatsApp, Instagram, serviços de mapas ou Zelle levam a plataformas externas regidas por seus próprios avisos e termos; ao acessá-las, as informações fornecidas ficam sujeitas às práticas desse fornecedor.",
+      "The website relies on technical providers for hosting, application delivery, database services, analytics, and security. When enabled, these may include Vercel, Neon, and Cloudflare. Links to WhatsApp, Instagram, mapping services, or Zelle lead to external platforms governed by their own notices and terms; once opened, information you provide is subject to that provider’s practices. If the City Bank gateway is enabled, the card form is shown in an iframe from that bank: City Bank captures the card number and it does not reach this site.",
+      "O site depende de fornecedores técnicos de hospedagem, entrega da aplicação, banco de dados, análise e segurança. Quando habilitados, eles podem incluir Vercel, Neon e Cloudflare. Links para WhatsApp, Instagram, serviços de mapas ou Zelle levam a plataformas externas regidas por seus próprios avisos e termos; ao acessá-las, as informações fornecidas ficam sujeitas às práticas desse fornecedor. Se o gateway do City Bank estiver habilitado, o formulário do cartão é exibido em um iframe desse banco: o City Bank captura o número do cartão e ele não chega a este site.",
     ],
   "La Organización no vende datos personales. Puede compartir información con proveedores que la necesiten para prestar servicios técnicos a la aplicación, bajo las condiciones aplicables, o cuando sea necesario para cumplir la ley, proteger la seguridad o responder a un requerimiento válido.":
     [
@@ -1112,9 +1158,9 @@ export const catalog: Record<string, readonly [string, string]> = {
       "We may update this policy to reflect operational, technical, or legal changes. We will publish the current version on this page and indicate the update date. This policy does not waive rights that cannot be excluded by law.",
       "Podemos atualizar esta política para refletir mudanças operacionais, técnicas ou legais. Publicaremos a versão vigente nesta página e indicaremos a data de atualização. Esta política não pretende renunciar a direitos que não possam ser excluídos por lei.",
     ],
-  "Última actualización: 25 de octubre de 2026.": [
-    "Last updated: October 25, 2026.",
-    "Última atualização: 25 de outubro de 2026.",
+  "Última actualización: 2 de noviembre de 2026.": [
+    "Last updated: November 2, 2026.",
+    "Última atualização: 2 de novembro de 2026.",
   ],
   "Contacto de privacidad: info@foundationvne.com.": [
     "Privacy contact: info@foundationvne.com.",
