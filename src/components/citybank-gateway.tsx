@@ -151,12 +151,6 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
               className="mt-1.5 h-12 w-full rounded-xl border border-line bg-paper px-3 text-base font-normal text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold dark:border-white/15 dark:bg-navy-deep dark:text-cream"
             />
           </label>
-          <p className="mt-3 text-sm leading-relaxed text-mist dark:text-cream/70">
-            <T>
-              El número de la tarjeta no se escribe aquí. Solo lo pide City Bank, dentro de su
-              pasarela.
-            </T>
-          </p>
           {error ? (
             <p role="alert" className="mt-3 text-sm font-semibold text-navy dark:text-gold">
               <T>{fieldError(error)}</T>
