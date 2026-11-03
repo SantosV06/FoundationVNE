@@ -16,7 +16,7 @@ export const Route = createFileRoute("/donaciones")({
           {
             name: "description",
             content:
-              "Donaciones voluntarias a Fundación VNE. Pasarela embebida de City Bank cuando el banco entrega el token, e instrucciones de Zelle. El sitio no pide el número de la tarjeta.",
+              "Donaciones voluntarias a Fundación VNE. Monto, nombre y correo en esta página; la tarjeta queda en el iframe de City Bank cuando el banco entrega el token. También hay instrucciones de Zelle.",
           },
         ],
       },
@@ -54,7 +54,7 @@ function Donaciones() {
         kicker={t("Transparencia")}
         title={t("Tu aporte sostiene programas productivos, no una campaña pasajera.")}
         lede={t(
-          "Las donaciones son voluntarias. La pasarela de City Bank se abre dentro de esta página solo cuando el banco entrega el token. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.",
+          "Las donaciones son voluntarias. Esta página pide el monto, el nombre y el correo, y deja el pago con tarjeta en el iframe de City Bank cuando el banco entrega el token. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.",
         )}
       />
       <CitybankGateway gateway={gateway} />

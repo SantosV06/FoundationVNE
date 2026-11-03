@@ -94,7 +94,7 @@ export const legalPages: Record<
       {
         heading: "5. Proveedores y enlaces externos",
         paragraphs: [
-          "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de City Bank está habilitada, el formulario de tarjeta se muestra en un iframe de ese banco: el número de tarjeta lo captura City Bank y no llega a este sitio.",
+          "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de City Bank está habilitada, esta página envía a ese banco el monto, el nombre y el correo dentro de la dirección del iframe, y no los guarda. El formulario de tarjeta se muestra en ese iframe: el número de tarjeta lo captura City Bank y no llega a este sitio.",
           "La Organización no vende datos personales. Puede compartir información con proveedores que la necesiten para prestar servicios técnicos a la aplicación, bajo las condiciones aplicables, o cuando sea necesario para cumplir la ley, proteger la seguridad o responder a un requerimiento válido.",
         ],
       },
@@ -126,7 +126,7 @@ export const legalPages: Record<
         heading: "10. Cambios y contacto",
         paragraphs: [
           "Podemos actualizar esta política para reflejar cambios operativos, técnicos o legales. Publicaremos la versión vigente en esta página e indicaremos la fecha de actualización. Esta política no pretende renunciar a derechos que no puedan excluirse por ley.",
-          "Última actualización: 2 de noviembre de 2026.",
+          "Última actualización: 3 de noviembre de 2026.",
           "Contacto de privacidad: info@foundationvne.com.",
         ],
       },
@@ -162,7 +162,7 @@ export const legalPages: Record<
       {
         heading: "4. Donaciones",
         paragraphs: [
-          "Las donaciones son voluntarias. Pueden hacerse por Zelle o, cuando esté habilitada, en la pasarela alojada de City Bank dentro de esta página. La Organización no solicita contraseñas, códigos de verificación ni el número de la tarjeta.",
+          "Las donaciones son voluntarias. Pueden hacerse por Zelle o, cuando esté habilitada, en la pasarela alojada de City Bank dentro de esta página. Para abrir esa pasarela el sitio pide el monto, el nombre y el correo; el número de la tarjeta lo pide City Bank. La Organización no solicita contraseñas ni códigos de verificación.",
         ],
       },
       {
