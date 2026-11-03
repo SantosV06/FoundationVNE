@@ -916,10 +916,6 @@ export const catalog: Record<string, readonly [string, string]> = {
   "Monto en dólares": ["Amount in dollars", "Valor em dólares"],
   "Nombre completo": ["Full name", "Nome completo"],
   "Correo electrónico": ["Email", "E-mail"],
-  "El número de la tarjeta no se escribe aquí. Solo lo pide City Bank, dentro de su pasarela.": [
-    "The card number is not entered here. Only City Bank asks for it, inside its gateway.",
-    "O número do cartão não se escreve aqui. Só o City Bank o pede, dentro do gateway.",
-  ],
   "Revisa el monto. Usa dólares, entre 1 y 25 000, con hasta dos decimales.": [
     "Check the amount. Use dollars, from 1 to 25,000, with up to two decimal places.",
     "Revise o valor. Use dólares, entre 1 e 25 000, com até duas casas decimais.",
