@@ -8,6 +8,10 @@ import { assertTurnstileVerification } from "./turnstile.server.ts";
 export const submitVolunteer = createServerFn({ method: "POST" })
   .validator(volunteerSchema)
   .handler(async ({ data }) => {
+    // Reject cross-site submissions before making an outbound Siteverify request.
+    const { assertTrustedRequest } = await import("./admin-request.server");
+    assertTrustedRequest();
+
     // Mantener el honeypot existente.
     if (data.website) return { ok: true };
     const token = data.turnstileToken;
