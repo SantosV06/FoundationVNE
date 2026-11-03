@@ -67,9 +67,7 @@ function Casas() {
       <PageIntro
         kicker={t("Modelo territorial")}
         title={t("Un sistema integrado de desarrollo social y económico.")}
-        lede={t(
-          "Una Casa VNE articula formación, actividad económica y participación en un mismo territorio, para generar autonomía, productividad y cohesión. Está pensada para crecer, adaptarse y replicarse.",
-        )}
+        lede={t("Formación, trabajo y participación en un mismo lugar.")}
       />
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
@@ -137,11 +135,7 @@ function Casas() {
             <T>Un piloto con visión de sistema</T>
           </h2>
           <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/75">
-            <T>
-              Las Casas VNE son el punto de partida de un modelo mayor: un laboratorio donde se
-              diseñan, prueban y ajustan estructuras que pueden escalar a nivel regional y nacional,
-              a partir de experiencia real.
-            </T>
+            <T>Un modelo que se prueba aquí y puede crecer a más territorios.</T>
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">

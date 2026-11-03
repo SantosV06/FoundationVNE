@@ -11,8 +11,7 @@ export const Route = createFileRoute("/construccion")({
           { title: "Construcción | Fundación VNE" },
           {
             name: "description",
-            content:
-              "Unidad de construcción de Fundación VNE. Segundo negocio de la visión comercial: dos negocios que la fundación financia.",
+            content: "Unidad de construcción de Fundación VNE.",
           },
         ],
       },
@@ -23,20 +22,12 @@ export const Route = createFileRoute("/construccion")({
 
 const points = [
   {
-    title: "Visión de venta",
-    text: "Fundación VNE financia dos negocios. El primero es el punto de comida, un restaurante cuya actividad financia a la fundación. El segundo es esta unidad de construcción.",
+    title: "Qué es",
+    text: "Unidad de obra y oficios.",
   },
   {
-    title: "Qué representa",
-    text: "La unidad de construcción concentra la visión de obra, oficios y encargos productivos vinculados a la fundación. Es una unidad económica, no un programa de asistencia.",
-  },
-  {
-    title: "La fundación la impulsa",
-    text: "El arranque y el sostenimiento de esta unidad forman parte del compromiso de Fundación VNE con dos negocios propios. No se presenta como un proyecto social paralelo.",
-  },
-  {
-    title: "Génesis queda aparte",
-    text: "Proyecto Génesis es la proyección y el proyecto directo de la fundación. Construcción no lo reemplaza.",
+    title: "Para qué sirve",
+    text: "La fundación la financia para sostener sus programas.",
   },
 ];
 
@@ -47,9 +38,7 @@ function Construccion() {
       <PageIntro
         kicker={t("Unidad productiva")}
         title={t("Construcción")}
-        lede={t(
-          "Segunda unidad de la visión comercial: obra y encargos que Fundación VNE financia.",
-        )}
+        lede={t("Obra y encargos. La fundación financia esta unidad.")}
       />
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
@@ -84,10 +73,7 @@ function Construccion() {
           </Link>
         </div>
         <p className="editorial-justify mt-8 max-w-3xl text-sm leading-relaxed text-mist dark:text-cream/70">
-          <T>
-            Para consultas sobre esta unidad, comuníquese con administración o con la oficina
-            ejecutiva por los teléfonos publicados en este sitio.
-          </T>
+          <T>Consultas por los teléfonos de administración o de la oficina ejecutiva.</T>
         </p>
       </section>
     </Shell>

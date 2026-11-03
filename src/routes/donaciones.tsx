@@ -15,8 +15,7 @@ export const Route = createFileRoute("/donaciones")({
           { title: "Donaciones | Fundación VNE" },
           {
             name: "description",
-            content:
-              "Donaciones voluntarias a Fundación VNE. Monto, nombre y correo en esta página; la tarjeta queda en Citibank cuando el banco habilite el cobro. También hay instrucciones de Zelle.",
+            content: "Donaciones voluntarias a Fundación VNE por Zelle o con tarjeta en Citibank.",
           },
         ],
       },
@@ -52,9 +51,9 @@ function Donaciones() {
     <Shell>
       <PageIntro
         kicker={t("Transparencia")}
-        title={t("Tu aporte sostiene programas productivos, no una campaña pasajera.")}
+        title={t("Donaciones")}
         lede={t(
-          "Las donaciones son voluntarias. Esta página pide el monto, el nombre y el correo, y deja el pago con tarjeta en la página de Citibank cuando el banco la habilite. Zelle sigue disponible. La fundación no pide contraseñas, códigos ni el número de la tarjeta.",
+          "Voluntarias. La tarjeta se paga en Citibank y Zelle se envía desde el banco. Este sitio no guarda el número de tarjeta.",
         )}
       />
       <CitybankGateway gateway={gateway} />
@@ -90,21 +89,7 @@ function Donaciones() {
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
           <T>
-            Entra como donación voluntaria: por Zelle, al número de la oficina ejecutiva, o con
-            tarjeta cuando Citibank habilite la pasarela. Este sitio no retiene el dinero.
-          </T>
-        </p>
-        <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
-          <T>
-            Va a los programas de la fundación: Casas VNE, Proyecto Génesis, y las unidades de
-            comida y construcción que financia. No es una campaña de un día.
-          </T>
-        </p>
-        <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
-          <T>
-            Los fondos se usan exclusivamente para desarrollar y sostener los programas sociales,
-            comunitarios y productivos, conforme a los estatutos y a las políticas internas de
-            gobernanza.
+            El aporte va a Casas VNE, Proyecto Génesis y las unidades de comida y construcción.
           </T>
         </p>
 

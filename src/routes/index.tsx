@@ -16,8 +16,7 @@ export const Route = createFileRoute("/")({
           { title: "Fundación VNE | Desarrollo social y económico sostenible" },
           {
             name: "description",
-            content:
-              "Fundación Venezuela Nueva Esperanza. Proyectos productivos, emprendimiento y autonomía a través de Casas VNE y Proyecto Génesis.",
+            content: "Fundación Venezuela Nueva Esperanza. Casas VNE y Proyecto Génesis.",
           },
         ],
       },
@@ -161,17 +160,7 @@ function Home() {
         </div>
         <div className="editorial-justify space-y-5 text-lg leading-relaxed text-mist lg:col-span-8 dark:text-cream/80">
           <p>
-            <T>
-              Cada proyecto es una oportunidad de crear un cambio que permanezca. Trabajamos en
-              soluciones productivas basadas en el emprendimiento, la autonomía y el fortalecimiento
-              de capacidades individuales y colectivas.
-            </T>
-          </p>
-          <p>
-            <T>
-              No buscamos resolver solo la necesidad del día. Construimos estructuras para que
-              personas y comunidades se desarrollen de forma digna, autosuficiente y sostenible.
-            </T>
+            <T>Proyectos productivos en Nueva York y Caracas: Casas VNE y Proyecto Génesis.</T>
           </p>
           <MediaVideo src={media.aboutVideo} title={t("Conoce Fundación VNE")} />
         </div>
@@ -183,11 +172,7 @@ function Home() {
             <T>Misión</T>
           </h2>
           <p className="editorial-justify mt-4 max-w-3xl text-lg leading-relaxed text-mist dark:text-cream/80">
-            <T>
-              Impulsar el desarrollo social y económico sostenible mediante proyectos productivos
-              que fortalezcan capacidades, promuevan la autonomía y conviertan necesidades
-              estructurales en oportunidades de largo plazo.
-            </T>
+            <T>Desarrollo social y económico con proyectos productivos y autonomía.</T>
           </p>
           <ol className="mt-10 grid gap-4 sm:grid-cols-2">
             {pillars.map((item) => (
@@ -219,11 +204,7 @@ function Home() {
             <T>Wilmer Solórzano</T>
           </h2>
           <p className="editorial-justify mt-4 leading-relaxed text-cream/80">
-            <T>
-              CEO y fundador. Su trabajo orienta un modelo institucional de largo alcance: impacto
-              real, escalable y capaz de transformar comunidades sin depender de la asistencia
-              permanente.
-            </T>
+            <T>CEO y fundador de Fundación VNE.</T>
           </p>
           <Link
             to="/liderazgo"
@@ -247,10 +228,7 @@ function Home() {
             <T>Casas VNE</T>
           </h2>
           <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/80">
-            <T>
-              No son centros asistenciales. Son núcleos donde educación, emprendimiento, producción
-              y colaboración forman una microeconomía comunitaria.
-            </T>
+            <T>Formación, producción y trabajo comunitario.</T>
           </p>
           <Link
             to="/casas"
@@ -277,12 +255,6 @@ function Home() {
                 el modelo, generar ingresos propios y dejar evidencia para escalarlo.
               </T>
             </p>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/70">
-              <T>
-                Génesis es la proyección y el proyecto directo de la fundación, distinto de las dos
-                unidades productivas que la institución financia.
-              </T>
-            </p>
           </div>
           <div className="flex flex-col gap-3 lg:col-span-5 lg:items-start">
             <Link
@@ -306,13 +278,11 @@ function Home() {
           <T>Unidades productivas</T>
         </p>
         <h2 className="mt-3 max-w-3xl font-display text-4xl text-navy dark:text-cream">
-          <T>Dos negocios que la fundación financia.</T>
+          <T>Restaurante y construcción.</T>
         </h2>
         <p className="editorial-justify mt-4 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
           <T>
-            Fundación VNE financia dos unidades productivas. El punto de comida genera ingresos para
-            la fundación. Construcción es la segunda unidad de esa visión comercial. Proyecto
-            Génesis no es una de ellas: es el proyecto directo de la fundación.
+            Sus ingresos financian a la fundación. Proyecto Génesis es un proyecto aparte.
           </T>
         </p>
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
@@ -357,9 +327,7 @@ function Home() {
           <T>Dónde operamos</T>
         </h2>
         <p className="editorial-justify mt-3 max-w-2xl leading-relaxed text-mist dark:text-cream/75">
-          <T>
-            Una estructura internacional para articular visión estratégica y acción territorial.
-          </T>
+          <T>Nueva York y Caracas.</T>
         </p>
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <Place

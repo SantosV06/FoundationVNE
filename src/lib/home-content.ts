@@ -1,8 +1,7 @@
 import type { HomeContent } from "./admin-operations";
 import { translate } from "./i18n/translate";
 const title = "Somos Fundación VNE, Venezuela Nueva Esperanza.";
-const description =
-  "Empresa con propósito social. Diseñamos e implementamos proyectos de desarrollo sostenible mediante actividad productiva, alianzas y programas de servicio — no asistencia de corto plazo.";
+const description = "Fundación Venezuela Nueva Esperanza. Casas VNE y Proyecto Génesis.";
 export const defaultHomeContent: HomeContent = {
   title: { es: title, en: translate(title, "en"), pt: translate(title, "pt") },
   description: {

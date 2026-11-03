@@ -44,9 +44,7 @@ function Genesis() {
         tone="forest"
         kicker={t("Inversión social productiva")}
         title={t("Proyecto Génesis")}
-        lede={t(
-          "Una iniciativa privada con impacto económico: sistemas productivos autosostenibles, medibles y con vocación de política pública, sin ampliar la estructura del Estado.",
-        )}
+        lede={t("Inversión social privada de Fundación VNE, con piloto en Nueva York.")}
       />
 
       <Block title={t("Qué es")}>
@@ -66,13 +64,6 @@ function Genesis() {
           <T>
             El diseño prioriza la autosuficiencia, la responsabilidad económica progresiva y la
             integración productiva, sin depender de financiamiento público permanente.
-          </T>
-        </p>
-        <p>
-          <T>
-            Proyecto Génesis es la proyección y el proyecto directo de Fundación VNE. No forma parte
-            de los dos negocios que la fundación financia: el punto de comida y la unidad de
-            construcción.
           </T>
         </p>
         <p>
@@ -183,12 +174,7 @@ function Genesis() {
             <T>Escalabilidad</T>
           </h2>
           <p className="editorial-justify mt-4 max-w-3xl leading-relaxed text-cream/85">
-            <T>
-              Génesis no es una intervención aislada. El diseño modular permite empezar en pequeño,
-              validar con evidencia y sumar módulos productivos. Puede adaptarse a otros territorios
-              de Estados Unidos y, después, replicarse en América Latina — Panamá y Venezuela entre
-              ellos — sin perder coherencia operativa ni financiera.
-            </T>
+            <T>Se prueba en Nueva York y puede replicarse, también en Panamá y Venezuela.</T>
           </p>
         </div>
       </section>
@@ -207,11 +193,7 @@ function Genesis() {
           className="w-full rounded-card"
         />
         <p>
-          <T>
-            El proyecto ofrece una herramienta de integración económica basada en resultados
-            medibles, responsabilidad fiscal y actividad formal. La evidencia sirve para decidir
-            mejor y para mostrar que existen salidas estructurales a la asistencia prolongada.
-          </T>
+          <T>Se mide con los resultados del piloto.</T>
         </p>
       </Block>
 
@@ -235,11 +217,7 @@ function Genesis() {
           ))}
         </ul>
         <p className="editorial-justify mt-6 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
-          <T>
-            La participación se acuerda con esquemas claros, alineados con la sostenibilidad
-            financiera, el impacto medible y el horizonte largo del modelo. No publicamos cifras de
-            otros programas: el impacto de Génesis se medirá con los resultados del piloto.
-          </T>
+          <T>La participación se acuerda caso por caso.</T>
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link

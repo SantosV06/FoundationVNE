@@ -43,219 +43,95 @@ export const legalPages: Record<
 > = {
   privacidad: {
     title: "Política de privacidad",
-    description:
-      "Política de privacidad de Fundación Venezuela Nueva Esperanza LLC (Fundación V.N.E.). Información sobre datos personales, cookies y tecnologías del sitio.",
+    description: "Qué datos trata el sitio de Fundación VNE y cómo contactarnos.",
     blocks: [
       {
         paragraphs: [
-          "Fundación Venezuela Nueva Esperanza LLC, que opera públicamente como Fundación V.N.E. (en adelante, “la Organización”), explica en esta política qué información puede tratar cuando usted visita el sitio, envía una solicitud o se comunica con nosotros. Esta política describe las prácticas del sitio web y no sustituye los avisos de los proveedores externos.",
+          "Fundación Venezuela Nueva Esperanza LLC (Fundación VNE) trata los datos que usted envía en este sitio y los registros técnicos necesarios para operarlo.",
         ],
       },
       {
-        heading: "1. Información que podemos recopilar",
-        paragraphs: [
-          "Según las funciones que utilice, podemos tratar las siguientes categorías de información:",
-        ],
+        heading: "Datos",
+        paragraphs: ["Podemos guardar:"],
         list: [
-          "Datos de contacto que usted facilita, como nombre, correo electrónico y teléfono.",
-          "Contenido que usted envía en formularios, solicitudes de voluntariado, consultas u otras comunicaciones.",
-          "Datos operativos y de seguridad generados al usar el sitio, como dirección IP, fecha y hora de la solicitud, información del navegador y registros técnicos necesarios para detectar abusos, mantener la disponibilidad y proteger las cuentas.",
-          "Datos de cuenta y autenticación del personal autorizado que accede al área administrativa, incluidos identificadores de sesión y registros de seguridad.",
-          "Preferencias de idioma y tema que el navegador guarda localmente para recordar sus elecciones.",
+          "Nombre, correo, teléfono y el texto de formularios o mensajes.",
+          "Registros técnicos: IP, fecha y datos del navegador, para seguridad y disponibilidad.",
+          "Sesión del personal que entra al panel.",
+          "Idioma y tema, guardados en el navegador.",
         ],
       },
       {
-        heading: "2. Finalidades y base operativa",
-        paragraphs: ["Utilizamos la información para:"],
-        list: [
-          "Responder mensajes, tramitar solicitudes y administrar programas o servicios solicitados.",
-          "Operar, mantener y proteger el sitio, su base de datos y el acceso administrativo.",
-          "Prevenir fraude, spam, abuso y accesos no autorizados, incluso mediante controles de seguridad de terceros cuando estén habilitados.",
-          "Recordar preferencias básicas, como idioma y tema visual.",
-          "Medir el rendimiento y uso general del sitio mediante Vercel Analytics y Vercel Speed Insights, integrados en la aplicación; estos servicios pueden procesar datos técnicos de navegación conforme a sus propias condiciones.",
-          "Cumplir obligaciones legales, atender solicitudes válidas y proteger los derechos de la Organización y de otras personas.",
-        ],
-      },
-      {
-        heading: "3. Formularios, base de datos y conservación",
+        heading: "Uso",
         paragraphs: [
-          "La información enviada mediante formularios puede almacenarse en la base de datos de la aplicación para gestionar y dar seguimiento a la solicitud. El acceso administrativo está restringido a usuarios autorizados. No envíe por los formularios contraseñas, números completos de tarjetas, información bancaria sensible ni datos que no sean necesarios para su solicitud.",
-          "Conservamos los datos durante el tiempo razonablemente necesario para atender la finalidad de la solicitud, mantener la seguridad, cumplir obligaciones legales y resolver disputas. El plazo concreto puede variar según el tipo de registro. Los registros técnicos y de seguridad pueden conservarse durante periodos más breves o conforme a necesidades operativas. Cuando los datos ya no sean necesarios, se eliminan o se anonimizan cuando resulte viable, sujeto a obligaciones legales y copias de seguridad.",
+          "Los usamos para responder, gestionar solicitudes, operar el sitio y prevenir abuso. No vendemos datos personales.",
         ],
       },
       {
-        heading: "4. Cookies y almacenamiento local",
+        heading: "Terceros",
         paragraphs: [
-          "El sitio no declara utilizar cookies publicitarias ni de seguimiento de marketing. La aplicación puede utilizar cookies estrictamente necesarias para mantener sesiones autenticadas del área administrativa y proteger funciones de seguridad. Estas cookies no se utilizan para personalizar anuncios.",
-          "La preferencia de tema se guarda en localStorage con la clave “vne-theme”, y la preferencia de idioma puede guardarse mediante el mecanismo local de preferencias del navegador. localStorage no es una cookie, pero almacena información en su dispositivo. Puede borrar estos datos desde la configuración del navegador; al hacerlo, quizá deba volver a elegir sus preferencias.",
-          "El sitio integra Vercel Analytics y Vercel Speed Insights para medición de tráfico y rendimiento, y puede utilizar Cloudflare Turnstile para mitigar tráfico automatizado en formularios protegidos. Estos proveedores pueden procesar datos técnicos y utilizar tecnologías propias según su configuración y sus políticas. No afirmamos que el sitio esté libre de toda tecnología de medición o seguridad. Si en el futuro se incorporan herramientas opcionales de publicidad o seguimiento que requieran consentimiento, la Organización deberá revisar esta política y los controles correspondientes antes de activarlas.",
+          "El alojamiento y la base de datos pueden estar en Vercel y Neon. El formulario puede usar Cloudflare Turnstile. El sitio mide tráfico con Vercel Analytics y Speed Insights.",
+          "WhatsApp, Instagram, mapas, Zelle y Citibank son servicios externos. El número de tarjeta lo pide Citibank, no este sitio. El sitio puede enviar monto, nombre y correo para abrir ese cobro, y no los guarda.",
         ],
       },
       {
-        heading: "5. Proveedores y enlaces externos",
+        heading: "Contacto",
         paragraphs: [
-          "El sitio depende de proveedores técnicos para alojamiento, entrega de la aplicación, base de datos, analítica y seguridad. Cuando se habilitan, estos pueden incluir Vercel, Neon y Cloudflare. Los enlaces a WhatsApp, Instagram, servicios de mapas o Zelle llevan a plataformas externas que operan bajo sus propios avisos y condiciones; al abrirlos, la información que usted proporcione queda sujeta a las prácticas de ese proveedor. Si la pasarela de Citibank está habilitada, el cobro con tarjeta ocurre en la página del banco, dentro de esta pantalla. Para abrirlo, el sitio puede enviar el monto, el nombre y el correo, y no los guarda. El número de tarjeta lo captura Citibank y no llega a este sitio. Zelle no se procesa aquí: el donante lo envía desde la aplicación de su banco al número publicado.",
-          "La Organización no vende datos personales. Puede compartir información con proveedores que la necesiten para prestar servicios técnicos a la aplicación, bajo las condiciones aplicables, o cuando sea necesario para cumplir la ley, proteger la seguridad o responder a un requerimiento válido.",
-        ],
-      },
-      {
-        heading: "6. Seguridad",
-        paragraphs: [
-          "Aplicamos medidas técnicas y organizativas razonables, como controles de acceso, sesiones protegidas y mecanismos de prevención de abuso. Ningún sistema de transmisión o almacenamiento puede garantizar seguridad absoluta. Si sospecha que una comunicación o cuenta está comprometida, contacte a la Organización por los medios oficiales.",
-        ],
-      },
-      {
-        heading: "7. Sus solicitudes y derechos",
-        paragraphs: [
-          "Puede solicitar acceso, corrección o eliminación de información personal que nos haya proporcionado, así como plantear preguntas sobre su tratamiento, escribiendo a info@foundationvne.com. Para proteger a las personas, podremos pedir información razonable para verificar la identidad y aclarar la solicitud. La atención estará sujeta a la ley aplicable y a los registros que debamos conservar por razones legales o de seguridad.",
-        ],
-      },
-      {
-        heading: "8. Menores de edad",
-        paragraphs: [
-          "El sitio no está diseñado para recopilar deliberadamente información personal de menores sin la participación o autorización que pueda exigir la legislación aplicable. Si considera que un menor nos ha enviado información personal de forma inadecuada, comuníquese con nosotros para que podamos revisar el caso.",
-        ],
-      },
-      {
-        heading: "9. Transferencias y servicios internacionales",
-        paragraphs: [
-          "La Organización está registrada en Nueva York y puede trabajar con proveedores que procesan información en Estados Unidos u otros países. Las leyes de protección de datos pueden variar según la ubicación. Los datos se tratarán conforme a esta política y a los requisitos legales aplicables.",
-        ],
-      },
-      {
-        heading: "10. Cambios y contacto",
-        paragraphs: [
-          "Podemos actualizar esta política para reflejar cambios operativos, técnicos o legales. Publicaremos la versión vigente en esta página e indicaremos la fecha de actualización. Esta política no pretende renunciar a derechos que no puedan excluirse por ley.",
+          "Para pedir acceso, corrección o eliminación: info@foundationvne.com.",
           "Última actualización: 3 de noviembre de 2026.",
-          "Contacto de privacidad: info@foundationvne.com.",
         ],
       },
     ],
   },
   terminos: {
     title: "Términos y condiciones",
-    description: "Términos de uso del sitio de Fundación Venezuela Nueva Esperanza LLC.",
+    description: "Condiciones de uso del sitio de Fundación VNE.",
     blocks: [
       {
         paragraphs: [
-          "Al acceder o utilizar el sitio o los canales públicos de Fundación Venezuela Nueva Esperanza LLC (“la Organización”), usted acepta estos términos.",
+          "Al usar este sitio acepta estas condiciones. Fundación Venezuela Nueva Esperanza LLC es una sociedad de responsabilidad limitada registrada en Nueva York. La información publicada es general y no es asesoría legal ni financiera.",
         ],
       },
       {
-        heading: "1. Naturaleza de la organización",
+        heading: "Uso",
         paragraphs: [
-          "Fundación Venezuela Nueva Esperanza LLC es una sociedad de responsabilidad limitada con propósito social, registrada en el Estado de Nueva York. La información de este sitio es general y no constituye asesoría legal, financiera ni un compromiso contractual, salvo que conste en un acuerdo escrito.",
+          "El uso debe ser lícito. No copie el contenido sin autorización. Enviar un formulario no crea un contrato ni una relación laboral.",
         ],
       },
       {
-        heading: "2. Uso del sitio",
+        heading: "Donaciones",
         paragraphs: [
-          "El uso debe ser legal y ético. Queda prohibida la reproducción, modificación o distribución del contenido sin autorización expresa de la Organización.",
+          "Son voluntarias. Zelle se hace desde el banco del donante. La tarjeta, si Citibank habilita el cobro, se paga en la página del banco. Este sitio no guarda el número de tarjeta ni emite un comprobante fiscal. El dinero va a los programas de la fundación.",
         ],
       },
       {
-        heading: "3. Ausencia de obligación automática",
-        paragraphs: [
-          "Visitar el sitio, enviar una consulta o una solicitud de voluntariado no crea una relación contractual, laboral, financiera ni de representación, salvo que se formalice por escrito.",
-        ],
-      },
-      {
-        heading: "4. Donaciones",
-        paragraphs: [
-          "Las donaciones son voluntarias. Pueden hacerse por Zelle, fuera de esta página, o con tarjeta en la pasarela alojada de Citibank cuando el banco la habilite. El sitio pide el monto, el nombre y el correo para abrir ese cobro; el número de la tarjeta lo pide Citibank. La Organización no pide contraseñas ni códigos de verificación, no guarda esos datos y no confirma el pago. El aporte se destina a los programas de la Organización, entre ellos Casas VNE, Proyecto Génesis y las unidades productivas que financia, conforme a sus estatutos. Esta página no emite un comprobante fiscal.",
-        ],
-      },
-      {
-        heading: "5. Limitación de responsabilidad",
-        paragraphs: [
-          "La Organización no responde por daños directos, indirectos, incidentales o consecuentes derivados del uso o de la interpretación de la información publicada en este sitio.",
-        ],
-      },
-      {
-        heading: "6. Propiedad intelectual",
-        paragraphs: [
-          "Textos, marcas, logotipos y materiales de este sitio pertenecen a Fundación Venezuela Nueva Esperanza LLC, salvo indicación distinta, y están protegidos por las leyes aplicables.",
-        ],
-      },
-      {
-        heading: "7. Ley aplicable",
-        paragraphs: [
-          "Estos términos se rigen por las leyes del Estado de Nueva York, Estados Unidos.",
-          "Última actualización: 3 de noviembre de 2026.",
-        ],
+        heading: "Ley",
+        paragraphs: ["Rigen las leyes del Estado de Nueva York.", "Última actualización: 3 de noviembre de 2026."],
       },
     ],
   },
   conflicto: {
     title: "Política de conflicto de intereses",
-    description: "Política de conflicto de intereses de Fundación Venezuela Nueva Esperanza LLC.",
+    description: "Regla de conflicto de intereses de Fundación VNE.",
     blocks: [
       {
         paragraphs: [
-          "Fundación Venezuela Nueva Esperanza LLC exige que directores, funcionarios, gerentes y personal clave actúen en el mejor interés de la Organización y eviten situaciones que puedan generar un conflicto de intereses.",
+          "Quienes deciden por la fundación deben actuar en su interés y declarar conflictos personales, familiares o comerciales.",
         ],
       },
       {
-        heading: "1. Definición",
-        paragraphs: [
-          "Existe un conflicto de intereses cuando los intereses personales, financieros o comerciales de una persona pueden influir de manera indebida en sus decisiones en nombre de la Organización.",
-        ],
-      },
-      {
-        heading: "2. Divulgación",
-        paragraphs: [
-          "Quienes toman decisiones deben revelar cualquier conflicto real o potencial, incluyendo:",
-        ],
-        list: [
-          "Intereses financieros",
-          "Relaciones familiares o personales",
-          "Actividades comerciales externas",
-        ],
-      },
-      {
-        heading: "3. Gestión",
-        paragraphs: ["Cuando se identifica un conflicto:"],
-        list: [
-          "La persona involucrada se abstiene de la discusión y de la decisión relacionada",
-          "El conflicto se revisa y se documenta",
-          "La decisión se toma en el mejor interés de la Organización",
-        ],
-      },
-      {
-        heading: "4. Cumplimiento",
-        paragraphs: [
-          "El incumplimiento puede dar lugar a medidas correctivas, incluida la remoción de la autoridad de decisión.",
-          "Esta política sostiene la transparencia, la rendición de cuentas y la gobernanza ética del propósito social de la Organización.",
-          "Última actualización: 2026.",
-        ],
+        heading: "Qué se hace",
+        paragraphs: ["La persona se abstiene de esa decisión. El conflicto se documenta."],
       },
     ],
   },
   "no-discriminacion": {
     title: "Política de no discriminación",
-    description: "Política de no discriminación de Fundación Venezuela Nueva Esperanza LLC.",
+    description: "Regla de no discriminación de Fundación VNE.",
     blocks: [
       {
         paragraphs: [
-          "Fundación Venezuela Nueva Esperanza LLC se compromete a un entorno inclusivo, respetuoso y equitativo en sus actividades, programas, servicios y operaciones.",
-          "La Organización no discrimina por raza, color, origen nacional, etnia, género, identidad de género, orientación sexual, religión, edad, discapacidad, estado civil, condición de veterano u otra característica protegida por la ley aplicable.",
-        ],
-      },
-      {
-        heading: "Ámbito",
-        paragraphs: ["Esta política se aplica, entre otros, a:"],
-        list: [
-          "Empleo y contratación",
-          "Prestación de servicios",
-          "Alianzas y colaboraciones",
-          "Participación en programas",
-          "Gobernanza organizacional",
-        ],
-      },
-      {
-        paragraphs: [
-          "Las decisiones se toman según el mérito, las calificaciones y la alineación con la misión y el propósito social de la Organización.",
-          "Última actualización: 2026.",
+          "La fundación no discrimina por raza, color, origen, género, identidad de género, orientación sexual, religión, edad, discapacidad, estado civil, condición de veterano u otra característica protegida por la ley.",
+          "Aplica a empleo, servicios, alianzas, programas y gobernanza.",
         ],
       },
     ],
