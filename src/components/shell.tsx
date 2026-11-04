@@ -4,17 +4,16 @@ import { Link } from "@tanstack/react-router";
 import { Camera, Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
-import { media } from "@/data/media";
 
 function Mark({ className = "size-9" }: { className?: string }) {
   const { t } = useLanguage();
   return (
     <img
-      src="/favicon.svg?v=3"
-      alt={t("Emblema del árbol de Fundación VNE")}
-      className={`shrink-0 rounded-full object-contain ${className}`}
+      src="/logo-oficial.jpg?v=1"
+      alt={t("Logo oficial de Fundación VNE")}
+      className={`shrink-0 object-contain ${className}`}
       width={36}
-      height={36}
+      height={37}
     />
   );
 }
@@ -328,12 +327,12 @@ export function Footer() {
             className="mt-8 inline-block max-w-full rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
           >
             <img
-              src={media.logo}
-              alt={t("Logo completo de Fundación VNE")}
+              src="/logo-oficial.jpg?v=1"
+              alt={t("Logo oficial de Fundación VNE")}
               loading="lazy"
               decoding="async"
-              width={256}
-              height={107}
+              width={250}
+              height={254}
               className="h-auto w-60 max-w-full rounded-md object-contain"
             />
           </Link>

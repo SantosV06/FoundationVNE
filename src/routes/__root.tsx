@@ -50,7 +50,7 @@ export const Route = createRootRoute({
           ...(requestNonce() ? [{ name: "vne-csp-nonce", content: requestNonce()! }] : []),
         ],
         links: [
-          { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/favicon.svg?v=3" },
+          { rel: "icon", type: "image/jpeg", sizes: "any", href: "/logo-oficial.jpg?v=1" },
           ...(__SITE_ORIGIN__
             ? [
                 {
