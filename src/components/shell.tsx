@@ -6,15 +6,15 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
 import { media } from "@/data/media";
 
-function Mark({ className = "size-9" }: { className?: string }) {
+function Mark({ className = "h-10 w-auto" }: { className?: string }) {
   const { t } = useLanguage();
   return (
     <img
-      src="/favicon.svg?v=3"
+      src="/favicon.svg?v=4"
       alt={t("Emblema del árbol de Fundación VNE")}
-      className={`shrink-0 rounded-full object-contain ${className}`}
-      width={36}
-      height={36}
+      className={`shrink-0 object-contain ${className}`}
+      width={46}
+      height={40}
     />
   );
 }
