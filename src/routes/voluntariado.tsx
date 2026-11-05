@@ -41,7 +41,7 @@ type Fields = {
 const empty: Fields = { nombre: "", apellido: "", correo: "", telefono: "", mensaje: "" };
 
 function Voluntariado() {
-  const { t } = useLanguage();
+  const { t, tKey } = useLanguage();
   const [fields, setFields] = useState<Fields>(empty);
   const [phoneCountryCode, setPhoneCountryCode] = useState("US");
   const phoneCountry =
@@ -181,9 +181,7 @@ function Voluntariado() {
               </h2>
               <p className="editorial-justify mt-3 leading-relaxed text-mist dark:text-cream/75">
                 {sent.nombre}
-                <T>
-                  , tu solicitud quedó registrada correctamente. El equipo de voluntariado la revisará y se pondrá en contacto contigo si necesita información adicional.
-                </T>
+                {tKey("volunteer.confirmation.body")}
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <button
