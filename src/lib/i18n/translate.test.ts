@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import { translate, isLanguage, negotiateLanguage } from "./translate.ts";
 import { catalog } from "./catalog.ts";
 import { legalPages } from "../../data/site.ts";
+import { translateMessage } from "./message-catalog.ts";
 
 test("language validation and source fallback never alter unknown or original Spanish text", () => {
   assert.ok(isLanguage("es") && isLanguage("en") && isLanguage("pt"));
@@ -24,6 +25,9 @@ test("language validation and source fallback never alter unknown or original Sp
   assert.equal(negotiateLanguage("fr;q=0,en;q=0.5"), "en");
   assert.equal(negotiateLanguage("fr;q=0.9999,en;q=0.8"), "en");
   assert.equal(negotiateLanguage("fr;q=0.8,en;q=1.000"), "en");
+  assert.match(translateMessage("volunteer.confirmation.body", "es"), /solicitud quedó registrada/);
+  assert.match(translateMessage("volunteer.confirmation.body", "en"), /application has been registered/);
+  assert.match(translateMessage("volunteer.confirmation.body", "pt"), /solicitação foi registrada/);
 });
 test("both translations cover every published legal title, description, paragraph and list", () => {
   for (const page of Object.values(legalPages)) {
