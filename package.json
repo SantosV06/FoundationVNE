@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "node scripts/prepare-media.mjs && node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 8080",
-    "build": "npm run check && node scripts/prepare-media.mjs && node scripts/with-app-env.mjs vite build && npm run db:migrate",
+    "build": "npm run check && node scripts/prepare-media.mjs && node scripts/with-app-env.mjs vite build",
     "db:migrate": "node scripts/migrate.mjs",
     "build:dev": "node scripts/prepare-media.mjs && node scripts/with-app-env.mjs vite build --mode development",
     "preview": "node scripts/with-app-env.mjs vite preview",
@@ -27,7 +27,8 @@
     "data:retention": "node scripts/retention.mjs",
     "test:postgres": "node --experimental-strip-types --experimental-test-module-mocks --test src/lib/volunteer-service.test.ts src/lib/admin-totp.test.ts src/lib/admin-operations.test.ts",
     "db:verify": "node scripts/verify-database.mjs",
-    "test:coverage": "node --experimental-test-coverage --test 'scripts/**/*.test.mjs' && node --experimental-strip-types --experimental-test-module-mocks --experimental-test-coverage --test src/lib/volunteer.test.ts src/lib/brevo-email.server.test.ts src/lib/volunteer-service.test.ts src/lib/i18n/translate.test.ts src/lib/request-security.test.ts src/lib/admin-totp.test.ts src/lib/admin-operations.test.ts src/lib/citybank-gateway.test.ts"
+    "test:coverage": "node --experimental-test-coverage --test 'scripts/**/*.test.mjs' && node --experimental-strip-types --experimental-test-module-mocks --experimental-test-coverage --test src/lib/volunteer.test.ts src/lib/brevo-email.server.test.ts src/lib/volunteer-service.test.ts src/lib/i18n/translate.test.ts src/lib/request-security.test.ts src/lib/admin-totp.test.ts src/lib/admin-operations.test.ts src/lib/citybank-gateway.test.ts",
+    "build:deploy": "npm run build && npm run db:migrate"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.13",
