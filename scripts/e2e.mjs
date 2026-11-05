@@ -165,7 +165,7 @@ try {
       );
     }
     if (name === "mobile") {
-      const menu = page.getByRole("button", { name: "Menú", exact: true });
+      const menu = page.locator('button[aria-controls="menu-movil"]');
       await menu.click();
       await page.getByRole("navigation", { name: "Móvil" }).getByRole("link").first().waitFor();
       await page.keyboard.press("Escape");
