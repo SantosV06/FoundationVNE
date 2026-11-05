@@ -460,9 +460,9 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Não é um contrato de trabalho nem uma vaga remunerada.",
   ],
   "Solicitud registrada": ["Application registered", "Inscrição registrada"],
-  ", tu solicitud quedó registrada correctamente. El equipo podrá consultarla desde el panel administrativo.": [
-    ", your application was registered successfully. The team can review it in the administration panel.",
-    ", sua inscrição foi registrada com sucesso. A equipe poderá consultá-la no painel administrativo.",
+  ", tu solicitud quedó registrada correctamente. El equipo de voluntariado la revisará y se pondrá en contacto contigo si necesita información adicional.": [
+    ", your application was registered successfully. The volunteer team will review it and contact you if further information is needed.",
+    ", sua inscrição foi registrada com sucesso. A equipe de voluntariado irá analisá-la e entrará em contato se precisar de mais informações.",
   ],
   "Nueva solicitud": ["New application", "Nova inscrição"],
   "Apellido": ["Last name", "Sobrenome"],
