@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, type ReactNode } from "react";
 import { useRouterState, useNavigate } from "@tanstack/react-router";
 import { isLanguage, translate, type Language } from "./translate";
+import { translateMessage } from "./message-catalog";
 
 import { LanguageContext, useLanguage } from "./context";
 
@@ -25,7 +26,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     [navigate],
   );
   const t = useCallback((source: string) => translate(source, language), [language]);
-  const value = useMemo(() => ({ language, setLanguage, t }), [language, setLanguage, t]);
+  const tKey = useCallback((id: Parameters<typeof translateMessage>[0]) => translateMessage(id, language), [language]);
+  const value = useMemo(() => ({ language, setLanguage, t, tKey }), [language, setLanguage, t, tKey]);
   useEffect(() => {
     document.documentElement.lang = language;
     // Use authoritative route metadata rather than previously modified DOM content.
