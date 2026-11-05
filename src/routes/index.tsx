@@ -1,4 +1,5 @@
-import { localizedHead } from "@/lib/i18n/seo";
+import { languageFromSearch, localizedHead } from "@/lib/i18n/seo";
+import { defaultHomeContent } from "@/lib/home-content";
 import { getPublicHomeContent } from "@/lib/home-content-functions";
 import { T, useLanguage } from "@/lib/i18n";
 import { MediaVideo } from "@/components/media-video";
@@ -9,19 +10,22 @@ import { org } from "@/data/site";
 import { Shell } from "@/components/shell";
 
 export const Route = createFileRoute("/")({
-  head: ({ matches }) =>
-    localizedHead(
+  head: ({ matches, loaderData }) => {
+    const search = matches.at(-1)?.search ?? {};
+    const language = languageFromSearch(search);
+    return localizedHead(
       {
         meta: [
           { title: "Fundación VNE | Desarrollo social y económico sostenible" },
           {
             name: "description",
-            content: "Fundación Venezuela Nueva Esperanza. Casas VNE y Proyecto Génesis.",
+            content: loaderData?.description?.[language] ?? defaultHomeContent.description[language],
           },
         ],
       },
-      matches.at(-1)?.search ?? {},
-    ),
+      search,
+    );
+  },
   loader: () => getPublicHomeContent(),
   component: Home,
 });
