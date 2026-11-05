@@ -173,7 +173,10 @@ try {
       assert.equal(await mobileNav.count(), 0);
       assert.ok(await menu.evaluate((node) => node === document.activeElement));
       await menu.click();
-      await mobileNav.locator('a[href="/casas"]').click();
+      const housesLink = mobileNav.locator('a[href^="/casas"]');
+      await housesLink.waitFor({ state: "visible" });
+      await housesLink.click();
+      await page.waitForURL((url) => url.pathname === "/casas");
       await page.getByRole("heading", { level: 1 }).waitFor();
       assert.equal(await mobileNav.count(), 0);
     }
