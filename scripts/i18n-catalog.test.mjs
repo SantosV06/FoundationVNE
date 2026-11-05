@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import { join, relative } from "node:path";
 import test from "node:test";
 import ts from "typescript";
 import { catalog } from "../src/lib/i18n/catalog.ts";
 import { adminCatalog } from "../src/lib/i18n/admin-catalog.ts";
 
-const root = new URL("../src/", import.meta.url);
+const root = fileURLToPath(new URL("../src/", import.meta.url));
 
 async function sourceFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -14,14 +15,14 @@ async function sourceFiles(directory) {
     entries.map(async (entry) => {
       const path = join(directory, entry.name);
       if (entry.isDirectory()) return sourceFiles(path);
-      return /\\.tsx$/.test(entry.name) ? [path] : [];
+      return /\.tsx$/.test(entry.name) ? [path] : [];
     }),
   );
   return nested.flat();
 }
 
 function normalize(value) {
-  return value.replace(/\\s+/g, " ").trim();
+  return value.replace(/\s+/g, " ").trim();
 }
 
 function literalValue(node) {
@@ -31,8 +32,8 @@ function literalValue(node) {
 
 test("all literal translations in public routes and UI components exist in both catalogs", async () => {
   const files = [
-    ...(await sourceFiles(new URL("routes/", root))),
-    ...(await sourceFiles(new URL("components/", root))),
+    ...(await sourceFiles(join(root, "routes"))),
+    ...(await sourceFiles(join(root, "components"))),
   ];
   const missing = [];
 
@@ -45,7 +46,7 @@ test("all literal translations in public routes and UI components exist in both 
       true,
       ts.ScriptKind.TSX,
     );
-    const relativePath = relative(root.pathname, filename);
+    const relativePath = relative(root, filename);
 
     function check(value, kind) {
       const key = normalize(value);
@@ -87,5 +88,5 @@ test("all literal translations in public routes and UI components exist in both 
     visit(source);
   }
 
-  assert.deepEqual(missing, [], missing.join("\\n"));
+  assert.deepEqual(missing, [], missing.join("\n"));
 });
