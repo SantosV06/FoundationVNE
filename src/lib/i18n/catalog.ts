@@ -459,6 +459,10 @@ export const catalog: Record<string, readonly [string, string]> = {
     "This is not an employment contract or a paid position.",
     "Não é um contrato de trabalho nem uma vaga remunerada.",
   ],
+  "Verificación de seguridad": [
+    "Security verification",
+    "Verificação de segurança",
+  ],
   "Solicitud registrada": ["Application registered", "Inscrição registrada"],
   ", tu solicitud quedó registrada correctamente. El equipo de voluntariado la revisará y se pondrá en contacto contigo si necesita información adicional.": [
     ", your application was registered successfully. The volunteer team will review it and contact you if further information is needed.",
