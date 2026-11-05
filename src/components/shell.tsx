@@ -316,11 +316,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link to="/solicitudes" className="text-cream/70 underline-offset-4 hover:underline">
-                <T>Administración de solicitudes</T>
-              </Link>
-            </li>
           </ul>
           <Link
             to="/"
