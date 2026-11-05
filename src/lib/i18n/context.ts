@@ -6,6 +6,6 @@ export const LanguageContext = createContext({
   language: "es" as Language,
   setLanguage: (_language: Language) => {},
   t: (source: string) => source,
-  tKey: (id: MessageId) => id,
+  tKey: (id: MessageId): string => id,
 });
 export const useLanguage = () => useContext(LanguageContext);
