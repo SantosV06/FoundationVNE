@@ -47,11 +47,13 @@ test("all literal translations in public routes and UI components exist in both 
       ts.ScriptKind.TSX,
     );
     const relativePath = relative(root, filename);
+    const isAdmin =
+      relativePath === "routes/solicitudes.tsx" || relativePath.startsWith("components/admin-");
 
     function check(value, kind) {
       const key = normalize(value);
       if (!key) return;
-      const entry = catalog[key] ?? adminCatalog[key];
+      const entry = catalog[key] ?? (isAdmin ? adminCatalog[key] : undefined);
       if (!entry || !entry[0]?.trim() || !entry[1]?.trim()) {
         missing.push(`${relativePath}: missing ${kind} translation: ${key}`);
       }
