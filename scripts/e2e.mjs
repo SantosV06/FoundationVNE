@@ -182,7 +182,7 @@ try {
     }
   }
   async function chooseLanguage(label) {
-    await page.getByRole("combobox", { name: /^(Idioma|Language)$/ }).selectOption({
+    await page.locator("header select").selectOption({
       label: `${label === "Español" ? "ES" : label === "English" ? "EN" : "PT"} · ${label}`,
     });
   }
@@ -278,7 +278,7 @@ try {
   });
   const blockedPage = await blocked.newPage();
   await blockedPage.goto(base, { waitUntil: "domcontentloaded" });
-  await blockedPage.getByRole("combobox", { name: "Idioma", exact: true }).selectOption("en");
+  await blockedPage.locator("header select").selectOption("en");
   await blockedPage.waitForFunction(() => document.documentElement.lang === "en");
   await blocked.close();
   await page.setViewportSize({ width: 390, height: 844 });
