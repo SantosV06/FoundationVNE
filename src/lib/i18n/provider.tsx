@@ -26,8 +26,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     [navigate],
   );
   const t = useCallback((source: string) => translate(source, language), [language]);
-  const tKey = useCallback((id: Parameters<typeof translateMessage>[0]) => translateMessage(id, language), [language]);
-  const value = useMemo(() => ({ language, setLanguage, t, tKey }), [language, setLanguage, t, tKey]);
+  const tKey = useCallback(
+    (id: Parameters<typeof translateMessage>[0]) => translateMessage(id, language),
+    [language],
+  );
+  const value = useMemo(
+    () => ({ language, setLanguage, t, tKey }),
+    [language, setLanguage, t, tKey],
+  );
   useEffect(() => {
     document.documentElement.lang = language;
     // Use authoritative route metadata rather than previously modified DOM content.
