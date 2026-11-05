@@ -19,6 +19,11 @@ test("language validation and source fallback never alter unknown or original Sp
   assert.equal(negotiateLanguage("fr-FR,fr;q=0.9,en;q=0.8"), "en");
   assert.equal(negotiateLanguage("fr,de;q=0.5"), undefined);
   assert.equal(negotiateLanguage("en-US,en,es"), "en");
+  assert.equal(negotiateLanguage("fr;q=1.5,en;q=0.8"), "en");
+  assert.equal(negotiateLanguage("fr;q=2,en;q=0.7"), "en");
+  assert.equal(negotiateLanguage("fr;q=0,en;q=0.5"), "en");
+  assert.equal(negotiateLanguage("fr;q=0.9999,en;q=0.8"), "en");
+  assert.equal(negotiateLanguage("fr;q=0.8,en;q=1.000"), "en");
 });
 test("both translations cover every published legal title, description, paragraph and list", () => {
   for (const page of Object.values(legalPages)) {
