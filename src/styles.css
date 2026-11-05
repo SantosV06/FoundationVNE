@@ -444,3 +444,10 @@ html.dark .min-h-screen:has(.vne-hero) > main > section:not(.vne-hero):last-of-t
     transition: none;
   }
 }
+
+@media (max-width: 640px) {
+  .editorial-justify {
+    text-align: start;
+    text-align-last: auto;
+  }
+}
