@@ -1,7 +1,7 @@
 # Fundación VNE
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/SantosV06/Prueba-724/actions/workflows/ci.yml/badge.svg)](https://github.com/SantosV06/Prueba-724/actions/workflows/ci.yml)
+[![CI](https://github.com/SantosV06/FoundationVNE/actions/workflows/ci.yml/badge.svg)](https://github.com/SantosV06/FoundationVNE/actions/workflows/ci.yml)
 
 Sitio oficial de **Fundación Venezuela Nueva Esperanza** y panel de voluntariado.
 
