@@ -6,6 +6,7 @@ import test from "node:test";
 import ts from "typescript";
 import { catalog } from "../src/lib/i18n/catalog.ts";
 import { adminCatalog } from "../src/lib/i18n/admin-catalog.ts";
+import { messageCatalog } from "../src/lib/i18n/message-catalog.ts";
 
 const root = fileURLToPath(new URL("../src/", import.meta.url));
 
@@ -63,11 +64,18 @@ test("all literal translations in public routes and UI components exist in both 
       if (
         ts.isCallExpression(node) &&
         ts.isIdentifier(node.expression) &&
-        node.expression.text === "t" &&
+        (node.expression.text === "t" || node.expression.text === "tKey") &&
         node.arguments.length > 0
       ) {
         const value = literalValue(node.arguments[0]);
-        if (value !== undefined) check(value, "function");
+        if (value !== undefined) {
+          if (node.expression.text === "tKey") {
+            const entry = messageCatalog[value];
+            if (!entry?.es?.trim() || !entry?.en?.trim() || !entry?.pt?.trim()) {
+              missing.push(`${relativePath}: missing stable message translation: ${value}`);
+            }
+          } else check(value, "function");
+        }
       }
 
       if (
