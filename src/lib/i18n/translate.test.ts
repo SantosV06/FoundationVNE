@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { adminCatalog } from "./admin-catalog.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
-import { translate, isLanguage } from "./translate.ts";
+import { translate, isLanguage, negotiateLanguage } from "./translate.ts";
 import { catalog } from "./catalog.ts";
 import { legalPages } from "../../data/site.ts";
 
@@ -15,6 +15,10 @@ test("language validation and source fallback never alter unknown or original Sp
   assert.equal(translate("info@foundationvne.com", "en"), "info@foundationvne.com");
   assert.equal(translate("Fundación VNE", "pt"), "Fundación VNE");
   assert.equal(translate("Texto nuevo sin traducción", "en"), "Texto nuevo sin traducción");
+  assert.equal(negotiateLanguage("es-VE,es;q=0.9,en;q=0.8"), "es");
+  assert.equal(negotiateLanguage("fr-FR,fr;q=0.9,en;q=0.8"), "en");
+  assert.equal(negotiateLanguage("fr,de;q=0.5"), undefined);
+  assert.equal(negotiateLanguage("en-US,en,es"), "en");
 });
 test("both translations cover every published legal title, description, paragraph and list", () => {
   for (const page of Object.values(legalPages)) {

@@ -198,8 +198,6 @@ try {
     "/",
     "/casas",
     "/genesis",
-    "/punto-de-comida",
-    "/construccion",
     "/liderazgo",
     "/soporte",
     "/donaciones",

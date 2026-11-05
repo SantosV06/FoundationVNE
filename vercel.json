@@ -1,5 +1,9 @@
 {
   "installCommand": "npm ci --include=dev --no-audit --no-fund",
+  "redirects": [
+    { "source": "/construccion", "destination": "/", "permanent": false },
+    { "source": "/punto-de-comida", "destination": "/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*)",

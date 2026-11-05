@@ -502,7 +502,7 @@ function SiteLanguage() {
     >
       <p className="text-sm">
         {t(
-          "Se aplica a visitantes sin idioma elegido. Los enlaces con idioma y las preferencias guardadas tienen prioridad.",
+          "Si el navegador pide español, inglés o portugués, se usa ese idioma. Si no, se usa este valor. Un enlace con idioma o una preferencia guardada tienen prioridad.",
         )}
       </p>
       <label className="block font-semibold">

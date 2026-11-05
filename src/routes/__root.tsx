@@ -1,5 +1,5 @@
 import { getDefaultLanguage } from "@/lib/i18n/default-language";
-import { preferredLanguage } from "@/lib/i18n/preference";
+import { browserLanguage, preferredLanguage } from "@/lib/i18n/preference";
 import { requestNonce } from "@/lib/csp-nonce";
 import { languageFromSearch, languageHref, localizedHead } from "@/lib/i18n/seo";
 import { isLanguage } from "@/lib/i18n/translate";
@@ -25,7 +25,7 @@ export const Route = createRootRoute({
   }),
   beforeLoad: async ({ location, search }) => {
     if (isLanguage(search.lang)) return;
-    const language = await getDefaultLanguage();
+    const language = browserLanguage() ?? (await getDefaultLanguage());
     if (language !== "es")
       throw redirect({
         to: location.pathname,

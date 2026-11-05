@@ -29,7 +29,7 @@ Variables en `.env.example`. **No subas secretos.**
 
 ## Qué incluye
 
-Páginas públicas (inicio, Casas VNE, Génesis, punto de comida, construcción, liderazgo, soporte, donaciones, voluntariado y textos legales), español / English / português, formulario con Turnstile y panel `/solicitudes`.
+Páginas públicas (inicio, Casas VNE, Génesis, liderazgo, soporte, donaciones, voluntariado y textos legales), español / English / português, formulario con Turnstile y panel `/solicitudes`. Restaurante y construcción no se publican hasta nuevo aviso.
 
 Correo con Brevo solo si están `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` y, para el aviso interno, `VOLUNTEER_NOTIFICATION_EMAIL`. El pago con tarjeta en `/donaciones` queda cerrado hasta `CITIBANK_GATEWAY_TOKEN` y `CITIBANK_IFRAME_URL` (`CITYBANK_*` sigue valiendo). Zelle no se procesa en el sitio.
 

@@ -3,10 +3,10 @@ export const adminCatalog: Record<string, readonly [string, string]> = {
   "Idioma predeterminado": ["Default language", "Idioma padrão"],
   "Guardar idioma predeterminado": ["Save default language", "Salvar idioma padrão"],
   "Idioma predeterminado guardado.": ["Default language saved.", "Idioma padrão salvo."],
-  "Se aplica a visitantes sin idioma elegido. Los enlaces con idioma y las preferencias guardadas tienen prioridad.":
+  "Si el navegador pide español, inglés o portugués, se usa ese idioma. Si no, se usa este valor. Un enlace con idioma o una preferencia guardada tienen prioridad.":
     [
-      "Applies to visitors who have not chosen a language. Language links and saved preferences take priority.",
-      "Aplica-se a visitantes que não escolheram um idioma. Links com idioma e preferências salvas têm prioridade.",
+      "If the browser asks for Spanish, English or Portuguese, that language is used. Otherwise this value is used. A language link or a saved preference takes priority.",
+      "Se o navegador pedir espanhol, inglês ou português, esse idioma é usado. Caso contrário, usa-se este valor. Um link com idioma ou uma preferência salva tem prioridade.",
     ],
   "La configuración cambió. Vuelve a cargar antes de guardar.": [
     "Settings changed. Reload before saving.",

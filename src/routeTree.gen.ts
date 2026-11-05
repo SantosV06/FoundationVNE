@@ -11,11 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CasasRouteImport } from './routes/casas'
-import { Route as ConstruccionRouteImport } from './routes/construccion'
 import { Route as DonacionesRouteImport } from './routes/donaciones'
 import { Route as GenesisRouteImport } from './routes/genesis'
 import { Route as LiderazgoRouteImport } from './routes/liderazgo'
-import { Route as PuntoDeComidaRouteImport } from './routes/punto-de-comida'
 import { Route as SolicitudesRouteImport } from './routes/solicitudes'
 import { Route as SoporteRouteImport } from './routes/soporte'
 import { Route as VoluntariadoRouteImport } from './routes/voluntariado'
@@ -32,11 +30,6 @@ const CasasRoute = CasasRouteImport.update({
   path: '/casas',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConstruccionRoute = ConstruccionRouteImport.update({
-  id: '/construccion',
-  path: '/construccion',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DonacionesRoute = DonacionesRouteImport.update({
   id: '/donaciones',
   path: '/donaciones',
@@ -50,11 +43,6 @@ const GenesisRoute = GenesisRouteImport.update({
 const LiderazgoRoute = LiderazgoRouteImport.update({
   id: '/liderazgo',
   path: '/liderazgo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PuntoDeComidaRoute = PuntoDeComidaRouteImport.update({
-  id: '/punto-de-comida',
-  path: '/punto-de-comida',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolicitudesRoute = SolicitudesRouteImport.update({
@@ -86,11 +74,9 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/casas': typeof CasasRoute
-  '/construccion': typeof ConstruccionRoute
   '/donaciones': typeof DonacionesRoute
   '/genesis': typeof GenesisRoute
   '/liderazgo': typeof LiderazgoRoute
-  '/punto-de-comida': typeof PuntoDeComidaRoute
   '/solicitudes': typeof SolicitudesRoute
   '/soporte': typeof SoporteRoute
   '/voluntariado': typeof VoluntariadoRoute
@@ -100,11 +86,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/casas': typeof CasasRoute
-  '/construccion': typeof ConstruccionRoute
   '/donaciones': typeof DonacionesRoute
   '/genesis': typeof GenesisRoute
   '/liderazgo': typeof LiderazgoRoute
-  '/punto-de-comida': typeof PuntoDeComidaRoute
   '/solicitudes': typeof SolicitudesRoute
   '/soporte': typeof SoporteRoute
   '/voluntariado': typeof VoluntariadoRoute
@@ -115,11 +99,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/casas': typeof CasasRoute
-  '/construccion': typeof ConstruccionRoute
   '/donaciones': typeof DonacionesRoute
   '/genesis': typeof GenesisRoute
   '/liderazgo': typeof LiderazgoRoute
-  '/punto-de-comida': typeof PuntoDeComidaRoute
   '/solicitudes': typeof SolicitudesRoute
   '/soporte': typeof SoporteRoute
   '/voluntariado': typeof VoluntariadoRoute
@@ -131,11 +113,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/casas'
-    | '/construccion'
     | '/donaciones'
     | '/genesis'
     | '/liderazgo'
-    | '/punto-de-comida'
     | '/solicitudes'
     | '/soporte'
     | '/voluntariado'
@@ -145,11 +125,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/casas'
-    | '/construccion'
     | '/donaciones'
     | '/genesis'
     | '/liderazgo'
-    | '/punto-de-comida'
     | '/solicitudes'
     | '/soporte'
     | '/voluntariado'
@@ -159,11 +137,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/casas'
-    | '/construccion'
     | '/donaciones'
     | '/genesis'
     | '/liderazgo'
-    | '/punto-de-comida'
     | '/solicitudes'
     | '/soporte'
     | '/voluntariado'
@@ -174,11 +150,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CasasRoute: typeof CasasRoute
-  ConstruccionRoute: typeof ConstruccionRoute
   DonacionesRoute: typeof DonacionesRoute
   GenesisRoute: typeof GenesisRoute
   LiderazgoRoute: typeof LiderazgoRoute
-  PuntoDeComidaRoute: typeof PuntoDeComidaRoute
   SolicitudesRoute: typeof SolicitudesRoute
   SoporteRoute: typeof SoporteRoute
   VoluntariadoRoute: typeof VoluntariadoRoute
@@ -202,13 +176,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CasasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/construccion': {
-      id: '/construccion'
-      path: '/construccion'
-      fullPath: '/construccion'
-      preLoaderRoute: typeof ConstruccionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/donaciones': {
       id: '/donaciones'
       path: '/donaciones'
@@ -228,13 +195,6 @@ declare module '@tanstack/react-router' {
       path: '/liderazgo'
       fullPath: '/liderazgo'
       preLoaderRoute: typeof LiderazgoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/punto-de-comida': {
-      id: '/punto-de-comida'
-      path: '/punto-de-comida'
-      fullPath: '/punto-de-comida'
-      preLoaderRoute: typeof PuntoDeComidaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solicitudes': {
@@ -278,11 +238,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CasasRoute: CasasRoute,
-  ConstruccionRoute: ConstruccionRoute,
   DonacionesRoute: DonacionesRoute,
   GenesisRoute: GenesisRoute,
   LiderazgoRoute: LiderazgoRoute,
-  PuntoDeComidaRoute: PuntoDeComidaRoute,
   SolicitudesRoute: SolicitudesRoute,
   SoporteRoute: SoporteRoute,
   VoluntariadoRoute: VoluntariadoRoute,

@@ -25,8 +25,6 @@ export const nav = [
   { to: "/", label: "Inicio" },
   { to: "/casas", label: "Casas VNE" },
   { to: "/genesis", label: "Génesis" },
-  { to: "/punto-de-comida", label: "Restaurante" },
-  { to: "/construccion", label: "Construcción" },
   { to: "/liderazgo", label: "Liderazgo" },
   { to: "/soporte", label: "Soporte" },
 ] as const;
@@ -105,7 +103,10 @@ export const legalPages: Record<
       },
       {
         heading: "Ley",
-        paragraphs: ["Rigen las leyes del Estado de Nueva York.", "Última actualización: 3 de noviembre de 2026."],
+        paragraphs: [
+          "Rigen las leyes del Estado de Nueva York.",
+          "Última actualización: 3 de noviembre de 2026.",
+        ],
       },
     ],
   },

@@ -50,7 +50,7 @@ function Donaciones() {
   return (
     <Shell>
       <PageIntro
-        kicker={t("Transparencia")}
+        kicker={t("Cómo donar")}
         title={t("Donaciones")}
         lede={t(
           "Voluntarias. La tarjeta se paga en Citibank y Zelle se envía desde el banco. Este sitio no guarda el número de tarjeta.",
@@ -88,9 +88,7 @@ function Donaciones() {
           <T>De dónde sale y a dónde va</T>
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
-          <T>
-            El aporte va a Casas VNE, Proyecto Génesis y las unidades de comida y construcción.
-          </T>
+          <T>El aporte va a Casas VNE y Proyecto Génesis.</T>
         </p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -107,7 +105,7 @@ function Donaciones() {
             rel="noreferrer"
             className="inline-flex h-12 items-center justify-center rounded-full border border-navy px-6 text-sm font-bold text-navy dark:border-gold dark:text-gold"
           >
-            <T>Abrir Zelle</T>
+            <T>Sitio de Zelle</T>
           </a>
           <a
             href={org.infoWa}

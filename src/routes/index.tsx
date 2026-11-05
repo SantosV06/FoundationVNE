@@ -273,55 +273,6 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
-        <p className="text-xs font-bold tracking-[0.2em] text-gold-deep uppercase">
-          <T>Unidades productivas</T>
-        </p>
-        <h2 className="mt-3 max-w-3xl font-display text-4xl text-navy dark:text-cream">
-          <T>Restaurante y construcción.</T>
-        </h2>
-        <p className="editorial-justify mt-4 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
-          <T>
-            Sus ingresos financian a la fundación. Proyecto Génesis es un proyecto aparte.
-          </T>
-        </p>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <article className="flex flex-col rounded-card border-t-4 border-gold bg-card p-8 dark:bg-navy">
-            <h3 className="font-display text-3xl text-navy dark:text-cream">
-              <T>Punto de comida</T>
-            </h3>
-            <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/75">
-              <T>
-                Restaurante de Fundación VNE. Su actividad está destinada a financiar a la
-                fundación.
-              </T>
-            </p>
-            <Link
-              to="/punto-de-comida"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy dark:text-gold"
-            >
-              <T>Conocer el punto de comida </T>
-              <ArrowUpRight className="size-4" />
-            </Link>
-          </article>
-          <article className="flex flex-col rounded-card border-t-4 border-clay bg-card p-8 dark:bg-navy">
-            <h3 className="font-display text-3xl text-navy dark:text-cream">
-              <T>Construcción</T>
-            </h3>
-            <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/75">
-              <T>Unidad de obra y encargos. Es el segundo negocio que Fundación VNE financia.</T>
-            </p>
-            <Link
-              to="/construccion"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy dark:text-gold"
-            >
-              <T>Conocer construcción </T>
-              <ArrowUpRight className="size-4" />
-            </Link>
-          </article>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-6 lg:py-24">
         <h2 className="font-display text-4xl text-navy dark:text-cream">
           <T>Dónde operamos</T>

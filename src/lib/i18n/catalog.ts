@@ -353,10 +353,12 @@ export const catalog: Record<string, readonly [string, string]> = {
   "Concepto sugerido": ["Suggested reference", "Finalidade sugerida"],
   "Donación Fundación VNE": ["Donation to Fundación VNE", "Doação à Fundación VNE"],
   "Transparencia": ["Transparency", "Transparência"],
+  "Cómo donar": ["How to give", "Como doar"],
   "De dónde sale y a dónde va": ["Where it comes from and where it goes", "De onde vem e para onde vai"],
   "Número copiado": ["Number copied", "Número copiado"],
   "Copiar número de Zelle": ["Copy Zelle number", "Copiar número do Zelle"],
   "Abrir Zelle": ["Open Zelle", "Abrir Zelle"],
+  "Sitio de Zelle": ["Zelle website", "Site do Zelle"],
   "Consulta administrativa": ["Administrative inquiry", "Consulta administrativa"],
   "Pasarela de pago": ["Payment gateway", "Gateway de pagamento"],
   "Pago con tarjeta en Citibank": ["Card payment with Citibank", "Pagamento com cartão no Citibank"],
@@ -585,9 +587,9 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Voluntary. The card is charged at Citibank and Zelle is sent from your bank. This site does not store the card number.",
     "Voluntárias. O cartão é pago no Citibank e o Zelle é enviado pelo banco. Este site não guarda o número do cartão.",
   ],
-  "El aporte va a Casas VNE, Proyecto Génesis y las unidades de comida y construcción.": [
-    "Gifts go to Casas VNE, Proyecto Génesis and the food and construction units.",
-    "A contribuição vai para Casas VNE, Projeto Génesis e as unidades de alimentação e construção.",
+  "El aporte va a Casas VNE y Proyecto Génesis.": [
+    "Gifts go to Casas VNE and Proyecto Génesis.",
+    "A contribuição vai para Casas VNE e Projeto Génesis.",
   ],
   "Qué datos trata el sitio de Fundación VNE y cómo contactarnos.": [
     "What data the Fundación VNE site handles and how to reach us.",
