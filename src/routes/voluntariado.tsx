@@ -182,8 +182,7 @@ function Voluntariado() {
               <p className="editorial-justify mt-3 leading-relaxed text-mist dark:text-cream/75">
                 {sent.nombre}
                 <T>
-                  , tu solicitud quedó registrada correctamente. El equipo podrá consultarla desde
-                  el panel administrativo.
+                  , tu solicitud quedó registrada correctamente. El equipo de voluntariado la revisará y se pondrá en contacto contigo si necesita información adicional.
                 </T>
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
