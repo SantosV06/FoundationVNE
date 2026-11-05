@@ -22,7 +22,8 @@ Variables en `.env.example`. **No subas secretos.**
 | Comando | Para qué |
 | --- | --- |
 | `npm run check` | Tipos, lint y pruebas |
-| `npm run build` | Tipos, lint, pruebas, medios y compilación; no modifica la base de datos |\n| `npm run build:deploy` | Build de despliegue seguido de migraciones pendientes |
+| `npm run build` | Tipos, lint, pruebas, medios y compilación; no modifica la base de datos |
+| `npm run build:deploy` | Build de despliegue seguido de migraciones pendientes |
 | `npm run db:migrate` | Ejecutar migraciones pendientes de forma explícita |
 | `npm run test:e2e` | Pruebas de navegador |
 | `npm run admin:recover -- admin` | Recuperar al propietario con acceso a la base |
