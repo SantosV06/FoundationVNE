@@ -166,18 +166,16 @@ try {
     }
     if (name === "mobile") {
       const menu = page.locator('button[aria-controls="menu-movil"]');
+      const mobileNav = page.locator("nav#menu-movil");
       await menu.click();
-      await page.getByRole("navigation", { name: "Móvil" }).getByRole("link").first().waitFor();
+      await mobileNav.getByRole("link").first().waitFor();
       await page.keyboard.press("Escape");
-      assert.equal(await page.getByRole("navigation", { name: "Móvil" }).count(), 0);
+      assert.equal(await mobileNav.count(), 0);
       assert.ok(await menu.evaluate((node) => node === document.activeElement));
       await menu.click();
-      await page
-        .getByRole("navigation", { name: "Móvil" })
-        .getByRole("link", { name: "Casas VNE" })
-        .click();
+      await mobileNav.locator('a[href="/casas"]').click();
       await page.getByRole("heading", { level: 1 }).waitFor();
-      assert.equal(await page.getByRole("navigation", { name: "Móvil" }).count(), 0);
+      assert.equal(await mobileNav.count(), 0);
     }
   }
   async function chooseLanguage(label) {
