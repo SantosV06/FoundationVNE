@@ -4,7 +4,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { translate, isLanguage, negotiateLanguage } from "./translate.ts";
 import { catalog } from "./catalog.ts";
-import { legalPages } from "../../data/site.ts";
+import { legalPages, legalLinks, nav, org } from "../../data/site.ts";
 import { translateMessage } from "./message-catalog.ts";
 
 test("language validation and source fallback never alter unknown or original Spanish text", () => {
@@ -54,6 +54,15 @@ test("both translations cover every published legal title, description, paragrap
       assert.ok(catalog[text][0].trim());
       assert.ok(catalog[text][1].trim());
     }
+  }
+});
+
+test("data-driven public navigation and contact metadata have both translations", () => {
+  const labels = [...nav.map((item) => item.label), ...legalLinks.map((item) => item.label), org.hours];
+  for (const label of labels) {
+    const entry = catalog[label];
+    assert.ok(entry, `Missing data-driven site translation: ${label}`);
+    assert.ok(entry[0].trim() && entry[1].trim());
   }
 });
 
