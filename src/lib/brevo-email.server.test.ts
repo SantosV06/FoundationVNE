@@ -123,8 +123,8 @@ test("falls back to Vercel's production hostname when SITE_URL is not configured
     }
     const notification = messages.find((message) => message.to[0].email === "team@example.com");
     assert.ok(notification);
-    assert.match(notification.htmlContent, /https:\\/\\/foundationvne\\.com\\/solicitudes/);
-    assert.match(notification.textContent, /https:\\/\\/foundationvne\\.com\\/solicitudes/);
+    assert.ok(notification.htmlContent.includes("https://foundationvne.com/solicitudes"));
+    assert.ok(notification.textContent.includes("https://foundationvne.com/solicitudes"));
   });
 });
 
