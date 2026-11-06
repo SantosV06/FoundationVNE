@@ -9,6 +9,7 @@ const envKeys = [
   "BREVO_SENDER_NAME",
   "VOLUNTEER_NOTIFICATION_EMAIL",
   "SITE_URL",
+  "VERCEL_PROJECT_PRODUCTION_URL",
 ] as const;
 
 const volunteer: StoredVolunteerInput = {
@@ -98,6 +99,38 @@ test("sends confirmation and internal notification with safe content", async () 
     assert.doesNotMatch(notification.body.textContent, /Texto privado/);
     assert.doesNotMatch(notification.body.htmlContent, /Texto privado/);
     assert.equal(notification.body.subject, "Nueva solicitud de voluntariado recibida");
+  });
+});
+
+test("falls back to Vercel's production hostname when SITE_URL is not configured", async () => {
+  await withBrevoEnv({}, async () => {
+    delete process.env.SITE_URL;
+    process.env.VERCEL_PROJECT_PRODUCTION_URL = "foundationvne.com";
+    type CapturedMessage = { to: Array<{ email: string }>; htmlContent: string; textContent: string };
+    const messages: CapturedMessage[] = [];
+    const fetchMock = mock.method(
+      globalThis,
+      "fetch",
+      async (_input: string | URL | Request, init?: RequestInit) => {
+        messages.push(JSON.parse(String(init?.body)) as CapturedMessage);
+        return new Response(JSON.stringify({ messageId: "mock-message-id" }), { status: 201 });
+      },
+    );
+    try {
+      await notifyNewVolunteer(volunteer);
+    } finally {
+      fetchMock.mock.restore();
+    }
+    const notification = messages.find((message) => message.to[0].email === "team@example.com");
+    assert.ok(notification);
+    assert.match(notification.htmlContent, /https:\\/\\/foundationvne\\.com\\/solicitudes/);
+    assert.match(notification.textContent, /https:\\/\\/foundationvne\\.com\\/solicitudes/);
+  });
+});
+
+test("rejects a non-HTTPS or path-bearing SITE_URL instead of generating an unsafe admin link", async () => {
+  await withBrevoEnv({ SITE_URL: "http://foundationvne.com/solicitudes" }, async () => {
+    await assert.rejects(notifyNewVolunteer(volunteer), /SITE_URL must be an HTTPS origin/);
   });
 });
 
