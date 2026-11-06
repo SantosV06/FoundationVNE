@@ -34,6 +34,12 @@ Páginas públicas (inicio, Casas VNE, Génesis, liderazgo, soporte, donaciones,
 
 Correo con Brevo solo si están `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` y, para el aviso interno, `VOLUNTEER_NOTIFICATION_EMAIL`. El pago con tarjeta en `/donaciones` queda cerrado hasta `CITIBANK_GATEWAY_TOKEN` y `CITIBANK_IFRAME_URL` (`CITYBANK_*` sigue valiendo). Zelle no se procesa en el sitio.
 
+## Operaciones y auditoría
+
+- [Guía de operaciones y variables de entorno](docs/OPERATIONS.md)
+- [Política técnica de conservación y eliminación de datos](docs/DATA-RETENTION.md)
+- [Estado y límites de la auditoría de seguridad](docs/SECURITY-REVIEW.md)
+
 ## Seguridad
 
 Para reportar vulnerabilidades de seguridad, consulta [SECURITY.md](SECURITY.md).

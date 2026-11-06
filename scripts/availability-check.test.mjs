@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { checkAvailability, isSameOriginLanguageRedirect } from "./availability-check.mjs";
 
-const SITE = "https://prueba-724.vercel.app";
+const SITE = "https://foundationvne.com";
 
 function response({ status = 200, location, body = "" }) {
   return {
