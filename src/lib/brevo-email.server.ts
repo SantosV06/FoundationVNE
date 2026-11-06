@@ -10,6 +10,32 @@ type BrevoMessage = {
 
 const API_URL = "https://api.brevo.com/v3/smtp/email";
 
+/** Resolve the canonical HTTPS site origin for links sent by server-side email. */
+export function resolveSiteOrigin(env: NodeJS.ProcessEnv = process.env): string {
+  const configured = env.SITE_URL?.trim();
+  const vercelHost = env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  const raw = configured || (vercelHost ? `https://${vercelHost}` : "");
+  if (!raw) return "";
+
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    throw new Error("SITE_URL must be a valid HTTPS origin.");
+  }
+  if (
+    url.protocol !== "https:" ||
+    url.username ||
+    url.password ||
+    url.pathname !== "/" ||
+    url.search ||
+    url.hash
+  ) {
+    throw new Error("SITE_URL must be an HTTPS origin without a path or credentials.");
+  }
+  return url.origin;
+}
+
 function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, (character) => {
     const entities: Record<string, string> = {
@@ -84,7 +110,7 @@ export async function notifyNewVolunteer(input: StoredVolunteerInput): Promise<v
   const safeName = escapeHtml(fullName);
   const safeEmail = escapeHtml(input.correo);
   const safePhone = escapeHtml(input.telefono);
-  const siteUrl = process.env.SITE_URL?.trim().replace(/\/$/, "");
+  const siteUrl = resolveSiteOrigin();
   const panelUrl = siteUrl ? `${siteUrl}/solicitudes` : undefined;
 
   const common = {
