@@ -18,5 +18,5 @@ jobs:
           persist-credentials: false
       - name: Check homepage and database health
         env:
-          SITE: ${{ vars.MONITOR_SITE_URL || 'https://prueba-724.vercel.app' }}
+          SITE: ${{ vars.MONITOR_SITE_URL || 'https://foundationvne.com' }}
         run: node scripts/availability-check.mjs
