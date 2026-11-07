@@ -21,6 +21,14 @@ const volunteer: StoredVolunteerInput = {
   requestKey: "3e7a61ad-6491-4893-95e2-af04df8ed012",
 };
 
+function assertFoundationAdminUrl(rawUrl: string): void {
+  const url = new URL(rawUrl);
+  assert.equal(url.origin, new URL("https://foundationvne.com").origin);
+  assert.equal(url.pathname, "/solicitudes");
+  assert.equal(url.search, "");
+  assert.equal(url.hash, "");
+}
+
 function withBrevoEnv(
   overrides: Partial<Record<(typeof envKeys)[number], string>>,
   run: () => Promise<void>,
@@ -123,8 +131,15 @@ test("falls back to Vercel's production hostname when SITE_URL is not configured
     }
     const notification = messages.find((message) => message.to[0].email === "team@example.com");
     assert.ok(notification);
-    assert.ok(notification.htmlContent.includes("https://foundationvne.com/solicitudes"));
-    assert.ok(notification.textContent.includes("https://foundationvne.com/solicitudes"));
+    const adminHref = notification.htmlContent.match(/<a href="([^"]+)"/)?.[1];
+    assert.ok(adminHref, "internal notification contains an admin-panel link");
+    assertFoundationAdminUrl(adminHref);
+
+    const panelLine = notification.textContent
+      .split("\n")
+      .find((line) => line.startsWith("Panel: "));
+    assert.ok(panelLine, "plain-text notification contains an admin-panel link");
+    assertFoundationAdminUrl(panelLine.slice("Panel: ".length));
   });
 });
 
