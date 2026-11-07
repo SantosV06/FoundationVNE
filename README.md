@@ -45,7 +45,7 @@ Correo con Brevo solo si están `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` y, para el
 Para reportar vulnerabilidades de seguridad, consulta [SECURITY.md](SECURITY.md).
 
 - Seguridad: **info@foundationvne.com**
-- Soporte / navegación: **soporte@foundationvne.com**
+- Soporte: **soporte@foundationvne.com**
 
 ## Código de conducta
 
