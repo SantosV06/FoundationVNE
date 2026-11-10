@@ -396,8 +396,13 @@ try {
     await page.getByRole("button", { name: "Guardar portada", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Portada guardada" }).waitFor();
     await page.getByRole("button", { name: "Ocultar herramientas", exact: true }).click();
-    await row.getByRole("combobox").selectOption("contactada");
-    await page.getByRole("status").filter({ hasText: "Estado actualizado" }).waitFor();
+    const statusSelect = row.getByRole("combobox");
+    await statusSelect.selectOption("contactada");
+    // No toast: mutate() only refreshes the list. Wait for the persisted value.
+    await page.waitForFunction(
+      (el) => el instanceof HTMLSelectElement && el.value === "contactada" && !el.disabled,
+      await statusSelect.elementHandle(),
+    );
     await page.getByRole("button", { name: "Exportar resultados CSV" }).click();
     const csv = await page.waitForEvent("download");
     assert.equal(csv.suggestedFilename(), "voluntarios-vne.csv");
@@ -422,12 +427,21 @@ try {
       1,
     );
     await page.getByRole("button", { name: "Ocultar usuarios", exact: true }).click();
+    page.once("dialog", (dialog) => dialog.accept());
     await row.getByRole("button", { name: "Mover a papelera" }).click();
-    await page.getByRole("status").filter({ hasText: "Movido a la papelera" }).waitFor();
-    await page.getByRole("button", { name: "Papelera", exact: true }).click();
+    // No toast: the row leaves the active list after remove + refresh.
+    await row.waitFor({ state: "detached" });
+    await page.getByRole("button", { name: "Ver papelera", exact: true }).click();
     await page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }).waitFor();
     await page.getByRole("button", { name: "Restaurar" }).click();
-    await page.getByRole("status").filter({ hasText: "Restaurado" }).waitFor();
+    // Restore also has no toast; the row gains "Mover a papelera" again on the active list.
+    await page.getByRole("button", { name: "Ver solicitudes activas", exact: true }).click();
+    await page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }).waitFor();
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }) })
+      .getByRole("button", { name: "Mover a papelera" })
+      .waitFor();
     await page.getByRole("button", { name: "Cerrar sesión", exact: true }).click();
     await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
     if (process.env.E2E_TOTP_ENABLED === "true") {
