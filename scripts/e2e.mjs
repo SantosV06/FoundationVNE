@@ -522,8 +522,18 @@ try {
       await page
         .getByLabel("Código del autenticador o de recuperación", { exact: true })
         .fill(codes[1]);
-      await page.getByRole("button", { name: "Desactivar 2FA y cerrar sesiones", exact: true }).click();
-      await page.getByRole("status").filter({ hasText: "2FA desactivado" }).waitFor();
+      await page
+        .getByRole("button", { name: "Desactivar 2FA y cerrar sesiones", exact: true })
+        .click();
+      // Successful disable revokes every session; AdminTwoFactor calls onSignedOut,
+      // which unmounts this component. Assert the resulting login screen instead
+      // of waiting for a status message that cannot remain mounted.
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
+      assert.equal(
+        await page.getByLabel("Código del autenticador o de recuperación", { exact: false }).count(),
+        0,
+        "2FA disable signs the administrator out",
+      );
     }
     await page.goto(`${base}/solicitudes`, { waitUntil: "domcontentloaded" });
     await page.getByLabel("Usuario", { exact: true }).fill("admin");
