@@ -459,9 +459,16 @@ try {
         .getByLabel("Contraseña administrativa", { exact: true })
         .fill(process.env.E2E_ADMIN_PASSWORD);
       await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
-      await page.getByRole("button", { name: "Configurar autenticador", exact: true }).click();
-      await page.getByRole("heading", { name: "Configura la autenticación en dos pasos", exact: true }).waitFor();
-      const secret = await page.locator("[data-totp-secret]").getAttribute("data-totp-secret");
+      const twoFactorPanel = page
+        .locator("details")
+        .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) });
+      await twoFactorPanel.locator("summary").click();
+      await twoFactorPanel.getByLabel("Contraseña actual", { exact: true }).fill(process.env.E2E_ADMIN_PASSWORD);
+      await twoFactorPanel.getByRole("button", { name: "Configurar autenticador", exact: true }).click();
+      await twoFactorPanel
+        .getByRole("img", { name: "Código QR para configurar tu autenticador de Fundación VNE", exact: true })
+        .waitFor();
+      const secret = await twoFactorPanel.locator("code").innerText();
       const otp = new TOTP({ secret, digits: 6, period: 30 });
       await page.getByLabel("Código del autenticador", { exact: true }).fill(otp.generate());
       await page.getByRole("button", { name: "Confirmar y activar 2FA", exact: true }).click();
@@ -508,7 +515,7 @@ try {
       await page
         .getByLabel("Código del autenticador o de recuperación", { exact: true })
         .fill(codes[1]);
-      await page.getByRole("button", { name: "Desactivar 2FA", exact: true }).click();
+      await page.getByRole("button", { name: "Desactivar 2FA y cerrar sesiones", exact: true }).click();
       await page.getByRole("status").filter({ hasText: "2FA desactivado" }).waitFor();
     }
     await page.goto(`${base}/solicitudes`, { waitUntil: "domcontentloaded" });
