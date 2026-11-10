@@ -44,10 +44,16 @@ function Soporte() {
             </T>
           </p>
           <a
+            href={`mailto:${org.email}`}
+            className="mt-8 inline-flex h-12 max-w-full items-center rounded-full bg-gold px-5 text-sm font-bold break-all text-navy"
+          >
+            {org.email}
+          </a>
+          <a
             href={org.infoWa}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex h-12 items-center rounded-full bg-gold px-5 text-sm font-bold text-navy"
+            className="mt-3 inline-flex h-12 items-center rounded-full border border-cream/40 px-5 text-sm font-bold text-cream"
           >
             <T>Escribir por WhatsApp</T>
           </a>
@@ -62,22 +68,22 @@ function Soporte() {
             </T>
           </p>
           <a
+            href={`mailto:${org.supportEmail}`}
+            className="mt-8 inline-flex h-12 max-w-full items-center rounded-full bg-navy px-5 text-sm font-bold break-all text-cream dark:bg-gold dark:text-navy"
+          >
+            {org.supportEmail}
+          </a>
+          <a
             href={org.webWa}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex h-12 items-center rounded-full border border-navy px-5 text-sm font-bold text-navy dark:border-gold dark:text-gold"
+            className="mt-3 inline-flex h-12 items-center rounded-full border border-navy px-5 text-sm font-bold text-navy dark:border-gold dark:text-gold"
           >
             <T>Reportar un problema</T>
           </a>
           <p className="mt-6 text-sm text-mist dark:text-cream/60">
-            <T>También puedes escribir a </T>
-            <a
-              className="font-semibold underline-offset-4 hover:underline"
-              href={`mailto:${org.email}`}
-            >
-              <T>{org.email}</T>
-            </a>
-            <T>. Horario: </T>
+            <T>Horario</T>
+            {": "}
             <T>{org.hours}</T>
           </p>
         </article>
