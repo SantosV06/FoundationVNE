@@ -99,3 +99,474 @@ try {
     ["en", "We are Fundación VNE, Venezuela Nueva Esperanza."],
     ["pt", "Somos a Fundación VNE, Venezuela Nueva Esperanza."],
   ]) {
+    const response = await fetch(`${base}/?lang=${language}`);
+    const html = await response.text();
+    if (built) {
+      const policy = response.headers.get("content-security-policy") ?? "";
+      assert.ok(policy.includes("'nonce-"), "built HTML uses a response nonce");
+      assert.ok(
+        !policy.split("script-src ")[1].split(";")[0].includes("unsafe-inline"),
+        "inline scripts require a nonce",
+      );
+    }
+    assert.ok(html.includes(`lang="${language}"`), "locale is rendered on the server");
+    if (language === "en")
+      assert.ok(html.includes(expected), "translated content exists before JavaScript");
+  }
+  const page = await context.newPage();
+  page.on("response", (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`);
+  });
+  // Vite aborts in-flight module requests on SPA navigations; that is not a product failure.
+  page.on("requestfailed", (request) => {
+    const text = request.failure()?.errorText ?? "";
+    if (text === "net::ERR_ABORTED" || text === "net::ERR_CACHE_MISS") return;
+    errors.push(`${request.url()}: ${text}`);
+  });
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  for (const [name, width, height] of [
+    ["desktop", 1280, 800],
+    ["mobile", 390, 844],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
+    await page.getByRole("heading", { level: 1 }).waitFor();
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForFunction(() =>
+      Object.keys(document.querySelector("button[aria-controls=menu-movil]") ?? {}).some((key) =>
+        key.startsWith("__reactProps"),
+      ),
+    );
+    assert.ok((await page.locator("body").innerText()).length > 1000);
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      false,
+    );
+    await page.screenshot({ path: `${screenshots}/vne-${built ? "built" : "dev"}-${name}.png` });
+    const video = page.locator("video").first();
+    assert.equal(await video.getAttribute("preload"), "none");
+    assert.ok(await video.getAttribute("poster"));
+    if (name === "desktop") {
+      await video.scrollIntoViewIfNeeded();
+      await video.evaluate((node) => node.play());
+      await video.evaluate(
+        (node) =>
+          new Promise((resolve) => {
+            node.addEventListener("pause", resolve, { once: true });
+            node.pause();
+          }),
+      );
+      await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+      await page.waitForTimeout(150);
+      assert.equal(
+        await video.evaluate((node) => node.paused),
+        true,
+        "manual pause survives visibility changes",
+      );
+    }
+    if (name === "mobile") {
+      const menu = page.locator('button[aria-controls="menu-movil"]');
+      const mobileNav = page.locator("nav#menu-movil");
+      await menu.click();
+      await mobileNav.getByRole("link").first().waitFor();
+      await page.keyboard.press("Escape");
+      assert.equal(await mobileNav.count(), 0);
+      assert.ok(await menu.evaluate((node) => node === document.activeElement));
+      await menu.click();
+      const housesLink = mobileNav.locator('a[href^="/casas"]');
+      await housesLink.waitFor({ state: "visible" });
+      await housesLink.click();
+      await page.waitForURL((url) => url.pathname === "/casas");
+      await page.getByRole("heading", { level: 1 }).waitFor();
+      assert.equal(await mobileNav.count(), 0);
+    }
+  }
+  async function chooseLanguage(label) {
+    await page.locator("header select").selectOption({
+      label: `${label === "Español" ? "ES" : label === "English" ? "EN" : "PT"} · ${label}`,
+    });
+  }
+  await chooseLanguage("English");
+  await page.waitForFunction(() => document.documentElement.lang === "en");
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => document.documentElement.lang === "en");
+  assert.equal(
+    await page.getByRole("heading", { level: 1 }).innerText(),
+    "An integrated system for social and economic development.",
+  );
+  assert.ok((await page.title()).includes("Self-sustaining"));
+  const paths = [
+    "/",
+    "/casas",
+    "/genesis",
+    "/liderazgo",
+    "/soporte",
+    "/donaciones",
+    "/voluntariado",
+    "/legal/privacidad",
+    "/legal/terminos",
+    "/legal/conflicto",
+    "/legal/no-discriminacion",
+  ];
+  for (const [language, label] of [
+    ["en", "English"],
+    ["pt", "Português"],
+  ]) {
+    await chooseLanguage(label);
+    for (const path of paths) {
+      await page.goto(`${base}${path}`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction((lang) => document.documentElement.lang === lang, language);
+      const untranslated = await page.locator("main").evaluate(
+        (root, translations) => {
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+          const missing = [];
+          while (walker.nextNode()) {
+            const text = walker.currentNode.textContent.replace(/\s+/g, " ").trim();
+            if (translations[text] && translations[text] !== text) missing.push(text);
+          }
+          return missing;
+        },
+        Object.fromEntries(
+          Object.entries(catalog).map(([key, values]) => [key, values[language === "en" ? 0 : 1]]),
+        ),
+      );
+      assert.deepEqual(untranslated, [], `Untranslated content on ${path} in ${language}`);
+      assert.equal(
+        await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+        false,
+        `Overflow on ${path} in ${language}`,
+      );
+    }
+  }
+  await page.goto(`${base}/voluntariado`, { waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => document.documentElement.lang === "pt");
+  await page.getByLabel("Nome", { exact: true }).fill("Nombre sin traducir");
+  await chooseLanguage("English");
+  assert.equal(
+    await page.getByLabel("First name", { exact: true }).inputValue(),
+    "Nombre sin traducir",
+  );
+  await page.getByRole("button", { name: "Register application", exact: true }).click();
+  await page.getByRole("alert").filter({ hasText: "Complete your first name" }).waitFor();
+  await chooseLanguage("Español");
+  await page.goto(base, { waitUntil: "domcontentloaded" });
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await chooseLanguage("English");
+  await page.screenshot({ path: `${screenshots}/vne-${built ? "built" : "dev"}-english.png` });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await chooseLanguage("Português");
+  await page.screenshot({
+    path: `${screenshots}/vne-${built ? "built" : "dev"}-portuguese-mobile.png`,
+  });
+  await page.setViewportSize({ width: 320, height: 740 });
+  assert.equal(
+    await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+    false,
+  );
+  await chooseLanguage("Español");
+  // A blocked preference store must not break language switching or hydration.
+  const blocked = await browser.newContext();
+  await blocked.route(/^https:\/\/(?:www\.google\.com|va\.vercel-scripts\.com)\//, (route) =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: "" }),
+  );
+  await blocked.addInitScript(() => {
+    Object.defineProperty(window, "localStorage", {
+      get() {
+        throw new DOMException("Blocked", "SecurityError");
+      },
+    });
+  });
+  const blockedPage = await blocked.newPage();
+  await blockedPage.goto(base, { waitUntil: "domcontentloaded" });
+  await blockedPage.locator("header select").selectOption("en");
+  await blockedPage.waitForFunction(() => document.documentElement.lang === "en");
+  await blocked.close();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("button", { name: "Usar tema oscuro" }).click();
+  assert.equal(await page.locator("html").getAttribute("class"), "dark");
+  await page.getByRole("button", { name: "Usar tema claro" }).click();
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`${base}/voluntariado`, { waitUntil: "domcontentloaded" });
+  await page.getByRole("button", { name: "Registrar solicitud" }).click();
+  await page.getByRole("alert").filter({ hasText: "Completa nombre" }).waitFor();
+  {
+    assert.ok(
+      process.env.E2E_ADMIN_PASSWORD,
+      "Supply a local test password; never use production credentials here.",
+    );
+    const suffix = Date.now();
+    await page.getByLabel("Nombre", { exact: true }).fill(`Prueba ${suffix}`);
+    await page.getByLabel("Apellido", { exact: true }).fill("Automatizada");
+    await page.getByLabel("Correo", { exact: true }).fill(`qa-${suffix}@example.com`);
+    await page.getByLabel("Teléfono", { exact: false }).fill("+507 6000 0000");
+    await page
+      .getByLabel("Cómo puedes aportar")
+      .fill("Solicitud local desechable para comprobar el flujo completo.");
+    await page.getByRole("button", { name: "Registrar solicitud" }).click();
+    const successHeading = page.getByRole("heading", { name: "Solicitud registrada" });
+    const formAlert = page.getByRole("alert");
+    const submissionResult = await Promise.race([
+      successHeading.waitFor({ state: "visible", timeout: 30_000 }).then(() => "success"),
+      formAlert.waitFor({ state: "visible", timeout: 30_000 }).then(() => "error"),
+    ]);
+    if (submissionResult === "error") {
+      throw new Error(`Volunteer submission rejected: ${(await formAlert.innerText()).trim()}`);
+    }
+    await page.goto(`${base}/solicitudes`, { waitUntil: "domcontentloaded" });
+    await chooseLanguage("English");
+    await page.getByRole("heading", { name: "Volunteer applications", exact: true }).waitFor();
+    await page.getByLabel("Administrator password", { exact: true }).waitFor();
+    await chooseLanguage("Português");
+    await page.getByRole("heading", { name: "Inscrições de voluntariado", exact: true }).waitFor();
+    await page.getByLabel("Senha administrativa", { exact: true }).waitFor();
+    await chooseLanguage("Español");
+    await page.getByLabel("Usuario", { exact: true }).fill("admin");
+    await page.getByLabel("Contraseña administrativa").fill(process.env.E2E_ADMIN_PASSWORD);
+    await page.getByRole("button", { name: "Iniciar sesión" }).click();
+    const row = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }) });
+    await row.waitFor();
+    await page.getByRole("button", { name: "Herramientas del propietario", exact: true }).click();
+    await page.getByText("Cuentas activas con 2FA", { exact: false }).waitFor();
+    const securityTool = page.getByRole("button", { name: "Seguridad del equipo", exact: true });
+    await securityTool.click();
+    assert.equal(await securityTool.getAttribute("aria-expanded"), "false");
+    assert.equal(await page.getByText("Cuentas activas con 2FA", { exact: false }).count(), 0);
+    await securityTool.click();
+    await page.getByText("Cuentas activas con 2FA", { exact: false }).waitFor();
+    const languageTool = page.getByRole("button", { name: "Idioma predeterminado", exact: true });
+    await languageTool.click();
+    const defaultLanguage = page.getByLabel("Idioma predeterminado", { exact: true });
+    await defaultLanguage.waitFor({ state: "visible" });
+    await page.waitForFunction(
+      () => !document.querySelector("#owner-tool-language select")?.disabled,
+    );
+    for (const language of ["en", "pt", "es"]) {
+      await defaultLanguage.selectOption(language);
+      await page
+        .getByRole("button", { name: "Guardar idioma predeterminado", exact: true })
+        .click();
+      await page
+        .getByRole("status")
+        .filter({ hasText: "Idioma predeterminado guardado." })
+        .waitFor();
+      const fresh = await fetch(base);
+      const html = await fresh.text();
+      assert.ok(html.includes(`lang="${language}"`), "default locale is rendered on a fresh visit");
+      const explicit = await fetch(`${base}/?lang=es`);
+      assert.ok((await explicit.text()).includes('lang="es"'), "explicit locale overrides default");
+      const preference = await fetch(base, { headers: { cookie: "vne-language=es" } });
+      assert.ok(
+        (await preference.text()).includes('lang="es"'),
+        "saved preference overrides default",
+      );
+    }
+    await languageTool.click();
+    assert.equal(await defaultLanguage.count(), 0);
+    await page.getByRole("button", { name: "Historial de actividad", exact: true }).click();
+    await page.getByLabel("Acción exacta", { exact: true }).fill("login:success");
+    const tools = page.getByRole("region", { name: "Herramientas del propietario", exact: true });
+    await tools.getByRole("button", { name: "Buscar", exact: true }).click();
+    await tools.locator("strong").filter({ hasText: "login:success" }).first().waitFor();
+    await page.getByRole("button", { name: "Editar portada", exact: true }).click();
+    const homepageTitle = page.getByLabel("Título de portada (es)", { exact: true });
+    await homepageTitle.waitFor();
+    await page.waitForFunction(
+      () =>
+        ![...document.querySelectorAll("input")].find(
+          (x) => x.value === "Somos Fundación VNE, Venezuela Nueva Esperanza.",
+        )?.disabled,
+    );
+    const originalTitle = await homepageTitle.inputValue();
+    await homepageTitle.fill(`Portada QA ${suffix}`);
+    await page.getByRole("button", { name: "Guardar portada", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Portada guardada" }).waitFor();
+    await page.goto(base, { waitUntil: "domcontentloaded" });
+    await page.getByRole("heading", { level: 1, name: `Portada QA ${suffix}` }).waitFor();
+    await page.goto(`${base}/solicitudes`, { waitUntil: "domcontentloaded" });
+    await row.waitFor();
+    await page.getByRole("button", { name: "Herramientas del propietario", exact: true }).click();
+    await page.getByRole("button", { name: "Editar portada", exact: true }).click();
+    await homepageTitle.waitFor();
+    await homepageTitle.fill(originalTitle);
+    await page.getByRole("button", { name: "Guardar portada", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Portada guardada" }).waitFor();
+    await page.getByRole("button", { name: "Ocultar herramientas", exact: true }).click();
+    await row.getByRole("combobox").selectOption("contactada");
+    await page.getByRole("status").filter({ hasText: "Estado actualizado" }).waitFor();
+    await page.getByRole("button", { name: "Exportar resultados CSV" }).click();
+    const csv = await page.waitForEvent("download");
+    assert.equal(csv.suggestedFilename(), "voluntarios-vne.csv");
+    await page.getByRole("button", { name: "Administrar usuarios", exact: true }).click();
+    await page.getByLabel("Usuario nuevo", { exact: true }).fill(`equipo-${suffix}`);
+    await page.getByLabel("Contraseña nueva", { exact: true }).fill("test-team-password-12345");
+    await page.getByLabel("Rol", { exact: true }).selectOption("staff");
+    await page.getByRole("button", { name: "Crear usuario", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Usuario creado" }).waitFor();
+    await page
+      .getByRole("button", { name: `Cambiar contraseña de equipo-${suffix}`, exact: true })
+      .click();
+    await page.getByLabel("Nueva contraseña", { exact: true }).fill("test-team-password-67890");
+    await page.getByRole("button", { name: "Guardar contraseña", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Contraseña actualizada" }).waitFor();
+    await page.getByRole("button", { name: `Desactivar equipo-${suffix}`, exact: true }).click();
+    await page.getByRole("button", { name: `Activar equipo-${suffix}`, exact: true }).waitFor();
+    await page.getByRole("button", { name: `Activar equipo-${suffix}`, exact: true }).click();
+    await page.getByRole("button", { name: `Desactivar equipo-${suffix}`, exact: true }).waitFor();
+    assert.equal(
+      await page.getByText(`equipo-${suffix}`, { exact: true }).count(),
+      1,
+    );
+    await page.getByRole("button", { name: "Ocultar usuarios", exact: true }).click();
+    await row.getByRole("button", { name: "Mover a papelera" }).click();
+    await page.getByRole("status").filter({ hasText: "Movido a la papelera" }).waitFor();
+    await page.getByRole("button", { name: "Papelera", exact: true }).click();
+    await page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }).waitFor();
+    await page.getByRole("button", { name: "Restaurar" }).click();
+    await page.getByRole("status").filter({ hasText: "Restaurado" }).waitFor();
+    await page.getByRole("button", { name: "Cerrar sesión", exact: true }).click();
+    await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
+    if (process.env.E2E_TOTP_ENABLED === "true") {
+      await page.getByLabel("Usuario", { exact: true }).fill("admin");
+      await page
+        .getByLabel("Contraseña administrativa", { exact: true })
+        .fill(process.env.E2E_ADMIN_PASSWORD);
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+      await page.getByRole("button", { name: "Configurar 2FA", exact: true }).click();
+      await page.getByRole("heading", { name: "Configura la autenticación en dos pasos", exact: true }).waitFor();
+      const secret = await page.locator("[data-totp-secret]").getAttribute("data-totp-secret");
+      const otp = new TOTP({ secret, digits: 6, period: 30 });
+      await page.getByLabel("Código del autenticador", { exact: true }).fill(otp.generate());
+      await page.getByRole("button", { name: "Confirmar y activar 2FA", exact: true }).click();
+      await page
+        .getByRole("heading", {
+          name: "2FA activado: guarda tus códigos de recuperación",
+          exact: true,
+        })
+        .waitFor();
+      const codes = (await page.locator("pre").innerText()).trim().split("\n");
+      assert.equal(codes.length, 10);
+      assert.equal(await row.count(), 0, "enrollment revokes access and clears volunteer data");
+      await page.getByLabel("He guardado mis códigos de recuperación", { exact: true }).check();
+      await page.getByRole("button", { name: "Volver al inicio de sesión", exact: true }).click();
+      await page
+        .getByLabel("Contraseña administrativa", { exact: true })
+        .fill(process.env.E2E_ADMIN_PASSWORD);
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+      await page
+        .getByLabel("Código del autenticador o de recuperación", { exact: false })
+        .fill(otp.generate({ timestamp: Date.now() + 30000 }));
+      assert.equal(await row.count(), 0, "password alone never opens the panel");
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+      await row.waitFor();
+      await page.getByRole("button", { name: "Cerrar sesión", exact: true }).click();
+      await page
+        .getByLabel("Contraseña administrativa", { exact: true })
+        .fill(process.env.E2E_ADMIN_PASSWORD);
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+      await page
+        .getByLabel("Código del autenticador o de recuperación", { exact: false })
+        .fill(codes[0]);
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+      await row.waitFor();
+      await page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }).click();
+      await page
+        .getByText("2FA activo. Códigos de recuperación restantes: 9.", { exact: true })
+        .waitFor();
+      await page
+        .locator("details")
+        .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) })
+        .getByLabel("Contraseña actual", { exact: true })
+        .fill(process.env.E2E_ADMIN_PASSWORD);
+      await page
+        .getByLabel("Código del autenticador o de recuperación", { exact: true })
+        .fill(codes[1]);
+      await page.getByRole("button", { name: "Desactivar 2FA", exact: true }).click();
+      await page.getByRole("status").filter({ hasText: "2FA desactivado" }).waitFor();
+    }
+    await page.goto(`${base}/solicitudes`, { waitUntil: "domcontentloaded" });
+    await page.getByLabel("Usuario", { exact: true }).fill("admin");
+    await page.getByLabel("Contraseña administrativa").fill(process.env.E2E_ADMIN_PASSWORD);
+    await page.getByRole("button", { name: "Iniciar sesión" }).click();
+    await row.waitFor();
+    await page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }).click();
+    const passwordForm = page
+      .locator("details")
+      .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) });
+    await passwordForm.getByLabel("Contraseña actual", { exact: true }).fill(process.env.E2E_ADMIN_PASSWORD);
+    await passwordForm.getByLabel("Nueva contraseña", { exact: true }).fill("test-self-password-12345");
+    await passwordForm
+      .getByLabel("Repetir nueva contraseña", { exact: true })
+      .fill("test-self-password-12345");
+    await page.getByRole("button", { name: "Guardar mi contraseña", exact: true }).click();
+    await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
+    await page
+      .getByLabel("Contraseña administrativa", { exact: true })
+      .fill("test-self-password-12345");
+    await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+    await row.waitFor();
+    await context.clearCookies();
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+    await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
+    assert.equal(await row.count(), 0, "session expiry clears personal data from the screen");
+  }
+  assert.deepEqual(errors, []);
+  console.log(
+    JSON.stringify(
+      {
+        ok: true,
+        mode: built ? "built" : "dev",
+        errors,
+        excludedExternalHosts: [...excludedExternalHosts],
+        checked: [
+          "desktop/mobile render",
+          "mobile menu",
+          "themes",
+          "validation",
+          "all public pages in English and Portuguese",
+          "language persistence and translated metadata",
+          "form values survive language changes",
+          "language switching with blocked storage",
+          "owner audit viewer and role restrictions",
+          "homepage editor publishes and restores content",
+          "server-rendered language URLs",
+          "own password change revokes sessions",
+          "owner creates accounts",
+          "password reset",
+          ...(process.env.E2E_TOTP_ENABLED === "true"
+            ? [
+                "TOTP enrollment and QR on desktop/mobile",
+                "password alone cannot open 2FA panel",
+                "TOTP login",
+                "one-use recovery login",
+                "disable 2FA with a different recovery code",
+              ]
+            : []),
+          "disable and reactivate account",
+          "new account login and role restrictions",
+          ...[
+            "form to PostgreSQL",
+            "admin login",
+            "administration translated into English and Portuguese",
+            "expired session clears personal data",
+            "status update",
+            "CSV download",
+            "trash and restore",
+            "logout",
+          ],
+        ],
+      },
+      null,
+      2,
+    ),
+  );
+} catch (error) {
+  console.error(JSON.stringify({ errors }, null, 2));
+  throw error;
+} finally {
+  await browser.close();
+}
