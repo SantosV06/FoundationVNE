@@ -99,4 +99,3 @@ try {
     ["en", "We are Fundación VNE, Venezuela Nueva Esperanza."],
     ["pt", "Somos a Fundación VNE, Venezuela Nueva Esperanza."],
   ]) {
-    // ... (truncated for brevity in this thought - need full content)
