@@ -59,3 +59,44 @@ try {
       });
     },
   );
+  // External maps/chrome are outside the local application boundary. Avoid
+  // network-dependent failures; no application API or DB call is intercepted.
+  await context.route(
+    /^https:\/\/(?:www\.google\.com|va\.vercel-scripts\.com)\//,
+    async (route) => {
+      excludedExternalHosts.add(new URL(route.request().url()).host);
+      const script = route.request().resourceType() === "script";
+      await route.fulfill({
+        status: 200,
+        contentType: script ? "application/javascript" : "text/html",
+        body: script ? "" : "<p>Mapa externo omitido en QA local.</p>",
+      });
+    },
+  );
+  await context.route(/\/_vercel\/(?:insights|speed-insights)\//, (route) => {
+    excludedExternalHosts.add("Vercel managed analytics (local preview)");
+    return route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
+  });
+  if (built) {
+    // Exercise the actual deployment CSP against the built HTML, not just its syntax.
+    const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
+    const policy = config.headers[0].headers.find(
+      (header) => header.key === "Content-Security-Policy",
+    ).value;
+    await context.route(`${base}/**`, async (route) => {
+      if (route.request().resourceType() !== "document") return route.fallback();
+      const response = await route.fetch();
+      await route.fulfill({
+        response,
+        headers: {
+          ...response.headers(),
+          "content-security-policy": response.headers()["content-security-policy"] ?? policy,
+        },
+      });
+    });
+  }
+  for (const [language, expected] of [
+    ["en", "We are Fundación VNE, Venezuela Nueva Esperanza."],
+    ["pt", "Somos a Fundación VNE, Venezuela Nueva Esperanza."],
+  ]) {
+    // ... (truncated for brevity in this thought - need full content)
