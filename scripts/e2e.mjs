@@ -459,7 +459,7 @@ try {
         .getByLabel("Contraseña administrativa", { exact: true })
         .fill(process.env.E2E_ADMIN_PASSWORD);
       await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
-      await page.getByRole("button", { name: "Configurar 2FA", exact: true }).click();
+      await page.getByRole("button", { name: "Configurar autenticador", exact: true }).click();
       await page.getByRole("heading", { name: "Configura la autenticación en dos pasos", exact: true }).waitFor();
       const secret = await page.locator("[data-totp-secret]").getAttribute("data-totp-secret");
       const otp = new TOTP({ secret, digits: 6, period: 30 });
