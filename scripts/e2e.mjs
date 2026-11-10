@@ -407,19 +407,28 @@ try {
     const csv = await page.waitForEvent("download");
     assert.equal(csv.suggestedFilename(), "voluntarios-vne.csv");
     await page.getByRole("button", { name: "Administrar usuarios", exact: true }).click();
-    await page.getByLabel("Usuario nuevo", { exact: true }).fill(`equipo-${suffix}`);
-    await page.getByLabel("Contraseña nueva", { exact: true }).fill("test-team-password-12345");
-    await page.getByLabel("Rol", { exact: true }).selectOption("staff");
+    await page.getByRole("heading", { name: "Usuarios del panel", exact: true }).waitFor();
+    // Labels match admin-accounts.tsx: Nombre de la persona / Nuevo usuario / Contraseña del nuevo usuario
+    // (no role selector; new accounts are always role "admin").
+    await page.getByLabel("Nombre de la persona", { exact: true }).fill(`Equipo ${suffix}`);
+    await page.getByLabel("Nuevo usuario", { exact: true }).fill(`equipo-${suffix}`);
+    await page
+      .getByLabel("Contraseña del nuevo usuario", { exact: true })
+      .fill("test-team-password-12345");
     await page.getByRole("button", { name: "Crear usuario", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Usuario creado" }).waitFor();
     await page
       .getByRole("button", { name: `Cambiar contraseña de equipo-${suffix}`, exact: true })
       .click();
-    await page.getByLabel("Nueva contraseña", { exact: true }).fill("test-team-password-67890");
+    await page
+      .getByLabel(`Nueva contraseña de equipo-${suffix}`, { exact: true })
+      .fill("test-team-password-67890");
     await page.getByRole("button", { name: "Guardar contraseña", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Contraseña actualizada" }).waitFor();
+    page.once("dialog", (dialog) => dialog.accept());
     await page.getByRole("button", { name: `Desactivar equipo-${suffix}`, exact: true }).click();
     await page.getByRole("button", { name: `Activar equipo-${suffix}`, exact: true }).waitFor();
+    page.once("dialog", (dialog) => dialog.accept());
     await page.getByRole("button", { name: `Activar equipo-${suffix}`, exact: true }).click();
     await page.getByRole("button", { name: `Desactivar equipo-${suffix}`, exact: true }).waitFor();
     assert.equal(
@@ -507,10 +516,10 @@ try {
     await page.getByLabel("Contraseña administrativa").fill(process.env.E2E_ADMIN_PASSWORD);
     await page.getByRole("button", { name: "Iniciar sesión" }).click();
     await row.waitFor();
-    await page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }).click();
+    await page.locator("summary").filter({ hasText: "Cambiar mi contraseña" }).click();
     const passwordForm = page
       .locator("details")
-      .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) });
+      .filter({ has: page.locator("summary").filter({ hasText: "Cambiar mi contraseña" }) });
     await passwordForm.getByLabel("Contraseña actual", { exact: true }).fill(process.env.E2E_ADMIN_PASSWORD);
     await passwordForm.getByLabel("Nueva contraseña", { exact: true }).fill("test-self-password-12345");
     await passwordForm
