@@ -1,6 +1,8 @@
 export function siteOrigin(env) {
+  // Prefer the public production domain over Vercel's generated hostname.
   const raw =
     env.SITE_URL ||
+    (env.VERCEL_ENV === "production" ? "https://foundationvne.com" : "") ||
     (env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}` : "");
   if (!raw) return "";
   const url = new URL(raw);
