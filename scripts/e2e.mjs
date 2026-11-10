@@ -463,10 +463,17 @@ try {
         .locator("details")
         .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) });
       await twoFactorPanel.locator("summary").click();
-      await twoFactorPanel.getByLabel("Contraseña actual", { exact: true }).fill(process.env.E2E_ADMIN_PASSWORD);
-      await twoFactorPanel.getByRole("button", { name: "Configurar autenticador", exact: true }).click();
       await twoFactorPanel
-        .getByRole("img", { name: "Código QR para configurar tu autenticador de Fundación VNE", exact: true })
+        .getByLabel("Contraseña actual", { exact: true })
+        .fill(process.env.E2E_ADMIN_PASSWORD);
+      await twoFactorPanel
+        .getByRole("button", { name: "Configurar autenticador", exact: true })
+        .click();
+      await twoFactorPanel
+        .getByRole("img", {
+          name: "Código QR para configurar tu autenticador de Fundación VNE",
+          exact: true,
+        })
         .waitFor();
       const secret = await twoFactorPanel.locator("code").innerText();
       const otp = new TOTP({ secret, digits: 6, period: 30 });
