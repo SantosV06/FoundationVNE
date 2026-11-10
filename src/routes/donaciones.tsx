@@ -84,7 +84,7 @@ function Donaciones() {
           ))}
         </div>
 
-        <h2 className="font-display text-3xl text-navy dark:text-cream">
+        <h2 className="mt-12 font-display text-3xl text-navy dark:text-cream">
           <T>De dónde sale y a dónde va</T>
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
