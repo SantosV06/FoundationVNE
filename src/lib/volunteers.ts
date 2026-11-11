@@ -10,10 +10,17 @@ export type Volunteer = {
 
 export function volunteersToCsv(rows: (Volunteer & { status?: string })[]) {
   const header = ["fecha", "nombre", "apellido", "correo", "telefono", "mensaje", "estado"];
-
   const escape = (value: string) => {
+    let firstSignificant = 0;
+    while (firstSignificant < value.length) {
+      const character = value[firstSignificant] ?? "";
+      const code = value.charCodeAt(firstSignificant);
+      if (code > 0x1f && !/\s/u.test(character)) break;
+      firstSignificant++;
+    }
 
-    const safe = /^[\s\u0000-\u001f]*[=+@-]/u.test(value) ? `\t${value}` : value;
+    const first = value[firstSignificant] ?? "";
+    const safe = /^[=+@-]/u.test(first) ? `\t${value}` : value;
     return `"${safe.replaceAll('"', '""')}"`;
   };
   const lines = rows.map((row) =>
