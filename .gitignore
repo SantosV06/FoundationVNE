@@ -5,7 +5,6 @@ node_modules/
 .env.*
 !.env.example
 
-# Generated public aliases for Foundation multimedia
 /public/media/
 
 /.generated-public/
