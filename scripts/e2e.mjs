@@ -306,6 +306,9 @@ try {
       .getByLabel("Cómo puedes aportar")
       .fill("Solicitud local desechable para comprobar el flujo completo.");
     await page.getByRole("button", { name: "Registrar solicitud" }).click();
+
+
+
     const successHeading = page.getByRole("heading", { name: "Solicitud registrada" });
     const formAlert = page.getByRole("alert");
     const submissionResult = await Promise.race([
