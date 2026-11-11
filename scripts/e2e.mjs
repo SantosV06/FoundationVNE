@@ -308,7 +308,6 @@ try {
     await page.getByRole("button", { name: "Registrar solicitud" }).click();
 
 
-
     const successHeading = page.getByRole("heading", { name: "Solicitud registrada" });
     const formAlert = page.getByRole("alert");
     const submissionResult = await Promise.race([
