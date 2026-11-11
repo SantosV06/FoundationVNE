@@ -1,7 +1,7 @@
 import { T, useLanguage } from "@/lib/i18n";
 import { LanguageSelector } from "./language-selector";
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
+import { Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
 import { media } from "@/data/media";
@@ -251,7 +251,37 @@ export function Footer() {
               aria-label={t("Instagram de Fundación VNE")}
               className="grid size-11 place-items-center rounded-full border border-gold/50"
             >
-              <Instagram className="size-4" aria-hidden="true" />
+              <svg
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                aria-hidden="true"
+              >
+                <defs>
+                  <linearGradient id="instagram-brand-gradient" x1="3" y1="21" x2="21" y2="3">
+                    <stop offset="0%" stopColor="#FEDA75" />
+                    <stop offset="48%" stopColor="#D62976" />
+                    <stop offset="100%" stopColor="#4F5BD5" />
+                  </linearGradient>
+                </defs>
+                <rect
+                  x="3"
+                  y="3"
+                  width="18"
+                  height="18"
+                  rx="5.2"
+                  stroke="url(#instagram-brand-gradient)"
+                  strokeWidth="1.8"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4.1"
+                  stroke="url(#instagram-brand-gradient)"
+                  strokeWidth="1.8"
+                />
+                <circle cx="17.55" cy="6.55" r="1.15" fill="#D62976" />
+              </svg>
             </a>
             <a
               href={`https://wa.me/${org.adminTel.replace("+", "")}`}
