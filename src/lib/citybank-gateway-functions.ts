@@ -29,18 +29,18 @@ function gatewayFromEnv() {
   });
 }
 
-// Status only. The embed address stays on the server until the donor continues.
+
 export const getCitybankGateway = createServerFn({ method: "GET" }).handler(
   async (): Promise<CitybankGatewayPublic> => ({ status: gatewayFromEnv().status }),
 );
 
-// Builds the bank iframe address. Does not accept card numbers. Nothing is stored.
+
 export const openCitybankDonation = createServerFn({ method: "POST" })
   .validator(donorInputSchema)
   .handler(async ({ data }): Promise<CitybankDonationResult> => {
-    // Keep this public-facing POST consistent with the origin checks used by
-    // volunteer and administrative mutations. It only prepares the bank URL;
-    // it must not be callable cross-site.
+
+
+
     const { assertTrustedRequest } = await import("./admin-request.server");
     assertTrustedRequest();
 

@@ -30,7 +30,7 @@ test("parsePid reads a pidfile and rejects junk", () => {
   assert.equal(parsePid(""), null);
   assert.equal(parsePid("not-a-pid"), null);
   assert.equal(parsePid("-7"), null);
-  // pid 1 is the sandbox init, never a preview server.
+
   assert.equal(parsePid("1"), null);
 });
 
@@ -43,7 +43,7 @@ test("parsePgid reads the pgrp field past a comm containing spaces", () => {
   assert.equal(parsePgid(undefined), null);
 });
 
-// One /proc/net/tcp row; the socket inode is column 10.
+
 const tcpRow = (sl, local, state, inode) =>
   [
     `  ${sl}:`,
@@ -70,7 +70,7 @@ const PROC_NET_TCP = [
 ].join("\n");
 
 test("parseListenerInodes picks LISTEN sockets on the wanted port only", () => {
-  // 0x1F91 = 8081 (LISTEN), 0x1F90 = 8080, and the third row is ESTABLISHED.
+
   assert.deepEqual(parseListenerInodes(PROC_NET_TCP, 8081), ["5551"]);
   assert.deepEqual(parseListenerInodes(PROC_NET_TCP, 8080), ["5552"]);
   assert.deepEqual(parseListenerInodes(PROC_NET_TCP, 9999), []);
@@ -83,7 +83,7 @@ test("parseListenerInodes reads the tcp6 dump the same way", () => {
   assert.deepEqual(parseListenerInodes(tcpRow(0, v6, "0A", 7777), 8081), ["7777"]);
 });
 
-// /proc/<pid>/cmdline is NUL-separated.
+
 const cmdline = (...argv) => argv.join("\u0000");
 
 test("looksLikePreviewProcess matches the npm wrapper and its vite child", () => {
@@ -94,12 +94,12 @@ test("looksLikePreviewProcess matches the npm wrapper and its vite child", () =>
     looksLikePreviewProcess(cmdline("node", "/ws/node_modules/.bin/vite", "preview")),
     true,
   );
-  // `ps -o command=` output is space-separated.
+
   assert.equal(looksLikePreviewProcess("node /ws/node_modules/.bin/vite preview"), true);
 });
 
 test("looksLikePreviewProcess spares the sibling scripts and re-used pids", () => {
-  // The sandbox service runs this one in the same box (CapturePreviewThumbnail).
+
   const thumbnail = cmdline(
     "node",
     "/opt/app-template/scripts/preview-thumbnail.mjs",
@@ -108,7 +108,7 @@ test("looksLikePreviewProcess spares the sibling scripts and re-used pids", () =
   );
   assert.equal(looksLikePreviewProcess(thumbnail), false);
   assert.equal(looksLikePreviewProcess(cmdline("node", "scripts/preview.mjs", "stop")), false);
-  // This tooling's own npm wrappers, which carry no `.mjs` in their cmdline.
+
   const npmCli = "/usr/lib/node_modules/npm/bin/npm-cli.js";
   assert.equal(looksLikePreviewProcess(cmdline("node", npmCli, "run", "preview:stop")), false);
   assert.equal(looksLikePreviewProcess(cmdline("node", npmCli, "run", "preview:restart")), false);

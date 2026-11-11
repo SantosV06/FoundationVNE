@@ -1,4 +1,4 @@
--- Additive migration: existing requests remain intact and pending.
+
 ALTER TABLE volunteer_requests ADD COLUMN IF NOT EXISTS request_key TEXT;
 ALTER TABLE volunteer_requests ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'pendiente';
 ALTER TABLE volunteer_requests ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;

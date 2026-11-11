@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Offline recovery only: requires database operator access, never exposed as a web endpoint. */
+
 import { randomUUID } from "node:crypto";
 import { emitKeypressEvents } from "node:readline";
 import { pathToFileURL } from "node:url";
@@ -112,7 +112,7 @@ async function main() {
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
   main().catch(() => {
-    // Do not print driver errors: they can contain database connection details.
+
     console.error(
       "No se completó la recuperación. Comprueba el usuario, la conexión privada y la contraseña (14–256 caracteres). No se cambian datos si la transacción falla.",
     );

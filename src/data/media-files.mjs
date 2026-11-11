@@ -1,5 +1,5 @@
-// Catalog of source filenames used to build optimized /media assets. Some originals
-// were intentionally removed after their verified derivatives were committed.
+
+
 export const mediaFiles = {
   logo: "LogoFundaciónVNE1.png",
   genesisLogo: "LogoProyGén1.png",
@@ -18,6 +18,6 @@ export const mediaFiles = {
   genesisPdf: "ProyectoGénesis.pdf",
 };
 
-/** @param {string} key @param {string} filename */
+
 export const publicMediaPath = (key, filename) =>
   `/media/${key}${filename.endsWith(".png") ? ".webp" : filename.slice(filename.lastIndexOf("."))}`;

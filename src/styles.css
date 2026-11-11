@@ -84,7 +84,7 @@
   }
 }
 
-/* Párrafos institucionales alineados, sin forzar títulos o controles. */
+
 @layer components {
   .editorial-justify {
     text-align: justify;
@@ -94,7 +94,7 @@
   }
 }
 
-/* Rediseño editorial VNE: imagen de portada con contraste estable y movimiento reducido. */
+
 @layer components {
   .vne-hero {
     isolation: isolate;
@@ -117,7 +117,7 @@
 }
 
 
-/* La portada usa una navegación superpuesta; las páginas interiores conservan su cabecera normal. */
+
 .min-h-screen:has(.vne-hero) > header {
   position: fixed;
   inset: 0 0 auto;
@@ -196,7 +196,7 @@
   scroll-margin-top: 5rem;
 }
 
-/* Las tarjetas de la portada ganan profundidad sin convertir toda la web en una cuadrícula de cajas. */
+
 .min-h-screen:has(.vne-hero) > main > section:not(.vne-hero) article {
   transition:
     transform 220ms ease,
@@ -218,8 +218,8 @@
 }
 
 
-/* Refinamiento visual de portada: capas, ritmo editorial y superficies más cuidadas.
-   Todos los selectores quedan limitados a la página que contiene .vne-hero. */
+
+
 .min-h-screen:has(.vne-hero) > main {
   overflow: clip;
 }

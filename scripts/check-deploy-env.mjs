@@ -1,4 +1,4 @@
-/** Validate server-only production configuration without logging secret values. */
+
 export function validateDeployEnv(env) {
   if (env.VERCEL_ENV !== "production") return;
   if (!env.DATABASE_URL?.trim())

@@ -9,7 +9,7 @@ export const languageOptions = [
 export function isLanguage(value: unknown): value is Language {
   return value === "es" || value === "en" || value === "pt";
 }
-/** First supported language in an Accept-Language header or a navigator.languages list. */
+
 export function negotiateLanguage(header: string | null | undefined): Language | undefined {
   if (!header) return undefined;
   const ranked = header
@@ -18,7 +18,7 @@ export function negotiateLanguage(header: string | null | undefined): Language |
       const [tag, ...params] = part.trim().split(";");
       const qParam = params.map((param) => param.trim()).find((param) => param.startsWith("q="));
       const rawQuality = qParam?.slice(2);
-      // RFC 9110 qvalues are limited to 0–1 with at most three decimals.
+
       const validQuality = rawQuality === undefined || /^(?:0(?:\.\d{0,3})?|1(?:\.0{0,3})?)$/.test(rawQuality);
       const quality = validQuality ? (rawQuality === undefined ? 1 : Number(rawQuality)) : 0;
       return { base: tag.toLowerCase().split("-")[0], quality, index };

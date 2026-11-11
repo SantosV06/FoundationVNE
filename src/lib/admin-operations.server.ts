@@ -14,8 +14,8 @@ import { COOKIE } from "./volunteer-service.server.ts";
 
 export async function listAuditEvents(filters: AuditFilters) {
   const { sql } = await requireOwner();
-  // Deliberately omit JSON payloads: old records may contain identifiers or data
-  // supplied by an operator. The viewer exposes only this small allowlist.
+
+
   const params = [filters.actor, filters.action];
   const where = "($1='' OR actor_username=$1) AND ($2='' OR action=$2)";
   const [count] = await sql.query<{ total: number }>(
@@ -61,7 +61,7 @@ export async function updateTwoFactorPolicy(required: boolean, password: string)
     throw new Error("Contraseña incorrecta.");
   if (required && (!user.totp_secret || !totpConfigured()))
     throw new Error("Activa 2FA en tu cuenta antes de exigirlo al equipo.");
-  // Recheck the owner's credentials and factor in the write statement.
+
   const changed = await sql.query(
     `WITH changed AS (
        UPDATE admin_policy SET require_two_factor=$1, updated_at=NOW() WHERE id=1

@@ -1,4 +1,4 @@
--- Preserve volunteer data; invalidate legacy shared-password sessions once.
+
 CREATE TABLE IF NOT EXISTS admin_users (
   id TEXT PRIMARY KEY,
   username TEXT NOT NULL UNIQUE CHECK (username = lower(username)),

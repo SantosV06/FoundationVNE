@@ -22,7 +22,7 @@ export default async function securityHeaders(
 ) {
   if (event.req.method !== "GET") return next();
 
-  // Generate before SSR so hydration and theme scripts use the response nonce.
+
   const nonce = randomBytes(18).toString("base64");
   event.req.headers.set("x-vne-csp-nonce", nonce);
   const response = await next();

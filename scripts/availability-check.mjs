@@ -1,9 +1,9 @@
-/**
- * Production availability probe used by .github/workflows/availability.yml.
- * Follows one same-origin language redirect (`?lang=es|en|pt`) because the site
- * redirects `/` when the stored default language is not Spanish. Any other
- * redirect, including a host change, fails closed. `/api/health` must not redirect.
- */
+
+
+
+
+
+
 import { pathToFileURL } from "node:url";
 
 const LANGUAGES = new Set(["es", "en", "pt"]);
@@ -17,7 +17,7 @@ function sortedQuery(params) {
     .join("&");
 }
 
-/** True only when the redirect stays on the same path and adds exactly one language. */
+
 export function isSameOriginLanguageRedirect(from, location) {
   if (!location) return false;
   let destination;
@@ -51,10 +51,10 @@ async function fetchManual(fetchImpl, url) {
   return fetchImpl(url, { signal: AbortSignal.timeout(25000), redirect: "manual" });
 }
 
-/**
- * @param {string} siteInput HTTPS origin to monitor.
- * @param {typeof fetch} [fetchImpl]
- */
+
+
+
+
 export async function checkAvailability(siteInput, fetchImpl = fetch) {
   const site = new URL(siteInput);
   if (site.protocol !== "https:" || site.username || site.password) {

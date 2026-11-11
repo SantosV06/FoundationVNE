@@ -32,7 +32,7 @@ export function MediaVideo({ src, title }: { src: string; title: string }) {
 
       if (shouldPlay && !manuallyPaused) {
         void video.play().catch(() => {
-          // El navegador puede bloquear la reproducción automática.
+
         });
       } else if (!shouldPlay && !video.paused) {
         automaticPause = true;

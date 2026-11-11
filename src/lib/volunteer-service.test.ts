@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { testDatabase } from "../../scripts/test-db.mjs";
 
-// Full real PostgreSQL schema/queries in a disposable local DB; no production credentials.
+
 const pg = testDatabase();
 const cookies = new Map<string, string>();
 let address = "192.0.2.1";
@@ -340,7 +340,7 @@ test("volunteer and admin workflow: durable data, limits, revocation, pagination
   await service.loginAdministrator("replacement-password-1234", "equipo");
   assert.equal(await service.isAdminAuthenticated(), true);
   const replacementToken = cookies.get("vne-admin-session")!;
-  // Exhausting an account/IP budget must not lock the owner out on another connection.
+
   address = "192.0.2.80";
   const failureCount = async () =>
     Number(
@@ -377,7 +377,7 @@ test("volunteer and admin workflow: durable data, limits, revocation, pagination
   );
   const hashed = JSON.stringify((await pg.query("SELECT password_hash FROM admin_users")).rows);
   assert.ok(!hashed.includes("replacement-password-1234"));
-  // The old environment password can no longer bypass account credentials.
+
   await service.updateAdminAccount({ id: owner.id, password: "new-owner-password-12345" });
   assert.equal(await service.isAdminAuthenticated(), false);
   address = "192.0.2.4";

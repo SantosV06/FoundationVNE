@@ -1,4 +1,4 @@
-/** Default is read-only. No schedule and no deletion without --apply plus an explicit period. */
+
 import { pathToFileURL } from "node:url";
 import { randomUUID } from "node:crypto";
 import pg from "pg";

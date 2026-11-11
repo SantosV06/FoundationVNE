@@ -283,12 +283,12 @@ function Voluntariado() {
                   className="mt-1.5 w-full rounded-xl border border-line bg-paper px-3 py-3 text-base font-normal text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold dark:border-white/15 dark:bg-navy-deep dark:text-cream"
                 />
               </label>
-              
+
               <div className="mt-5">
                   <p className="mb-2 text-sm font-semibold text-navy dark:text-cream">
                     <T>Verificación de seguridad</T>
                   </p>
-                  
+
                   <Turnstile
                     key={turnstileKey}
                     siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
@@ -310,7 +310,7 @@ function Voluntariado() {
                     }}
                     />
                 </div>
-              
+
               <label className="absolute -left-[9999px]" aria-hidden="true">
                 <T>Sitio web</T>
                 <input

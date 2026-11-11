@@ -11,8 +11,8 @@ import { fileURLToPath } from "node:url";
 import { siteOrigin, publicPages } from "./site-origin.mjs";
 import { mediaFiles, publicMediaPath } from "../src/data/media-files.mjs";
 
-// Vite serves a generated public directory. Originals remain in Git, but are not
-// copied twice into every deployment. This script never mutates source assets.
+
+
 const publicDir = new URL("../public/", import.meta.url);
 const output = new URL("../.generated-public/", import.meta.url);
 rmSync(output, { recursive: true, force: true });

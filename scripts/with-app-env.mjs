@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-/**
- * Small cross-platform command runner used by npm scripts.
- * Environment variables are supplied by the shell/Vercel; no generator config
- * file is read and no application secrets are loaded from the repository.
- */
+
+
+
+
+
 import { spawn } from "node:child_process";
 
 const [command, ...args] = process.argv.slice(2);

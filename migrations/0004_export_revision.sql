@@ -1,4 +1,4 @@
--- A committed revision lets multi-page exports reject changes instead of silently mixing states.
+
 CREATE TABLE IF NOT EXISTS volunteer_export_revision (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   revision BIGINT NOT NULL DEFAULT 0

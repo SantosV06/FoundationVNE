@@ -1,6 +1,6 @@
 import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 
-// Fixed, memory-hard parameters; never accept work factors from stored/user input.
+
 const options = { N: 131072, r: 8, p: 1, maxmem: 160 * 1024 * 1024 };
 function derive(password: string, salt: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {

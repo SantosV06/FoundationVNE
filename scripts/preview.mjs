@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-/**
- * Owns :8081, the built-output QA preview.
- *
- * `vite preview` is strictPort, so a preview left over from an earlier turn
- * both fails the next start and keeps serving the previous build's output.
- * Every restart therefore kills the current port owner first, whoever started
- * it. Owners come from /proc, so this runs only inside the Linux sandbox.
- *
- *   node scripts/preview.mjs stop|restart
- */
+
+
+
+
+
+
+
+
+
+
 import { spawn } from "node:child_process";
 import { tmpdir } from "node:os";
 import {
@@ -46,15 +46,15 @@ export function parsePreviewArgs(argv) {
 
 export function parsePid(text) {
   const pid = Number.parseInt(String(text ?? "").trim(), 10);
-  // pid 1 is the sandbox init — never the preview, and dangerous to signal.
+
   return Number.isInteger(pid) && pid > 1 ? pid : null;
 }
 
-/** pgid of a process from its /proc/<pid>/stat line. */
+
 export function parsePgid(stat) {
   const line = String(stat ?? "");
-  // The comm field is parenthesised and may itself contain spaces; state, ppid
-  // and pgrp are the three fields after it.
+
+
   const end = line.lastIndexOf(") ");
   if (end === -1) return null;
   const pgid = Number.parseInt(line.slice(end + 2).split(/\s+/)[2], 10);
@@ -63,7 +63,7 @@ export function parsePgid(stat) {
 
 const TCP_LISTEN = "0A";
 
-/** Socket inodes of the LISTEN sockets on `port` in a /proc/net/tcp{,6} dump. */
+
 export function parseListenerInodes(procNetTcp, port) {
   const wanted = `:${port.toString(16).toUpperCase().padStart(4, "0")}`;
   const inodes = [];
@@ -76,25 +76,25 @@ export function parseListenerInodes(procNetTcp, port) {
 }
 
 export function looksLikePreviewProcess(cmdline) {
-  // /proc/<pid>/cmdline is NUL-separated.
+
   const argv = String(cmdline ?? "")
     .split("\0")
     .filter(Boolean)
     .join(" ");
-  // Avoid signalling another preview-management script running concurrently.
+
   if (/\bpreview[\w-]*\.mjs\b/.test(argv)) return false;
-  // The `npm run preview` wrapper (`npm-cli.js run preview`) and its vite child.
-  // `preview` must be the whole script name: `run preview:stop`/`preview:restart`
-  // are this tooling's own wrappers, and `vite build --outDir preview-dist` is
-  // not a server.
+
+
+
+
   return /\brun\s+preview(?:\s|$)/.test(argv) || /\bvite\b\s+preview\b/.test(argv);
 }
 
-/**
- * Pids to signal. Port owners are owners by definition; the pidfile pid is only
- * a claim left by an earlier run — pids are re-used across hibernate/revive, so
- * signal it only when its command line still looks like the preview.
- */
+
+
+
+
+
 export function previewOwners({ portPids, pidFilePid, cmdlineOf }) {
   const owners = new Set(portPids);
   if (
@@ -116,11 +116,11 @@ async function waitForExit(pids, { isAlive, sleep, timeoutMs, pollMs }) {
   return remaining;
 }
 
-/**
- * SIGTERM every live pid, then SIGKILL whatever outlives the grace period.
- * Returns `{ signalled, killed, stubborn }` — `stubborn` is still alive after
- * the SIGKILL wait, which means the port is not reliably free.
- */
+
+
+
+
+
 export async function terminatePids(
   pids,
   { kill, isAlive, sleep, graceMs = GRACE_MS, pollMs = POLL_MS },
@@ -133,11 +133,11 @@ export async function terminatePids(
   return { signalled, killed, stubborn };
 }
 
-/**
- * What `stop` reports. `after` is the post-kill port check: `unattributed: true`
- * means a listener exists whose pid could not be resolved, so it may not claim
- * the port is free.
- */
+
+
+
+
+
 export function stopOutcome({ signalled, stubborn, after }) {
   const held = [...new Set([...stubborn, ...after.pids])];
   if (held.length > 0) {
@@ -176,21 +176,21 @@ function pgidOf(pid) {
 }
 
 function killPid(pid, signal) {
-  // restart() detaches the server into its own process group, so signal the
-  // group to reach `vite` under the `npm` wrapper. Only for a leader: `-pid` on
-  // a pid that leads no group still reaches any unrelated group numbered pid.
+
+
+
   if (pgidOf(pid) === pid) {
     try {
       process.kill(-pid, signal);
       return;
     } catch {
-      // The group exited between the pgid read and the signal.
+
     }
   }
   try {
     process.kill(pid, signal);
   } catch {
-    // Exited between the liveness check and the signal.
+
   }
 }
 
@@ -198,7 +198,7 @@ function cmdlineOf(pid) {
   try {
     return readFileSync(`/proc/${pid}/cmdline`, "utf8");
   } catch {
-    // Usually a dead pid — the stale pidfile this corroboration exists for.
+
     return "";
   }
 }
@@ -221,7 +221,7 @@ function pidsForSocketInodes(inodes) {
     try {
       fds = readdirSync(`/proc/${pid}/fd`);
     } catch {
-      // Exited mid-scan, or owned by another user.
+
       continue;
     }
     for (const fd of fds) {
@@ -231,17 +231,17 @@ function pidsForSocketInodes(inodes) {
           break;
         }
       } catch {
-        // fd closed mid-scan.
+
       }
     }
   }
   return pids;
 }
 
-/**
- * `{ pids, unattributed }` — `unattributed: true` when the port has a listener
- * whose owning pid could not be resolved (an fd dir we may not read).
- */
+
+
+
+
 function portOwners() {
   const inodes = new Set();
   for (const file of ["/proc/net/tcp", "/proc/net/tcp6"]) {
@@ -249,7 +249,7 @@ function portOwners() {
     try {
       dump = readFileSync(file, "utf8");
     } catch {
-      // tcp6 is absent when the box has no IPv6.
+
       continue;
     }
     for (const inode of parseListenerInodes(dump, PREVIEW_PORT)) inodes.add(inode);
@@ -268,8 +268,8 @@ async function stop(announce = true) {
 
   const outcome = stopOutcome({ signalled, stubborn, after: portOwners() });
   if (!outcome.ok) {
-    // Keep the pidfile: a survivor the port scan cannot attribute leaves it as
-    // the only record a retry could use.
+
+
     console.error(`[preview] ${outcome.error}`);
     return false;
   }
@@ -282,7 +282,7 @@ async function waitForReady(failure) {
   const deadline = Date.now() + READY_TIMEOUT_MS;
   while (Date.now() < deadline && failure() === null) {
     try {
-      // Any HTTP response means the server is bound; a 404 is still ready.
+
       await fetch(PREVIEW_URL, { signal: AbortSignal.timeout(2000) });
       return true;
     } catch {
@@ -320,8 +320,8 @@ async function restart() {
       `nothing answered on ${PREVIEW_URL} within ${secs}s — check that vite.config.ts ` +
         `still sets preview.port ${PREVIEW_PORT}`;
     console.error(`[preview] ${why} — see ${LOG_FILE}`);
-    // A server that binds a few seconds later would serve a build the agent has
-    // already been told to distrust.
+
+
     await stop(false);
     return 1;
   }

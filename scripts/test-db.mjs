@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { PGlite } from "@electric-sql/pglite";
 import pg from "pg";
-/** Each integration test process owns a disposable schema. Refuse remote hosts. */
+
 export function testDatabase() {
   if (!process.env.TEST_DATABASE_URL) return new PGlite();
   const url = new URL(process.env.TEST_DATABASE_URL);
@@ -9,7 +9,7 @@ export function testDatabase() {
     throw new Error(
       "TEST_DATABASE_URL must point to local disposable PostgreSQL, never Neon or production.",
     );
-  // Match the production driver's JSON-safe result parsers.
+
   pg.types.setTypeParser(20, Number);
   pg.types.setTypeParser(1082, (value) => value);
   pg.types.setTypeParser(1186, (value) => value);

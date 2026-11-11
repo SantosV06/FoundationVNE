@@ -3,7 +3,7 @@ import { ChevronDown, Globe2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { isLanguage, languageOptions } from "@/lib/i18n/translate";
 
-/** Native selection supports keyboard and mobile pickers without a dropdown runtime. */
+
 export function LanguageSelector() {
   const { language, setLanguage, t } = useLanguage();
   const [ready, setReady] = useState(false);

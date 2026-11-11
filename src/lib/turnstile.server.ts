@@ -3,10 +3,10 @@ export interface TurnstileVerification {
   hostname?: string;
 }
 
-/**
- * Accept only a successful Turnstile response issued for the configured site.
- * The expected hostname must come from server configuration, never from the request.
- */
+
+
+
+
 export function assertTurnstileVerification(
   verification: TurnstileVerification,
   expectedHostname: string,

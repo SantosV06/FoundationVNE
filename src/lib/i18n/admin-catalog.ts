@@ -1,4 +1,4 @@
-// Administrative translations load only with the panel.
+
 export const adminCatalog: Record<string, readonly [string, string]> = {
   "Idioma predeterminado": ["Default language", "Idioma padrão"],
   "Guardar idioma predeterminado": ["Save default language", "Salvar idioma padrão"],

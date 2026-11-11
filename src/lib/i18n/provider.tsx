@@ -15,7 +15,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       try {
         document.cookie = `vne-language=${next}; Path=/; Max-Age=31536000; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
       } catch {
-        /* The explicit language URL remains usable when cookies are blocked. */
+
       }
       void navigate({
         to: ".",
@@ -36,7 +36,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
   useEffect(() => {
     document.documentElement.lang = language;
-    // Use authoritative route metadata rather than previously modified DOM content.
+
     const metadata = matches.flatMap((match) => match.meta ?? []) as {
       title?: string;
       name?: string;

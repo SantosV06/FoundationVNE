@@ -8,11 +8,11 @@ import { assertTurnstileVerification } from "./turnstile.server.ts";
 export const submitVolunteer = createServerFn({ method: "POST" })
   .validator(volunteerSchema)
   .handler(async ({ data }) => {
-    // Reject cross-site submissions before making an outbound Siteverify request.
+
     const { assertTrustedRequest } = await import("./admin-request.server");
     assertTrustedRequest();
 
-    // Mantener el honeypot existente.
+
     if (data.website) return { ok: true };
     const token = data.turnstileToken;
     if (!token) {
@@ -37,9 +37,9 @@ export const submitVolunteer = createServerFn({ method: "POST" })
       throw new Error("El servicio de verificación no está disponible.");
     }
     let verification: { success: boolean; hostname?: string };
-    // The browser E2E suite uses a dummy token because it mocks the external
-    // Turnstile SDK. Bypass Siteverify only inside GitHub Actions with explicit
-    // disposable-test flags; deployed Preview/Production must verify with Cloudflare.
+
+
+
     if (
       process.env.CI === "true" &&
       process.env.E2E_LOCAL_DATABASE === "true" &&
@@ -74,7 +74,7 @@ export const submitVolunteer = createServerFn({ method: "POST" })
       }
     }
     assertTurnstileVerification(verification, expectedHostname);
-    // No guardar el token de seguridad en la base de datos.
+
     const { turnstileToken: _turnstileToken, ...volunteerData } = data;
     const { saveVolunteerRequest } = await import("./volunteer-service.server");
     const result = await saveVolunteerRequest(volunteerData);
@@ -83,7 +83,7 @@ export const submitVolunteer = createServerFn({ method: "POST" })
         const { notifyNewVolunteer } = await import("./brevo-email.server");
         await notifyNewVolunteer(volunteerData);
       } catch {
-        // The request is already saved; mail infrastructure must not fail the form.
+
         console.error(JSON.stringify({ event: "email:notification-unavailable" }));
       }
     }
@@ -116,7 +116,7 @@ export const listVolunteerRequests = createServerFn({ method: "GET" })
     const { listVolunteerRequests } = await import("./volunteer-service.server");
     return listVolunteerRequests(data);
   });
-// Export writes an audit event and must pass the same origin checks as mutations.
+
 export const exportVolunteerRequests = createServerFn({ method: "POST" })
   .validator(
     requestFiltersSchema.omit({ page: true }).extend({
