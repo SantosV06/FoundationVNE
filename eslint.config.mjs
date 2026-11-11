@@ -5,7 +5,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-/** Flat ESLint config for the active TanStack Start application. */
+
 export default tseslint.config(
   {
     ignores: [
@@ -33,9 +33,9 @@ export default tseslint.config(
     rules: {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      // TanStack file routes must export the Route object; it is framework
-      // metadata, not a React component, so allow it without suppressing
-      // Fast Refresh checks for other non-component exports.
+
+
+
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true, allowExportNames: ["Route"] },
@@ -48,6 +48,6 @@ export default tseslint.config(
       "no-empty": ["error", { allowEmptyCatch: true }],
     },
   },
-  // Disable rules that conflict with Prettier formatting.
+
   prettier,
 );

@@ -23,21 +23,21 @@ jobs:
           --health-cmd "pg_isready -U postgres -d vne_test"
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      # Public CI-only credentials, never production secrets.
-      # E2E has no DATABASE_URL and uses local PGLite. The PostgreSQL step uses
-      # TEST_DATABASE_URL against the disposable Postgres 17 service, never a remote database.
+
+
+
       ADMIN_PASSWORD: ci-test-only-password-724
       E2E_ADMIN_PASSWORD: ci-test-only-password-724
       ADMIN_SESSION_SECRET: ci-test-only-session-secret-at-least-32-characters
       E2E_LOCAL_DATABASE: "true"
-      # Enables the deterministic Turnstile test double only in this CI job.
+
       TURNSTILE_TEST_MODE: "true"
       E2E_TOTP_ENABLED: "true"
       ADMIN_TOTP_ENCRYPTION_KEY: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
-      # Official Cloudflare Turnstile test keys; never use these in production.
+
       VITE_TURNSTILE_SITE_KEY: "1x00000000000000000000AA"
       TURNSTILE_SECRET_KEY: "1x0000000000000000000000000000000AA"
-      # Cloudflare test secret returns hostname=localhost; keep the check enabled in E2E.
+
       TURNSTILE_EXPECTED_HOSTNAME: "localhost"
     steps:
       - uses: actions/checkout@v7

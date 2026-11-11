@@ -101,7 +101,7 @@ export async function requireOwner() {
 }
 function clientAddress() {
   const h = getRequest()?.headers;
-  // Vercel overwrites its dedicated header. Do not trust a caller-supplied XFF there.
+
   const value = process.env.VERCEL ? h?.get("x-vercel-forwarded-for") : h?.get("x-forwarded-for");
   return (value ?? "unknown").split(",")[0].trim().slice(0, 128);
 }
@@ -113,7 +113,7 @@ export async function enforceLimit(
   identity = clientAddress(),
 ) {
   const hash = createHmac("sha256", sessionSecret()).update(`${scope}:${identity}`).digest("hex");
-  // Opportunistic housekeeping, including dormant keys, on real traffic.
+
   await sql.query("DELETE FROM request_limits WHERE started_at < NOW() - INTERVAL '1 day'");
   await sql.query("DELETE FROM admin_sessions WHERE expires_at <= NOW()");
   const rows = await sql.query<{ hits: number }>(
@@ -130,7 +130,7 @@ export async function enforceLimit(
 export async function saveVolunteerRequest(input: StoredVolunteerInput) {
   assertTrustedRequest();
   const sql = await database();
-  // A retry of the same request must not create a second record or consume its limit again.
+
   const existing = await sql.query("SELECT id FROM volunteer_requests WHERE request_key = $1", [
     input.requestKey,
   ]);
@@ -146,14 +146,14 @@ export async function saveVolunteerRequest(input: StoredVolunteerInput) {
   return { ok: true, created: inserted.length > 0 };
 }
 async function rejectLogin(sql: Sql, message: string): Promise<never> {
-  // Called only after request budgets pass. Never persist submitted usernames,
-  // IPs, passwords, codes or a reason that reveals whether an account exists.
+
+
   try {
     await sql.query("INSERT INTO admin_events (id, action) VALUES ($1, 'login:failure')", [
       randomUUID(),
     ]);
   } catch {
-    // Failure to record a rejection must never allow login or expose DB errors.
+
     console.error(JSON.stringify({ event: "audit:login-failure-unavailable" }));
   }
   throw new Error(message);
@@ -163,7 +163,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
   privateResponse();
   const sql = await database();
   await enforceLimit(sql, "login", 60, 15);
-  // Scope the account budget to the source connection: one attacker must not lock out everyone.
+
   await enforceLimit(sql, "login", 8, 15, `account:${username}:${clientAddress()}`);
   let [user] = await sql.query<StoredAdmin>(
     `SELECT ${LOGIN_COLUMNS} FROM admin_users WHERE username = $1`,
@@ -171,7 +171,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
   );
   if (!user && username === "admin") {
     const [count] = await sql.query<{ total: number }>("SELECT count(*) AS total FROM admin_users");
-    // The environment password is used ONCE to create the owner, never as a login bypass.
+
     if (Number(count.total) === 0) {
       const { password } = adminSettings();
       if (!constantEquals(inputPassword, password))
@@ -187,7 +187,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
       );
     }
   }
-  // Hash a dummy password for missing accounts too, avoiding a fast username probe.
+
   const valid = user
     ? await verifyPassword(inputPassword, user.passwordHash)
     : (await hashPassword(inputPassword), false);
@@ -200,7 +200,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
   let step: number | null = null;
   let recovery: string | null = null;
   if (user.totp_secret) {
-    // This account-wide budget applies only AFTER a correct password, across all IPs.
+
     await enforceLimit(sql, "login", 8, 5, `mfa:${user.id}`);
     const { decryptTotp, verifyTotpStep, recoveryHash } =
       await import("./admin-totp-crypto.server.ts");
@@ -210,8 +210,8 @@ export async function loginAdministrator(inputPassword: string, username = "admi
       return rejectLogin(sql, "Código de autenticación inválido o ya utilizado.");
   }
   const token = newSessionToken();
-  // Lock the account and consume proof in the SAME statement that creates the
-  // session and audit. Concurrent logins cannot reuse a TOTP or recovery code.
+
+
   const inserted = await sql.query(
     `WITH locked AS MATERIALIZED (
        SELECT * FROM admin_users WHERE id=$4 AND enabled=true AND password_hash=$5
@@ -321,12 +321,12 @@ export async function logoutAdministrator() {
     const sql = await database();
     await sql.query("DELETE FROM admin_sessions WHERE token_hash = $1", [tokenHash(raw)]);
   }
-  // Only confirm logout after server-side revocation succeeds.
+
   deleteCookie(COOKIE, { path: "/" });
   return { ok: true };
 }
 function filterSql(filters: Pick<RequestFilters, "search" | "status" | "trash">) {
-  // Escape LIKE metacharacters: search is literal, and all values stay bound.
+
   const search = `%${filters.search.replace(/[\\%_]/g, "\\$&")}%`;
   return {
     where: `deleted_at IS ${filters.trash ? "NOT " : ""}NULL AND ($1 = '%%' OR concat_ws(' ', nombre, apellido, correo, telefono) ILIKE $1) AND ($2 = '' OR status = $2)`,
@@ -364,7 +364,7 @@ export async function exportVolunteerRequests(
         `SELECT to_char(NOW() AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`,
       )
     )[0].now;
-  // Rows and revision come from ONE PostgreSQL statement snapshot.
+
   const [batch] = await sql.query<{ revision: string; rows: VolunteerRequest[] }>(
     `SELECT r.revision::text AS revision, COALESCE(jsonb_agg(p ORDER BY p.fecha DESC, p.id DESC) FILTER (WHERE p.id IS NOT NULL), '[]'::jsonb) AS rows
      FROM volunteer_export_revision r LEFT JOIN LATERAL (
@@ -377,9 +377,9 @@ export async function exportVolunteerRequests(
   if (revision !== undefined && revision !== batch.revision)
     throw new Error("Las solicitudes cambiaron durante la exportación. Vuelve a descargar el CSV.");
   const rows = batch.rows;
-  // Record server delivery, not a completed local download. Never copy volunteer
-  // data or the search text into the audit log. If this write fails, no batch
-  // is returned to the browser.
+
+
+
   await sql.query(
     `INSERT INTO admin_events (id, action, actor_id, actor_username, after_value)
      VALUES ($1, 'export:batch', $2, $3, $4::jsonb)`,
@@ -430,8 +430,8 @@ export async function changeVolunteerRequest(
         ? ", deleted_at = NULL"
         : "");
   const guard = action === "restore" ? "v.deleted_at IS NOT NULL" : "v.deleted_at IS NULL";
-  // Capture the previous state and applicant address under the same row lock.
-  // The audit event and update remain in one SQL statement.
+
+
   const changed = await sql.query<{
     correo: string;
     nombre: string;
@@ -486,7 +486,7 @@ export async function changeVolunteerRequest(
           status,
         });
       } catch {
-        // The status and audit are already committed; email must not undo them.
+
         console.error(JSON.stringify({ event: "email:status-notification-unavailable" }));
       }
     }

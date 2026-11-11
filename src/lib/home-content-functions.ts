@@ -10,8 +10,8 @@ export const getPublicHomeContent = createServerFn({ method: "GET" }).handler(as
     );
     return row ? homeContentSchema.parse(row.content) : defaultHomeContent;
   } catch {
-    // Keep the institutional homepage available during a DB incident. Do not
-    // expose SQL, connection strings or database errors to the browser/logs.
+
+
     console.warn(JSON.stringify({ event: "home-content:unavailable" }));
     return defaultHomeContent;
   }

@@ -1,5 +1,5 @@
--- Old deployments omit totp_version and would otherwise bypass the new login.
--- Enforce the account epoch in the DB as well as in the current application.
+
+
 CREATE OR REPLACE FUNCTION vne_guard_admin_session() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE account_version INTEGER; account_enabled BOOLEAN;
 BEGIN

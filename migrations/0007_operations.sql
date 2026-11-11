@@ -1,4 +1,4 @@
--- Additive only: no volunteer data or existing credentials are removed.
+
 CREATE TABLE admin_policy (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   require_two_factor BOOLEAN NOT NULL DEFAULT false,

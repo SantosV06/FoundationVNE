@@ -1,5 +1,5 @@
-// Citibank checkout. The token has to reach the browser, so it is not an API secret,
-// but it still stays out of git. Card numbers never come through this file.
+
+
 
 export type CitybankGatewayInput = {
   token?: string | null;
@@ -86,7 +86,7 @@ export function resolveCitybankGateway(input: CitybankGatewayInput): CitybankGat
   return { status: "ready", embed };
 }
 
-// Origin for frame-src. Null leaves the baseline CSP alone.
+
 export function citybankFrameOrigin(
   token?: string | null,
   iframeUrl?: string | null,
@@ -135,7 +135,7 @@ function parseEmail(raw: string): string | null {
   return email;
 }
 
-// Iframe address after the donor confirms. Null if it would leave the bank origin.
+
 export function openCitybankEmbed(embed: string, donor: DonorFields): string | null {
   const base = probeEmbed(embed);
   if (!base) return null;

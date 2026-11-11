@@ -1,4 +1,4 @@
-/** Read-only checks after provisioning or restoring a Neon branch. Never writes or prints credentials. */
+
 import pg from "pg";
 import { readdir } from "node:fs/promises";
 import { decryptTotp, totpConfigured } from "../src/lib/admin-totp-crypto.server.ts";
@@ -35,7 +35,7 @@ async function main() {
     } = await client.query(
       "SELECT (SELECT count(*)::integer FROM volunteer_requests) AS applications, (SELECT count(*)::integer FROM admin_users) AS accounts, (SELECT count(*)::integer FROM admin_users WHERE totp_secret IS NOT NULL) AS protected",
     );
-    // Verify every enrolled key without exposing secrets or TOTP values.
+
     let keyReadable = counts.protected === 0;
     if (counts.protected && totpConfigured()) {
       const { rows } = await client.query(

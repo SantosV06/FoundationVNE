@@ -10,7 +10,7 @@ type BrevoMessage = {
 
 const API_URL = "https://api.brevo.com/v3/smtp/email";
 
-/** Resolve the canonical HTTPS site origin for links sent by server-side email. */
+
 export function resolveSiteOrigin(env: NodeJS.ProcessEnv = process.env): string {
   const configured = env.SITE_URL?.trim();
   const vercelHost = env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
@@ -82,21 +82,21 @@ async function sendBrevoMessage(
     });
 
     if (!response.ok) {
-      // Do not log response bodies, recipient addresses, or volunteer data.
+
       console.error(
         JSON.stringify({ event: "email:send-failed", type: event, status: response.status }),
       );
     }
   } catch {
-    // Email is a side effect; a provider/network failure must not undo a saved request.
+
     console.error(JSON.stringify({ event: "email:send-failed", type: event, reason: "network" }));
   }
 }
 
-/**
- * Sends the volunteer confirmation and internal alert after the request is saved.
- * Missing configuration or a Brevo outage never makes the form submission fail.
- */
+
+
+
+
 export async function notifyNewVolunteer(input: StoredVolunteerInput): Promise<void> {
   const config = emailConfig();
   if (!config) {
@@ -157,10 +157,10 @@ export async function notifyNewVolunteer(input: StoredVolunteerInput): Promise<v
 
 export type VolunteerStatusNotification = "aceptada" | "descartada";
 
-/**
- * Notifies an applicant only when their request is accepted or rejected.
- * This email is independent of the internal new-request mailbox setting.
- */
+
+
+
+
 export async function notifyVolunteerStatus(input: {
   correo: string;
   nombre: string;

@@ -1,5 +1,5 @@
-// Spanish source text stays authoritative. Names, addresses and user data are not translated.
-// Each entry contains [English, Português]. Keep translations local; no external translation service.
+
+
 export const catalog: Record<string, readonly [string, string]> = {
   "0": ["0", "0"],
   "Administración de solicitudes | Fundación VNE": [

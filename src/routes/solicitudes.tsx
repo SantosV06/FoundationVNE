@@ -109,7 +109,7 @@ function Solicitudes() {
       if (mounted.current) setError(message(cause));
     });
   }, [authenticated, refresh, user?.requiresEnrollment]);
-  // Clear personal data from the screen when a session expires or access is revoked.
+
   useEffect(() => {
     if (!authenticated) return;
     let active = true;
@@ -139,7 +139,7 @@ function Solicitudes() {
           setError("Tu sesión terminó. Inicia sesión nuevamente.");
         }
       } catch {
-        // An intermittent network failure is not proof that the session was revoked.
+
       } finally {
         checking = false;
       }

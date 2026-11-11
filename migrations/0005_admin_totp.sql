@@ -1,4 +1,4 @@
--- Additive: existing accounts can enroll individually; volunteer data is unchanged.
+
 ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS totp_secret TEXT;
 ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS totp_last_step BIGINT;
 ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS totp_version INTEGER NOT NULL DEFAULT 0;

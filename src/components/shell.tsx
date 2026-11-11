@@ -32,7 +32,7 @@ function useTheme() {
     try {
       localStorage.setItem("vne-theme", next ? "dark" : "light");
     } catch {
-      /* Storage may be blocked by the browser. */
+
     }
     setDark(next);
   }

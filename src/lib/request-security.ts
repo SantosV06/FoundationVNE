@@ -1,4 +1,4 @@
-/** Browser metadata and Origin must agree. Missing metadata never authorizes a mutation. */
+
 export function isTrustedRequest(request: Request, siteUrl?: string): boolean {
   const site = request.headers.get("sec-fetch-site");
   const origin = request.headers.get("origin");

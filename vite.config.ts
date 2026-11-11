@@ -9,7 +9,7 @@ import { nitro } from "nitro/vite";
 import { siteOrigin } from "./scripts/site-origin.mjs";
 import { isMigrationFile } from "./scripts/migration-plan.mjs";
 
-/** The files `src/lib/db.ts` globs — same directory, same non-recursive scope. */
+
 function hasGlobbedMigrations(root: string): boolean {
   try {
     return readdirSync(join(root, "migrations")).some(isMigrationFile);
@@ -18,7 +18,7 @@ function hasGlobbedMigrations(root: string): boolean {
   }
 }
 
-/** Initialize the disposable PGLite schema before dev-server traffic. */
+
 function pgliteBootstrapPlugin(): Plugin {
   return {
     name: "vne:pglite-bootstrap",
@@ -38,7 +38,7 @@ function pgliteBootstrapPlugin(): Plugin {
   };
 }
 
-// Keep the documented local dev/preview ports stable for the E2E workflow.
+
 export default defineConfig(({ command, isPreview }) => ({
   publicDir: ".generated-public",
   define: { __SITE_ORIGIN__: JSON.stringify(siteOrigin(process.env)) },

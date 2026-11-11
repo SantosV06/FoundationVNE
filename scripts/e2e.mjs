@@ -1,4 +1,4 @@
-/** Local QA only. Run against an explicitly started local dev or built preview. */
+
 import assert from "node:assert/strict";
 import { mkdirSync, readFileSync } from "node:fs";
 import { chromium } from "playwright";
@@ -15,7 +15,7 @@ if (
   throw new Error("E2E only targets a local HTTP(S) server unless BROWSER_ALLOW_EXTERNAL_HOST=1.");
 }
 const built = process.argv.includes("--built");
-// GitHub runners do not have write access to /workspace. Keep local QA captures there.
+
 const screenshots = process.env.GITHUB_WORKSPACE
   ? `${process.env.GITHUB_WORKSPACE}/screenshots`
   : "/workspace/screenshots";
@@ -29,9 +29,9 @@ const excludedExternalHosts = new Set();
 const errors = [];
 try {
   const context = await browser.newContext();
-  // Turnstile is an external anti-bot service. In E2E only, replace its browser
-  // SDK with a deterministic test double. The validate job also sets
-  // TURNSTILE_TEST_MODE, so the server skips Cloudflare siteverify.
+
+
+
   await context.route(
     /^https:\/\/challenges\.cloudflare\.com\/turnstile\/v0\/api\.js(?:\?.*)?$/,
     async (route) => {
@@ -59,8 +59,8 @@ try {
       });
     },
   );
-  // External maps/chrome are outside the local application boundary. Avoid
-  // network-dependent failures; no application API or DB call is intercepted.
+
+
   await context.route(
     /^https:\/\/(?:www\.google\.com|va\.vercel-scripts\.com)\//,
     async (route) => {
@@ -78,7 +78,7 @@ try {
     return route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
   });
   if (built) {
-    // Exercise the actual deployment CSP against the built HTML, not just its syntax.
+
     const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
     const policy = config.headers[0].headers.find(
       (header) => header.key === "Content-Security-Policy",
@@ -264,7 +264,7 @@ try {
     false,
   );
   await chooseLanguage("Español");
-  // A blocked preference store must not break language switching or hydration.
+
   const blocked = await browser.newContext();
   await blocked.route(/^https:\/\/(?:www\.google\.com|va\.vercel-scripts\.com)\//, (route) =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: "" }),
@@ -303,8 +303,8 @@ try {
       .getByLabel("Cómo puedes aportar")
       .fill("Solicitud local desechable para comprobar el flujo completo.");
     await page.getByRole("button", { name: "Registrar solicitud" }).click();
-    // If the server rejects the submission, report the visible form error instead
-    // of hiding the actionable cause behind a generic 30-second heading timeout.
+
+
     const successHeading = page.getByRole("heading", { name: "Solicitud registrada" });
     const formAlert = page.getByRole("alert");
     const submissionResult = await Promise.race([

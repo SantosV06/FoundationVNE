@@ -87,7 +87,7 @@ test("real DB: enrollment, no bypass, atomic one-use proofs, revocation, limits 
     const active = await mfa.beginTwoFactor(password);
     const otp = authenticator(active.secret);
     const activationCode = otp.generate({ timestamp: Date.now() - 30000 });
-    // Force the actual DB audit to fail: all enrollment writes must roll back.
+
     await pg.exec(
       "ALTER TABLE admin_events ADD CONSTRAINT test_audit_failure CHECK(action <> '2fa:enabled')",
     );
@@ -132,8 +132,8 @@ test("real DB: enrollment, no bypass, atomic one-use proofs, revocation, limits 
     );
     await pg.exec("DELETE FROM request_limits");
     const current = otp.generate();
-    // Parallel submissions: the same proof must not mint two sessions.
-    isolatedLoginRequests = true; // separate browsers arrive with no session cookie
+
+    isolatedLoginRequests = true;
     const results = await Promise.allSettled([
       service.loginAdministrator(password, "admin", current),
       service.loginAdministrator(password, "admin", current),
@@ -156,7 +156,7 @@ test("real DB: enrollment, no bypass, atomic one-use proofs, revocation, limits 
       /Forbidden/,
     );
     site = "same-origin";
-    // Missing/wrong encryption keys must never degrade login to password-only.
+
     const key = process.env.ADMIN_TOTP_ENCRYPTION_KEY;
     delete process.env.ADMIN_TOTP_ENCRYPTION_KEY;
     await assert.rejects(service.loginAdministrator(password, "admin", current), /ENCRYPTION_KEY/);
@@ -172,7 +172,7 @@ test("real DB: enrollment, no bypass, atomic one-use proofs, revocation, limits 
     assert.equal((await pg.query("SELECT * FROM admin_sessions")).rows.length, 0);
     await service.loginAdministrator(password);
     assert.equal((await mfa.twoFactorStatus()).enabled, false);
-    // Old session security versions cannot be resurrected after a 2FA change.
+
     await assert.rejects(
       pg.query("UPDATE admin_sessions SET totp_version=0 WHERE user_id=$1", [user.id]),
       /security version/,
