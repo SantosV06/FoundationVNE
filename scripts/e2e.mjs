@@ -176,6 +176,10 @@ try {
       assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
       assert.ok(await menu.evaluate((node) => node === document.activeElement));
       await menu.click();
+      await mobileNav.getByRole("link").first().waitFor();
+      await page.evaluate(() => window.scrollTo(0, 500));
+      await page.waitForFunction(() => !document.querySelector("nav#menu")?.matches(":popover-open"));
+      await page.evaluate(() => window.scrollTo(0, 0));
       const housesLink = mobileNav.locator('a[href^="/casas"]');
       await housesLink.waitFor({ state: "visible" });
       await housesLink.click();
