@@ -60,6 +60,15 @@ function Header() {
   const { t } = useLanguage();
   const { dark, toggle } = useTheme();
 
+  useEffect(() => {
+    const closeMenuOnScroll = () => {
+      const menu = document.getElementById("menu");
+      if (menu?.matches(":popover-open")) menu.hidePopover();
+    };
+
+    window.addEventListener("scroll", closeMenuOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", closeMenuOnScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-paper/90 backdrop-blur-md dark:border-white/10 dark:bg-navy-deep/90">
