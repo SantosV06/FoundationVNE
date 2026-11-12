@@ -209,7 +209,7 @@ export function Footer() {
             <Mail className="size-4 shrink-0 text-gold" aria-hidden="true" />
             <T>{org.email}</T>
           </a>
-          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-cream/70"><T>Soporte técnico del sitio</T></p>
+          <p className="mt-4 text-sm leading-relaxed text-cream/80"><T>Soporte técnico</T></p>
           <a className="mt-1 inline-flex max-w-full break-all text-sm font-semibold underline-offset-4 hover:underline" href={"mailto:" + org.supportEmail}>
             <Mail className="mr-2 size-4 shrink-0 text-gold" aria-hidden="true" />
             <T>{org.supportEmail}</T>
