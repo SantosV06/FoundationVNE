@@ -384,9 +384,10 @@ try {
     const homepageTitle = page.getByLabel("Título de portada (es)", { exact: true });
     await homepageTitle.waitFor();
     await page.waitForFunction(() => {
-      const input = [...document.querySelectorAll("input")].find(
-        (element) => element.getAttribute("aria-label") === "Título de portada (es)",
+      const label = [...document.querySelectorAll("label")].find(
+        (element) => element.textContent?.includes("Título de portada (es)"),
       );
+      const input = label?.querySelector("input") ?? (label?.htmlFor ? document.getElementById(label.htmlFor) : null);
       return input instanceof HTMLInputElement && !input.disabled && input.value.trim().length > 0;
     });
     const originalTitle = await homepageTitle.inputValue();
