@@ -18,7 +18,7 @@ export function localizedHead<
   }));
   const title = localizedMeta.find((meta) => typeof meta.title === "string")?.title;
   const description = localizedMeta.find((meta) => meta.name === "description")?.content;
-  const socialMeta = [
+  const socialMeta: { property?: string; name?: string; content: string }[] = [
     { property: "og:type", content: "website" },
     ...(title ? [{ property: "og:title", content: title }] : []),
     ...(description ? [{ property: "og:description", content: description }] : []),
@@ -28,10 +28,16 @@ export function localizedHead<
     ...(description ? [{ name: "twitter:description", content: description }] : []),
     { name: "twitter:image", content: "https://foundationvne.com/media/impact.webp" },
   ];
-  const socialKeys = new Set(socialMeta.map((meta) => meta.property ?? meta.name));
+  const socialKeys = new Set(socialMeta.map((meta) => meta.property ?? meta.name).filter((key): key is string => typeof key === "string"));
   return {
     ...head,
-    meta: [...localizedMeta.filter((meta) => !socialKeys.has(meta.property ?? meta.name)), ...socialMeta],
+    meta: [
+      ...localizedMeta.filter((meta) => {
+        const key = typeof meta.property === "string" ? meta.property : meta.name;
+        return !key || !socialKeys.has(key);
+      }),
+      ...socialMeta,
+    ],
   };
 }
 function localizedTitle(title: string, language: Language) {
