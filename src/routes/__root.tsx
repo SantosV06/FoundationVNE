@@ -80,6 +80,7 @@ export const Route = createRootRoute({
         ],
       },
       matches.at(-1)?.search ?? {},
+      false,
     ),
   component: RootDocument,
 });
