@@ -10,7 +10,7 @@ import { org } from "@/data/site";
 import { Shell } from "@/components/shell";
 
 export const Route = createFileRoute("/")({
-  head: ({ matches, loaderData }) => {
+  head: ({ matches }) => {
     const search = matches.at(-1)?.search ?? {};
     const language = languageFromSearch(search);
     return localizedHead(
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
           { title: "Fundación VNE | Desarrollo social y económico sostenible" },
           {
             name: "description",
-            content: loaderData?.description?.[language] ?? defaultHomeContent.description[language],
+            content: defaultHomeContent.description[language],
           },
         ],
       },
