@@ -63,6 +63,28 @@ export function CookieConsent() {
     return () => window.removeEventListener("vne:open-cookie-preferences", openPreferences);
   }, []);
 
+  useEffect(() => {
+    if (!preferencesOpen) return;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const dialog = document.getElementById("cookie-preferences-dialog");
+    const focusable = () => Array.from(dialog?.querySelectorAll(
+      'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ) ?? []);
+    focusable()[0]?.focus();
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") { setPreferencesOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const items = focusable();
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => { window.removeEventListener("keydown", handleKeyDown); previousFocus?.focus(); };
+  }, [preferencesOpen]);
+
   function choose(analytics: boolean) {
     const wasEnabled = consent?.analytics === true;
     const next = saveConsent(analytics);
@@ -141,6 +163,7 @@ export function CookieConsent() {
           className="fixed inset-0 z-[80] flex items-end justify-center bg-navy/65 p-3 sm:items-center sm:p-6"
         >
           <section
+            id="cookie-preferences-dialog"
             role="dialog"
             aria-modal="true"
             aria-labelledby="cookie-preferences-title"
