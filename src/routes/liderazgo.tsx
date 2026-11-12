@@ -98,7 +98,7 @@ function Liderazgo() {
 
       <section className="bg-card dark:bg-navy">
         <div className="mx-auto max-w-6xl px-5 py-14 sm:px-6">
-          <div className="mb-6"><h2 className="font-display text-3xl text-navy dark:text-cream"><T>Dirección y roles clave</T></h2><p className="mt-2 max-w-2xl leading-relaxed text-mist dark:text-cream/80"><T>Responsabilidades institucionales y técnicas identificadas con transparencia.</T></p></div>
+          <div className="mb-6"><h2 className="font-display text-3xl text-navy dark:text-cream"><T>Dirección y Roles</T></h2><p className="mt-2 max-w-2xl leading-relaxed text-mist dark:text-cream/80"><T>Distribución de Responsabilidades Institucionales y Técnicas</T></p></div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {people.map((person) => (
               <article
