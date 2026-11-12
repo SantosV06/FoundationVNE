@@ -201,7 +201,7 @@ try {
   await page.waitForFunction(() => document.documentElement.lang === "en");
   assert.equal(
     await page.getByRole("heading", { level: 1 }).innerText(),
-    "Productive development that builds lasting capacity.",
+    "An integrated system for social and economic development.",
   );
   assert.ok((await page.title()).includes("Self-sustaining"));
   const paths = [
@@ -383,12 +383,12 @@ try {
     await page.getByRole("button", { name: "Editar portada", exact: true }).click();
     const homepageTitle = page.getByLabel("Título de portada (es)", { exact: true });
     await homepageTitle.waitFor();
-    await page.waitForFunction(
-      () =>
-        ![...document.querySelectorAll("input")].find(
-          (x) => x.value === "Desarrollo productivo que deja capacidad instalada.",
-        )?.disabled,
-    );
+    await page.waitForFunction(() => {
+      const input = [...document.querySelectorAll("input")].find(
+        (element) => element.getAttribute("aria-label") === "Título de portada (es)",
+      );
+      return input instanceof HTMLInputElement && !input.disabled && input.value.trim().length > 0;
+    });
     const originalTitle = await homepageTitle.inputValue();
     await homepageTitle.fill(`Portada QA ${suffix}`);
     await page.getByRole("button", { name: "Guardar portada", exact: true }).click();
