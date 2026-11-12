@@ -319,6 +319,15 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("vne:open-cookie-preferences"))}
+                className="text-left text-gold underline-offset-4 hover:underline"
+              >
+                <T>Preferencias de cookies</T>
+              </button>
+            </li>
           </ul>
           <Link
             to="/"
