@@ -201,7 +201,7 @@ try {
   await page.waitForFunction(() => document.documentElement.lang === "en");
   assert.equal(
     await page.getByRole("heading", { level: 1 }).innerText(),
-    "An integrated system for social and economic development.",
+    "Productive development that builds lasting capacity.",
   );
   assert.ok((await page.title()).includes("Self-sustaining"));
   const paths = [
@@ -386,7 +386,7 @@ try {
     await page.waitForFunction(
       () =>
         ![...document.querySelectorAll("input")].find(
-          (x) => x.value === "Somos Fundación VNE, Venezuela Nueva Esperanza.",
+          (x) => x.value === "Desarrollo productivo que deja capacidad instalada.",
         )?.disabled,
     );
     const originalTitle = await homepageTitle.inputValue();
