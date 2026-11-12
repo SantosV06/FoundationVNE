@@ -79,9 +79,19 @@ export const legalPages: Record<
         paragraphs: ["El funcionamiento del sitio puede generar:"],
         list: [
           "Registros de seguridad y disponibilidad: dirección IP, fecha, hora y datos del navegador o del dispositivo.",
-          "Medición de visitas con Vercel Analytics y Speed Insights.",
+          "Medición de visitas y rendimiento con Vercel Analytics y Speed Insights, únicamente cuando la persona acepta las analíticas.",
           "La sesión del personal que entra al panel de solicitudes. Esa sesión no es pública.",
           "El resultado de Cloudflare Turnstile en el formulario de voluntariado, solo para distinguir un envío de una persona de uno automático. No guardamos ese comprobante.",
+        ],
+      },
+      {
+        heading: "Cookies y almacenamiento local",
+        paragraphs: [
+          "El sitio no utiliza publicidad ni cookies de seguimiento comercial. Utiliza tecnologías necesarias para prestar las funciones solicitadas y, de forma opcional, herramientas de medición.",
+          "Las cookies necesarias incluyen vne-language, que recuerda el idioma elegido durante un año, y la cookie de sesión administrativa, que mantiene el acceso seguro al panel durante un máximo de ocho horas. Cloudflare Turnstile puede ejecutarse en el formulario de voluntariado para prevenir envíos automatizados.",
+          "El tema visual se guarda en el almacenamiento local del navegador hasta que usted lo cambie o borre los datos del sitio. La elección sobre analíticas también se guarda en el almacenamiento local durante seis meses; al vencer ese plazo se vuelve a solicitar la preferencia.",
+          "Las analíticas opcionales son Vercel Analytics y Speed Insights. No se cargan ni miden visitas o rendimiento hasta que usted las acepta. Si las rechaza, permanecen desactivadas. Puede cambiar o retirar su decisión en cualquier momento desde el enlace Preferencias de cookies del pie de página. Al retirar el consentimiento, se recarga la página para detener cualquier medición que ya se hubiera iniciado.",
+          "La información que generen las herramientas de medición se conserva conforme a las condiciones y plazos aplicables de Vercel. La fundación no establece un plazo independiente de conservación para esos datos.",
         ],
       },
       {
@@ -101,7 +111,7 @@ export const legalPages: Record<
       {
         heading: "Base del tratamiento",
         paragraphs: [
-          "La consulta o la solicitud se trata porque usted la envía para que la fundación la revise. La seguridad, la medición y los registros técnicos se tratan para operar el sitio.",
+          "La consulta o la solicitud se trata porque usted la envía para que la fundación la revise. La seguridad y los registros técnicos necesarios se tratan para operar y proteger el sitio. La medición de visitas y rendimiento se realiza únicamente con su consentimiento, que puede retirar cuando quiera.",
           "Puede pedir que dejemos de usar una solicitud escribiendo a info@foundationvne.com. Eso no borra un registro que haya que conservar por una obligación legal, una disputa o una revisión de seguridad.",
         ],
       },
@@ -144,7 +154,7 @@ export const legalPages: Record<
         heading: "Cambios",
         paragraphs: [
           "Si este aviso cambia en algo relevante, se actualiza la fecha y el texto vigente queda en esta misma página.",
-          "Última actualización: 10 de noviembre de 2026.",
+          "Última actualización: 12 de noviembre de 2026.",
         ],
       },
     ],
