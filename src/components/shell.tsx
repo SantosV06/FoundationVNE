@@ -205,12 +205,14 @@ export function Footer() {
             <Phone className="size-4 text-gold" aria-hidden="true" />
             <T>{org.executivePhone}</T>
           </a>
-          <a
-            className="mt-4 flex w-fit max-w-full items-center gap-2 break-all text-sm font-semibold"
-            href={`mailto:${org.email}`}
-          >
+          <a className="mt-4 flex w-fit max-w-full items-center gap-2 break-all text-sm font-semibold underline-offset-4 hover:underline" href={"mailto:" + org.email}>
             <Mail className="size-4 shrink-0 text-gold" aria-hidden="true" />
             <T>{org.email}</T>
+          </a>
+          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-cream/70"><T>Soporte técnico del sitio</T></p>
+          <a className="mt-1 inline-flex max-w-full break-all text-sm font-semibold underline-offset-4 hover:underline" href={"mailto:" + org.supportEmail}>
+            <Mail className="mr-2 size-4 shrink-0 text-gold" aria-hidden="true" />
+            <T>{org.supportEmail}</T>
           </a>
           <div className="mt-5 flex gap-2">
             <a
@@ -352,6 +354,8 @@ export function Footer() {
         <T>. Todos los derechos reservados.</T>
         <br />
         <T>Este sitio es informativo y no constituye un compromiso legal ni financiero.</T>
+        <br />
+        <T>Desarrollo y seguridad: Felipe D. Santo</T>
       </div>
     </footer>
   );
