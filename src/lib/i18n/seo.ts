@@ -34,8 +34,7 @@ export function localizedHead<
     ...head,
     meta: [
       ...localizedMeta.filter((meta) => {
-        const property = (meta as { property?: string }).property;
-        const key = property ?? meta.name;
+        const key = "property" in meta && typeof meta.property === "string" ? meta.property : meta.name;
         return !key || !socialKeys.has(key);
       }),
       ...socialMeta,
