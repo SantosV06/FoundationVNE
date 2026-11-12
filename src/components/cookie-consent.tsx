@@ -67,11 +67,11 @@ export function CookieConsent() {
     if (!preferencesOpen) return;
     const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const dialog = document.getElementById("cookie-preferences-dialog");
-    const focusable = () => Array.from(dialog?.querySelectorAll(
+    const focusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>(
       'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
     ) ?? []);
     focusable()[0]?.focus();
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") { setPreferencesOpen(false); return; }
       if (event.key !== "Tab") return;
       const items = focusable();
