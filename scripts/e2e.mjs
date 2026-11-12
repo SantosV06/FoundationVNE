@@ -136,7 +136,7 @@ try {
     await page.getByRole("heading", { level: 1 }).waitFor();
     await page.evaluate(() => document.fonts.ready);
     await page.waitForFunction(() =>
-      Object.keys(document.querySelector("button[aria-controls=menu-movil]") ?? {}).some((key) =>
+      Object.keys(document.querySelector("button[aria-controls="menu"]") ?? {}).some((key) =>
         key.startsWith("__reactProps"),
       ),
     );
@@ -168,12 +168,12 @@ try {
       );
     }
     if (name === "mobile") {
-      const menu = page.locator('button[aria-controls="menu-movil"]');
-      const mobileNav = page.locator("nav#menu-movil");
+      const menu = page.locator('button[aria-controls="menu"]');
+      const mobileNav = page.locator("nav#menu");
       await menu.click();
       await mobileNav.getByRole("link").first().waitFor();
       await page.keyboard.press("Escape");
-      assert.equal(await mobileNav.count(), 0);
+      assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
       assert.ok(await menu.evaluate((node) => node === document.activeElement));
       await menu.click();
       const housesLink = mobileNav.locator('a[href^="/casas"]');
