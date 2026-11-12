@@ -181,7 +181,7 @@ try {
       await housesLink.click();
       await page.waitForURL((url) => url.pathname === "/casas");
       await page.getByRole("heading", { level: 1 }).waitFor();
-      assert.equal(await mobileNav.count(), 0);
+      assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
     }
   }
   async function chooseLanguage(label) {
