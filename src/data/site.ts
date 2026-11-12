@@ -43,7 +43,7 @@ export const legalPages: Record<
   privacidad: {
     title: "Política de privacidad",
     description:
-      "Aviso de privacidad de Fundación Venezuela Nueva Esperanza LLC: qué datos recoge el sitio, para qué, quién más interviene y cómo pedir acceso, corrección o eliminación.",
+      "Aviso de privacidad y cookies de Fundación Venezuela Nueva Esperanza LLC: datos que recoge el sitio, almacenamiento necesario, consentimiento de analíticas y derechos de las personas usuarias.",
     blocks: [
       {
         heading: "Responsable",
@@ -88,7 +88,7 @@ export const legalPages: Record<
         heading: "Cookies y almacenamiento local",
         paragraphs: [
           "El sitio no utiliza publicidad ni cookies de seguimiento comercial. Utiliza tecnologías necesarias para prestar las funciones solicitadas y, de forma opcional, herramientas de medición.",
-          "Las cookies necesarias incluyen vne-language, que recuerda el idioma elegido durante un año, y la cookie de sesión administrativa, que mantiene el acceso seguro al panel durante un máximo de ocho horas. Cloudflare Turnstile puede ejecutarse en el formulario de voluntariado para prevenir envíos automatizados.",
+          "Las cookies necesarias incluyen vne-language, que recuerda el idioma elegido durante un año, y vne-admin-session, una cookie de sesión HttpOnly y SameSite Strict que, en producción, también utiliza Secure. Mantiene el acceso al panel durante un máximo de ocho horas y se elimina al cerrar sesión o al vencer. Cloudflare Turnstile puede ejecutarse en el formulario de voluntariado para prevenir envíos automatizados; sus datos técnicos se rigen por la política de Cloudflare y el resultado de la verificación no se guarda en nuestra base de datos.",
           "El tema visual se guarda en el almacenamiento local del navegador hasta que usted lo cambie o borre los datos del sitio. La elección sobre analíticas también se guarda en el almacenamiento local durante seis meses; al vencer ese plazo se vuelve a solicitar la preferencia.",
           "Las analíticas opcionales son Vercel Analytics y Speed Insights. No se cargan ni miden visitas o rendimiento hasta que usted las acepta. Si las rechaza, permanecen desactivadas. Puede cambiar o retirar su decisión en cualquier momento desde el enlace Preferencias de cookies del pie de página. Al retirar el consentimiento, se recarga la página para detener cualquier medición que ya se hubiera iniciado.",
           "La información que generen las herramientas de medición se conserva conforme a las condiciones y plazos aplicables de Vercel. La fundación no establece un plazo independiente de conservación para esos datos.",
