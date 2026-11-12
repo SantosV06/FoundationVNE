@@ -1,7 +1,7 @@
 import { T, useLanguage } from "@/lib/i18n";
 import { LanguageSelector } from "./language-selector";
 import { Link } from "@tanstack/react-router";
-import { Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
+import { Mail, Menu, Moon, Phone, Sun } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
 import { media } from "@/data/media";
