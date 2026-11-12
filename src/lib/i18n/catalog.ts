@@ -1276,6 +1276,7 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Os cookies necessários incluem vne-language, que lembra o idioma escolhido por um ano, e vne-admin-session, um cookie de sessão HttpOnly e SameSite Strict que também utiliza Secure em produção. Mantém o acesso ao painel por até oito horas e é removido ao encerrar a sessão ou expirar. O Cloudflare Turnstile pode ser executado no formulário de voluntariado para evitar envios automatizados; seus dados técnicos são regidos pela política da Cloudflare e o resultado da verificação não é armazenado em nosso banco de dados.",
   ],
   "Dirección y Roles": ["Leadership and Roles","Direção e Funções"],
+  "Dirección y roles clave": ["Leadership and key roles","Direção e funções-chave"],
   "Distribución de Responsabilidades Institucionales y Técnicas": ["Distribution of Institutional and Technical Responsibilities","Distribuição das Responsabilidades Institucionais e Técnicas"],
   "Wilmer J. Solorzano": ["Wilmer J. Solorzano","Wilmer J. Solorzano"],
   "Stefany V. Solorzano": ["Stefany V. Solorzano","Stefany V. Solorzano"],
