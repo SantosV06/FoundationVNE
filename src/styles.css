@@ -157,16 +157,16 @@
   color: var(--color-cream);
 }
 
-.min-h-screen:has(.vne-hero) > header nav#menu-movil {
+.min-h-screen:has(.vne-hero) > header nav#menu {
   border-color: rgb(255 255 255 / 12%);
   background: var(--color-navy-deep);
 }
 
-.min-h-screen:has(.vne-hero) > header nav#menu-movil a {
+.min-h-screen:has(.vne-hero) > header nav#menu a {
   color: var(--color-cream);
 }
 
-.min-h-screen:has(.vne-hero) > header nav#menu-movil a[aria-current="page"] {
+.min-h-screen:has(.vne-hero) > header nav#menu a[aria-current="page"] {
   background: var(--color-gold);
   color: var(--color-navy-deep);
 }
@@ -450,4 +450,17 @@ html.dark .min-h-screen:has(.vne-hero) > main > section:not(.vne-hero):last-of-t
     text-align: start;
     text-align-last: auto;
   }
+}
+
+
+/* Menú móvil controlado por la Popover API nativa. */
+#menu:popover-open {
+  display: flex;
+  position: fixed;
+  inset: 4rem 0 auto;
+  width: 100%;
+  max-height: calc(100dvh - 4rem);
+  overflow-y: auto;
+  flex-direction: column;
+  margin: 0;
 }
