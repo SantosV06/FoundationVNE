@@ -9,13 +9,14 @@ export function localizedHead<
   T extends {
     meta?: { title?: string; name?: string; content?: string; [key: string]: unknown }[];
   },
->(head: T, search: Record<string, unknown>): T {
+>(head: T, search: Record<string, unknown>, includeSocial = true): T {
   const language = languageFromSearch(search);
   const localizedMeta = (head.meta ?? []).map((meta) => ({
     ...meta,
     ...(meta.title ? { title: localizedTitle(meta.title, language) } : {}),
     ...(meta.name === "description" && meta.content ? { content: translate(meta.content, language) } : {}),
   }));
+  if (!includeSocial) return { ...head, meta: localizedMeta };
   const title = localizedMeta.find((meta) => typeof meta.title === "string")?.title;
   const description = localizedMeta.find((meta) => meta.name === "description")?.content;
   const socialMeta: { property?: string; name?: string; content: string }[] = [
