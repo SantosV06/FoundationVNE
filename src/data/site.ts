@@ -133,6 +133,7 @@ export const legalPages: Record<
         heading: "Seguridad",
         paragraphs: [
           "El panel exige cuenta de personal, contraseña y un segundo factor. La sesión se guarda de modo que el identificador no quede en claro, y el formulario de voluntariado comprueba que la petición venga de este sitio.",
+          "El desarrollo y la seguridad técnica del sitio están a cargo de Felipe D. Santo, responsable del mantenimiento de las plataformas digitales, la infraestructura tecnológica y la aplicación de medidas de seguridad informática. Este rol no sustituye el canal institucional para ejercer derechos sobre datos personales: info@foundationvne.com.",
           "Ningún sitio puede asegurar la ausencia de incidentes. Si observa un uso indebido de sus datos, escriba a info@foundationvne.com. Los reportes de vulnerabilidad del código se atienden en ese mismo correo.",
         ],
       },
