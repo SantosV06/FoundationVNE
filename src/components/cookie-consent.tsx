@@ -139,9 +139,6 @@ export function CookieConsent() {
       {preferencesOpen ? (
         <div
           className="fixed inset-0 z-[80] flex items-end justify-center bg-navy/65 p-3 sm:items-center sm:p-6"
-          onKeyDown={(event) => {
-            if (event.key === "Escape") setPreferencesOpen(false);
-          }}
         >
           <section
             role="dialog"
