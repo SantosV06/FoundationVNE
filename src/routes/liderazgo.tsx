@@ -42,10 +42,10 @@ const people = [
   {
     initials: "FD",
     photo: null,
-    role: "Tecnología / Desarrollo y Seguridad",
+    role: "DESARROLLO Y SEGURIDAD",
     name: "Felipe D. Santo",
     charge: "Desarrollo tecnológico",
-    text: "Responsable del desarrollo y mantenimiento de las plataformas digitales, la infraestructura tecnológica y la implementación de medidas de seguridad informática.",
+    text: "Responsable del desarrollo de plataformas digitales, infraestructura tecnológica y seguridad informática.",
   },
 ];
 
@@ -65,7 +65,7 @@ function Liderazgo() {
         <div className="editorial-justify space-y-6 text-base leading-relaxed text-mist sm:text-lg dark:text-cream/80">
           <div>
             <h1 className="mb-3 font-display text-3xl text-navy sm:text-4xl dark:text-cream">
-              <T>Una fundación con propósito social, no con vocación asistencial</T>
+              <T>Una fundación con propósito social</T>
             </h1>
             <p>
               <T>
