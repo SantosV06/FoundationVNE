@@ -136,7 +136,7 @@ try {
     await page.getByRole("heading", { level: 1 }).waitFor();
     await page.evaluate(() => document.fonts.ready);
     await page.waitForFunction(() =>
-      Object.keys(document.querySelector("button[aria-controls="menu"]") ?? {}).some((key) =>
+      Object.keys(document.querySelector('button[aria-controls="menu"]') ?? {}).some((key) =>
         key.startsWith("__reactProps"),
       ),
     );
