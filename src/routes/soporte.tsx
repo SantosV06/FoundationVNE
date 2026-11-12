@@ -88,6 +88,13 @@ function Soporte() {
           </p>
         </article>
       </section>
+      <section className="mx-auto max-w-6xl px-5 pb-14 sm:px-6">
+        <article className="rounded-card border border-line bg-card p-6 dark:border-white/10 dark:bg-navy">
+          <h2 className="font-display text-2xl text-navy dark:text-cream"><T>Cómo protegemos los datos</T></h2>
+          <p className="mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/80"><T>Limitamos la información a la necesaria para atender cada solicitud, protegemos el acceso interno con controles de autenticación y segundo factor, filtramos envíos automatizados y mantenemos las analíticas opcionales desactivadas hasta recibir autorización. No pedimos ni almacenamos números de tarjeta o credenciales bancarias.</T></p>
+          <p className="mt-3 text-sm text-mist dark:text-cream/75"><T>Para consultas sobre datos personales, escribe a</T>{" "}<a className="font-semibold underline" href={"mailto:" + org.email}>{org.email}</a>.</p>
+        </article>
+      </section>
     </Shell>
   );
 }
