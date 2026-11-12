@@ -2,7 +2,7 @@ import { T, useLanguage } from "@/lib/i18n";
 import { LanguageSelector } from "./language-selector";
 import { Link } from "@tanstack/react-router";
 import { Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
 import { media } from "@/data/media";
 
@@ -59,48 +59,12 @@ export function Shell({ children }: { children: ReactNode }) {
 function Header() {
   const { t } = useLanguage();
   const { dark, toggle } = useTheme();
-  const [open, setOpen] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
-  const menuPanel = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    const desktop = window.matchMedia("(min-width: 1280px)");
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    menuPanel.current?.querySelector<HTMLElement>("a")?.focus();
-    const close = () => setOpen(false);
-    const keyboard = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        close();
-        menuButton.current?.focus();
-      }
-    };
-    // This is a navigation disclosure, not a modal: Tab remains free to leave it.
-    const focus = (event: FocusEvent) => {
-      if (
-        event.target instanceof Node &&
-        !menuPanel.current?.contains(event.target) &&
-        !menuButton.current?.contains(event.target)
-      )
-        close();
-    };
-    document.addEventListener("keydown", keyboard);
-    document.addEventListener("focusin", focus);
-    desktop.addEventListener("change", close);
-    return () => {
-      document.body.style.overflow = overflow;
-      document.removeEventListener("keydown", keyboard);
-      document.removeEventListener("focusin", focus);
-      desktop.removeEventListener("change", close);
-    };
-  }, [open]);
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-paper/90 backdrop-blur-md dark:border-white/10 dark:bg-navy-deep/90">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:gap-3 sm:px-6">
-        <Link to="/" className="flex min-w-0 items-center gap-2.5" onClick={() => setOpen(false)}>
+        <Link to="/" className="flex min-w-0 items-center gap-2.5" >
           <Mark />
           <span className="min-w-0 leading-tight">
             <span className="block font-display text-sm sm:text-[15px] font-semibold tracking-tight text-navy dark:text-cream">
@@ -151,12 +115,10 @@ function Header() {
           <button
             type="button"
             className="grid size-11 place-items-center rounded-full text-navy xl:hidden dark:text-cream"
-            ref={menuButton}
-            aria-expanded={open}
-            aria-controls="menu-movil"
-            onClick={() => setOpen((value) => !value)}
+            popoverTarget="menu"
+            aria-controls="menu"
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            <Menu className="size-5" />
             <span className="sr-only">
               <T>Menú</T>
             </span>
@@ -164,10 +126,9 @@ function Header() {
         </div>
       </div>
 
-      {open ? (
-        <nav
-          ref={menuPanel}
-          id="menu-movil"
+      <nav
+          id="menu"
+          popover="auto"
           className="border-t border-line bg-paper px-4 py-3 xl:hidden dark:border-white/10 dark:bg-navy-deep"
           aria-label={t("Móvil")}
         >
@@ -176,7 +137,7 @@ function Header() {
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => event.currentTarget.closest("nav")?.hidePopover()}
                   className="block rounded-lg px-3 py-3 text-base font-semibold"
                   inactiveProps={{
                     className: "text-navy hover:bg-navy/5 dark:text-cream dark:hover:bg-white/10",
@@ -194,15 +155,14 @@ function Header() {
             <li>
               <Link
                 to="/donaciones"
-                onClick={() => setOpen(false)}
+                onClick={(event) => event.currentTarget.closest("nav")?.hidePopover()}
                 className="mt-1 block rounded-lg bg-navy px-3 py-3 text-center text-base font-semibold text-cream dark:bg-gold dark:text-navy"
               >
                 <T>Donar</T>
               </Link>
             </li>
           </ul>
-        </nav>
-      ) : null}
+      </nav>
     </header>
   );
 }
