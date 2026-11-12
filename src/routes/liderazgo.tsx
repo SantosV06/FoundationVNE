@@ -26,18 +26,26 @@ const people = [
   {
     initials: "WS",
     photo: media.director,
-    role: "Dirección y liderazgo",
-    name: "Wilmer Solórzano",
+    role: "Dirección y Liderazgo",
+    name: "Wilmer J. Solorzano",
     charge: "CEO y fundador",
     text: "Responsable de la visión estratégica, las decisiones institucionales y la proyección de largo plazo.",
   },
   {
     initials: "SS",
     photo: media.coordinator,
-    role: "Coordinación general",
-    name: "Stefany Solorzano",
+    role: "Coordinación General",
+    name: "Stefany V. Solorzano",
     charge: "Planificación estratégica",
     text: "Planificación institucional, coordinación de proyectos y alineación entre las áreas de la organización.",
+  },
+  {
+    initials: "FD",
+    photo: null,
+    role: "Tecnología / Desarrollo y Seguridad",
+    name: "Felipe D. Santo",
+    charge: "Desarrollo tecnológico",
+    text: "Responsable del desarrollo y mantenimiento de las plataformas digitales, la infraestructura tecnológica y la implementación de medidas de seguridad informática.",
   },
 ];
 
@@ -90,21 +98,21 @@ function Liderazgo() {
 
       <section className="bg-card dark:bg-navy">
         <div className="mx-auto max-w-6xl px-5 py-14 sm:px-6">
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="mb-6"><h2 className="font-display text-3xl text-navy dark:text-cream"><T>Dirección y roles clave</T></h2><p className="mt-2 max-w-2xl leading-relaxed text-mist dark:text-cream/80"><T>Responsabilidades institucionales y técnicas identificadas con transparencia.</T></p></div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {people.map((person) => (
               <article
                 key={person.initials}
                 className="rounded-card border border-line bg-paper p-6 dark:border-white/10 dark:bg-navy-deep"
               >
                 <div className="flex items-center gap-4">
-                  <img
-                    src={person.photo}
-                    alt={t(person.name)}
-                    loading="lazy"
-                    width={64}
-                    height={64}
-                    className="size-16 shrink-0 rounded-full object-cover"
-                  />
+                  {person.photo ? (
+                    <img src={person.photo} alt={t(person.name)} loading="lazy" width={64} height={64} className="size-16 shrink-0 rounded-full object-cover" />
+                  ) : (
+                    <div role="img" aria-label={t("Fotografía pendiente de Felipe D. Santo")} className="grid size-16 shrink-0 place-items-center rounded-full border border-gold/40 bg-navy/10 font-display text-xl font-semibold text-navy dark:bg-white/10 dark:text-cream">
+                      {person.initials}
+                    </div>
+                  )}
                   <div>
                     <p className="text-xs font-bold tracking-[0.16em] text-gold-deep uppercase">
                       <T>{person.role}</T>
