@@ -96,8 +96,8 @@ try {
     });
   }
   for (const [language, expected] of [
-    ["en", "We are Fundación VNE, Venezuela Nueva Esperanza."],
-    ["pt", "Somos a Fundación VNE, Venezuela Nueva Esperanza."],
+    ["en", "Productive development that builds lasting capacity."],
+    ["pt", "Desenvolvimento produtivo que deixa capacidade instalada."],
   ]) {
     const response = await fetch(`${base}/?lang=${language}`);
     const html = await response.text();
