@@ -121,12 +121,19 @@ test("real DB: enrollment, no bypass, atomic one-use proofs, revocation, limits 
       .rows;
     assert.equal(failedLogins.length, 2, "invalid passwords and consumed TOTP proofs are audited");
     assert.ok(
-      failedLogins.every(
-        (event) =>
+      failedLogins.every((event) => {
+        const audit = event.after_value as {
+          usernameFingerprint?: unknown;
+          addressFingerprint?: unknown;
+        } | null;
+        return (
           event.actor_username === null &&
-          /^[a-f0-9]{64}$/.test(event.after_value?.usernameFingerprint ?? "") &&
-          /^[a-f0-9]{64}$/.test(event.after_value?.addressFingerprint ?? ""),
-      ),
+          typeof audit?.usernameFingerprint === "string" &&
+          /^[a-f0-9]{64}$/.test(audit.usernameFingerprint) &&
+          typeof audit.addressFingerprint === "string" &&
+          /^[a-f0-9]{64}$/.test(audit.addressFingerprint)
+        );
+      }),
       "failed-login audit stores keyed fingerprints instead of raw identifiers",
     );
     const failureText = JSON.stringify(failedLogins);
