@@ -235,7 +235,6 @@ export function AdminAccounts({
           <label>
             {t("Nueva contraseña de")} {accounts.find((account) => account.id === target)?.username}
             <input
-              autoFocus
               type="password"
               className={field}
               autoComplete="new-password"
