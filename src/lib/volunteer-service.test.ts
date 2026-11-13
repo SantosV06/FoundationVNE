@@ -89,8 +89,11 @@ test("volunteer and admin workflow: durable data, limits, revocation, pagination
   await assert.rejects(service.loginAdministrator("wrong"), /incorrecta/);
   const failures = (await pg.query("SELECT * FROM admin_events WHERE action='login:failure'")).rows;
   assert.equal(failures.length, 1, "a rejected bootstrap login is audited");
-  for (const field of ["actor_id", "actor_username", "request_id", "before_value", "after_value"])
+  for (const field of ["actor_id", "actor_username", "request_id", "before_value"])
     assert.equal(failures[0][field], null, "rejection audit does not retain submitted data");
+  assert.match(failures[0].after_value.usernameFingerprint, /^[a-f0-9]{64}$/);
+  assert.match(failures[0].after_value.addressFingerprint, /^[a-f0-9]{64}$/);
+  assert.doesNotMatch(JSON.stringify(failures[0].after_value), /nonexistent-user|192\.0\.2\.2/);
   await service.loginAdministrator(process.env.ADMIN_PASSWORD);
   await assert.rejects(service.loginAdministrator("wrong", "nonexistent-user"), /incorrecta/);
   failExportAudit = true;
