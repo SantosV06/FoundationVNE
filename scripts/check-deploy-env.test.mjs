@@ -24,6 +24,34 @@ test("production validation fails closed without exposing credentials", () => {
   );
   assert.doesNotThrow(() => validateDeployEnv({ VERCEL_ENV: "preview" }));
 });
+test("Preview requires a dedicated Neon branch and rejects the production database variable", () => {
+  const preview = {
+    VERCEL_ENV: "preview",
+    PREVIEW_DATABASE_ISOLATED: "true",
+    PREVIEW_DATABASE_URL:
+      "postgresql://test:test@ep-preview-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require",
+    PRODUCTION_DATABASE_HOST: "ep-production-pooler.us-east-2.aws.neon.tech",
+  };
+  assert.doesNotThrow(() => validateDeployEnv(preview));
+  assert.throws(
+    () => validateDeployEnv({ ...preview, DATABASE_URL: env.DATABASE_URL }),
+    /must not define DATABASE_URL/,
+  );
+  assert.throws(
+    () => validateDeployEnv({ ...preview, PRODUCTION_DATABASE_HOST: "ep-preview-pooler.us-east-2.aws.neon.tech" }),
+    /must differ/,
+  );
+  assert.throws(
+    () => validateDeployEnv({ ...preview, PRODUCTION_DATABASE_HOST: "" }),
+    /PRODUCTION_DATABASE_HOST/,
+  );
+  assert.throws(
+    () => validateDeployEnv({ ...preview, PREVIEW_DATABASE_URL: "not-a-url" }),
+    /valid PREVIEW_DATABASE_URL/,
+  );
+});
+
+});
 test("production rejects missing, malformed and incorrectly sized TOTP keys without leaking them", () => {
   for (const value of [
     undefined,
