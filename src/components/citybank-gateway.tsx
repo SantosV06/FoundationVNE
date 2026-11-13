@@ -9,13 +9,7 @@ function statusCopy(status: CitybankGatewayPublic["status"]): string {
   if (status === "ready") {
     return "El cobro se abre aquí, en la página de Citibank, después de indicar el monto, el nombre y el correo. Fundación VNE no ve ni guarda el número de la tarjeta.";
   }
-  if (status === "awaiting-url") {
-    return "El token de Citibank ya está configurado. Falta la dirección HTTPS del iframe para abrir la pasarela.";
-  }
-  if (status === "invalid") {
-    return "La configuración de la pasarela no es válida. El pago con tarjeta permanece cerrado hasta corregirla.";
-  }
-  return "Este espacio queda reservado para embeber la pasarela de Citibank. El formulario de tarjeta aparecerá aquí cuando el banco entregue el token y la dirección HTTPS.";
+  return "Estará próximamente disponible.";
 }
 
 function fieldError(field: DonorFieldError): string {
@@ -159,8 +153,7 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
           {closed ? (
             <p role="status" className="mt-3 text-sm font-semibold text-navy dark:text-gold">
               <T>
-                La pasarela sigue cerrada: Citibank todavía no entregó el token o la dirección
-                HTTPS. No se envió ningún pago y estos datos no se guardan.
+                Estará próximamente disponible. No se envió ningún pago y estos datos no se guardan.
               </T>
             </p>
           ) : null}
@@ -197,17 +190,8 @@ export function CitybankGateway({ gateway }: { gateway: CitybankGatewayPublic })
             </>
           ) : (
             <div className="flex h-[280px] flex-col items-center justify-center px-6 text-center sm:h-[360px]">
-              <p className="text-xs font-bold tracking-[0.16em] text-gold-deep uppercase">
-                <T>Citibank</T>
-              </p>
-              <p className="mt-3 max-w-md font-display text-2xl text-navy dark:text-cream">
-                <T>Espacio reservado para el iframe</T>
-              </p>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-mist dark:text-cream/70">
-                <T>
-                  Aquí se embeberá la pasarela cuando Citibank entregue el token y la dirección
-                  HTTPS. Mientras tanto no se abre ningún formulario de tarjeta.
-                </T>
+              <p className="max-w-md font-display text-2xl text-navy dark:text-cream">
+                <T>Estará próximamente disponible.</T>
               </p>
             </div>
           )}

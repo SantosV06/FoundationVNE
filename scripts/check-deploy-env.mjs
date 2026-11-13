@@ -1,5 +1,28 @@
-
 export function validateDeployEnv(env) {
+  if (env.VERCEL_ENV === "preview") {
+    if (env.DATABASE_URL?.trim())
+      throw new Error("Preview must not define DATABASE_URL. Use a dedicated PREVIEW_DATABASE_URL.");
+    if (env.PREVIEW_DATABASE_ISOLATED !== "true") return;
+    let preview;
+    try {
+      preview = new URL(env.PREVIEW_DATABASE_URL ?? "");
+    } catch {
+      throw new Error("An isolated Preview requires a valid PREVIEW_DATABASE_URL.");
+    }
+    const productionHost = env.PRODUCTION_DATABASE_HOST?.trim().toLowerCase().replace(/\.$/, "");
+    if (!productionHost)
+      throw new Error("An isolated Preview requires PRODUCTION_DATABASE_HOST for separation checks.");
+    if (
+      !["postgres:", "postgresql:"].includes(preview.protocol) ||
+      !preview.hostname.endsWith(".neon.tech") ||
+      !preview.hostname.includes("-pooler") ||
+      !["require", "verify-ca", "verify-full"].includes(preview.searchParams.get("sslmode"))
+    )
+      throw new Error("PREVIEW_DATABASE_URL must use a pooled Neon endpoint with SSL.");
+    if (preview.hostname.toLowerCase().replace(/\.$/, "") === productionHost)
+      throw new Error("Preview database host must differ from PRODUCTION_DATABASE_HOST.");
+    return;
+  }
   if (env.VERCEL_ENV !== "production") return;
   if (!env.DATABASE_URL?.trim())
     throw new Error("Production requires DATABASE_URL (Neon pooled connection with SSL).");

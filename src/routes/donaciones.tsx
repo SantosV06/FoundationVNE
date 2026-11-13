@@ -15,7 +15,7 @@ export const Route = createFileRoute("/donaciones")({
           { title: "Donaciones | Fundación VNE" },
           {
             name: "description",
-            content: "Donaciones voluntarias a Fundación VNE por Zelle o con tarjeta en Citibank.",
+            content: "Donaciones a Fundación VNE por Zelle desde la aplicación de su banco o con tarjeta mediante Citibank cuando la pasarela esté habilitada.",
           },
         ],
       },
@@ -53,7 +53,9 @@ function Donaciones() {
         kicker={t("Cómo donar")}
         title={t("Donaciones")}
         lede={t(
-          "Voluntarias. La tarjeta se paga en Citibank y Zelle se envía desde el banco. Este sitio no guarda el número de tarjeta.",
+          gateway.status === "ready"
+            ? "Puedes donar por Zelle desde la aplicación de tu banco o iniciar el pago con tarjeta en Citibank. Fundación VNE no recibe ni guarda el número de tu tarjeta."
+            : "Puedes donar por Zelle desde la aplicación de tu banco. El pago con tarjeta mediante Citibank estará próximamente disponible. Este sitio no solicita ni guarda el número de tarjeta.",
         )}
       />
       <CitybankGateway gateway={gateway} />
@@ -64,8 +66,7 @@ function Donaciones() {
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
           <T>
-            Zelle no pasa por esta página: se usa desde la aplicación del banco, con el número
-            publicado.
+            Zelle no pasa por esta página: se envía desde la aplicación o el sitio seguro de tu banco, con el número publicado. No introduzcas credenciales bancarias ni datos de tarjeta en foundationvne.com; la fundación no los solicita ni los almacena.
           </T>
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -84,7 +85,7 @@ function Donaciones() {
           ))}
         </div>
 
-        <h2 className="font-display text-3xl text-navy dark:text-cream">
+        <h2 className="mt-12 font-display text-3xl text-navy dark:text-cream">
           <T>De dónde sale y a dónde va</T>
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">

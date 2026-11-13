@@ -55,10 +55,11 @@ writeFileSync(
   new URL("robots.txt", output),
   preview
     ? "User-agent: *\nDisallow: /\n"
-    : `User-agent: *\nAllow: /\nDisallow: /solicitudes\n${origin ? `Sitemap: ${origin}/sitemap.xml\n` : ""}`,
+    : `User-agent: *\nAllow: /\n${origin ? `Sitemap: ${origin}/sitemap.xml\n` : ""}`,
 );
-if (origin)
+if (origin) {
   writeFileSync(
     new URL("sitemap.xml", output),
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${publicPages.flatMap((path) => ["es", "en", "pt"].map((lang) => `<url><loc>${origin}${path}?lang=${lang}</loc>${["es", "en", "pt", "x-default"].map((alternate) => `<xhtml:link rel="alternate" hreflang="${alternate}" href="${origin}${path}${alternate === "x-default" ? "" : `?lang=${alternate}`}"/>`).join("")}</url>`)).join("")}</urlset>`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${publicPages.flatMap((path) => ["es", "en", "pt"].map((lang) => `<url><loc>${origin}${path}?lang=${lang}</loc>${["es", "en", "pt", "x-default"].map((alternate) => `<xhtml:link rel="alternate" hreflang="${alternate}" href="${origin}${path}${alternate === "x-default" ? "" : `?lang=${alternate}`}"/>`).join("")}</url>`)).join("\n")}</urlset>\n`,
   );
+}

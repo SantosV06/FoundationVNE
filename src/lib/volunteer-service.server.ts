@@ -36,10 +36,12 @@ function privateResponse() {
   setResponseHeader("Cache-Control", "private, no-store");
 }
 export async function database(): Promise<Sql> {
-  if (process.env.VERCEL_ENV === "preview" && process.env.PREVIEW_DATABASE_ISOLATED !== "true") {
-    throw new Error(
-      "El formulario y el panel están desactivados en esta vista previa hasta configurar una base de datos de pruebas independiente.",
-    );
+  if (process.env.VERCEL_ENV === "preview") {
+    if (process.env.PREVIEW_DATABASE_ISOLATED !== "true" || dbSource !== "neon") {
+      throw new Error(
+        "El formulario y el panel están desactivados en esta vista previa hasta configurar una base de datos de pruebas independiente.",
+      );
+    }
   }
   if (
     process.env.NODE_ENV === "production" &&
@@ -145,15 +147,23 @@ export async function saveVolunteerRequest(input: StoredVolunteerInput) {
   );
   return { ok: true, created: inserted.length > 0 };
 }
-async function rejectLogin(sql: Sql, message: string): Promise<never> {
-
-
+async function rejectLogin(sql: Sql, message: string, username: string): Promise<never> {
   try {
-    await sql.query("INSERT INTO admin_events (id, action) VALUES ($1, 'login:failure')", [
-      randomUUID(),
-    ]);
+    const fingerprint = (scope: string, value: string) =>
+      createHmac("sha256", sessionSecret())
+        .update(`login:${scope}:${value.toLowerCase()}`)
+        .digest("hex");
+    await sql.query(
+      "INSERT INTO admin_events (id, action, after_value) VALUES ($1, 'login:failure', $2::jsonb)",
+      [
+        randomUUID(),
+        JSON.stringify({
+          usernameFingerprint: fingerprint("username", username),
+          addressFingerprint: fingerprint("address", clientAddress()),
+        }),
+      ],
+    );
   } catch {
-
     console.error(JSON.stringify({ event: "audit:login-failure-unavailable" }));
   }
   throw new Error(message);
@@ -175,7 +185,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
     if (Number(count.total) === 0) {
       const { password } = adminSettings();
       if (!constantEquals(inputPassword, password))
-        return rejectLogin(sql, "Usuario o contraseña incorrecta.");
+        return rejectLogin(sql, "Usuario o contraseña incorrecta.", username);
       const hash = await hashPassword(inputPassword);
       await sql.query(
         `INSERT INTO admin_users (id, username, display_name, password_hash, role, bootstrap_key)
@@ -191,7 +201,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
   const valid = user
     ? await verifyPassword(inputPassword, user.passwordHash)
     : (await hashPassword(inputPassword), false);
-  if (!user || !user.enabled || !valid) return rejectLogin(sql, "Usuario o contraseña incorrecta.");
+  if (!user || !user.enabled || !valid) return rejectLogin(sql, "Usuario o contraseña incorrecta.", username);
   const oldToken = getCookie(COOKIE);
   if (oldToken && validSessionToken(oldToken))
     await sql.query("DELETE FROM admin_sessions WHERE token_hash = $1", [tokenHash(oldToken)]);
@@ -207,7 +217,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
     recovery = recoveryHash(user.id, code);
     step = recovery ? null : verifyTotpStep(decryptTotp(user.totp_secret, user.id), code);
     if (step === null && recovery === null)
-      return rejectLogin(sql, "Código de autenticación inválido o ya utilizado.");
+      return rejectLogin(sql, "Código de autenticación inválido o ya utilizado.", username);
   }
   const token = newSessionToken();
 
@@ -250,6 +260,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
     return rejectLogin(
       sql,
       "Código inválido o credenciales modificadas. Inicia sesión nuevamente.",
+      username,
     );
   setCookie(COOKIE, token, {
     httpOnly: true,
@@ -288,18 +299,39 @@ export async function updateAdminAccount(input: {
   id: string;
   enabled?: boolean;
   password?: string;
+  currentPassword?: string;
 }) {
   const { sql, actor } = await requireOwner();
   if (input.id === actor.id && input.enabled !== undefined)
     throw new Error("No puedes desactivar tu propia cuenta.");
+  const [owner] = await sql.query<{ passwordHash: string }>(
+    "SELECT password_hash AS \"passwordHash\" FROM admin_users WHERE id=$1 AND enabled AND role='owner'",
+    [actor.id],
+  );
+  if (!owner) throw new Error("La cuenta propietaria ya no está disponible.");
+  if (input.password !== undefined) {
+    if (!input.currentPassword)
+      throw new Error("Confirma tu contraseña actual para restablecer una contraseña administrativa.");
+    if (!(await verifyPassword(input.currentPassword, owner.passwordHash)))
+      throw new Error("Contraseña actual incorrecta. No se modificó ninguna cuenta.");
+  }
   const hash = input.password ? await hashPassword(input.password) : null;
   const result = await sql.query(
-    `WITH changed AS (
+    `WITH owner AS MATERIALIZED (
+       SELECT id FROM admin_users
+       WHERE id=$8 AND enabled AND role='owner' AND password_hash=$9
+       FOR UPDATE
+     ), changed AS (
        UPDATE admin_users SET password_hash = COALESCE($2::text, password_hash), enabled = COALESCE($3::boolean, enabled)
-       WHERE id = $1 AND ($3::boolean IS NULL OR role <> 'owner') RETURNING id, username, enabled
-     ), revoked AS (DELETE FROM admin_sessions WHERE user_id IN (SELECT id FROM changed))
+       WHERE id = $1 AND EXISTS (SELECT 1 FROM owner)
+         AND ($3::boolean IS NULL OR role <> 'owner')
+       RETURNING id, username, enabled
+     ), revoked AS (
+       DELETE FROM admin_sessions WHERE user_id IN (SELECT id FROM changed)
+     )
      INSERT INTO admin_events (id, action, actor_id, actor_username, after_value)
-       SELECT $4, $5, $6, $7, jsonb_build_object('userId', id, 'username', username, 'enabled', enabled) FROM changed RETURNING id`,
+       SELECT $4, $5, $6, $7, jsonb_build_object('userId', id, 'username', username, 'enabled', enabled)
+       FROM changed RETURNING id`,
     [
       input.id,
       hash,
@@ -308,6 +340,8 @@ export async function updateAdminAccount(input: {
       hash ? "account:password" : "account:access",
       actor.id,
       actor.username,
+      actor.id,
+      owner.passwordHash,
     ],
   );
   if (!result.length) throw new Error("No se pudo modificar esa cuenta.");

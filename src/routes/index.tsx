@@ -10,7 +10,7 @@ import { org } from "@/data/site";
 import { Shell } from "@/components/shell";
 
 export const Route = createFileRoute("/")({
-  head: ({ matches, loaderData }) => {
+  head: ({ matches }) => {
     const search = matches.at(-1)?.search ?? {};
     const language = languageFromSearch(search);
     return localizedHead(
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
           { title: "Fundación VNE | Desarrollo social y económico sostenible" },
           {
             name: "description",
-            content: loaderData?.description?.[language] ?? defaultHomeContent.description[language],
+            content: defaultHomeContent.description[language],
           },
         ],
       },
@@ -72,13 +72,16 @@ function Home() {
           <div className="lg:col-span-8">
             <p className="inline-flex items-center gap-3 text-[11px] font-bold tracking-[0.28em] text-gold uppercase">
               <span className="h-px w-8 bg-gold" />
-              <T>Nueva York · Caracas · desde 2022</T>
+              <T>Desarrollo productivo · autonomía · capacidad instalada</T>
             </p>
             <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.8rem,7vw,6.8rem)] leading-[0.98] font-medium tracking-[-0.045em] text-balance">
               {content.title[language]}
             </h1>
             <p className="mt-7 max-w-2xl text-base leading-relaxed text-cream/85 sm:text-lg sm:leading-8">
               {content.description[language]}
+            </p>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-cream/75 sm:text-base">
+              <T>No nos limitamos a la asistencia puntual: fortalecemos capacidades para que las comunidades puedan producir, organizarse y sostener sus propios proyectos.</T>
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -205,7 +208,7 @@ function Home() {
             <T>Liderazgo</T>
           </p>
           <h2 className="mt-3 font-display text-3xl">
-            <T>Wilmer Solórzano</T>
+            <T>Wilmer J. Solorzano</T>
           </h2>
           <p className="editorial-justify mt-4 leading-relaxed text-cream/80">
             <T>CEO y fundador de Fundación VNE.</T>
@@ -214,7 +217,7 @@ function Home() {
             to="/liderazgo"
             className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-bold text-gold"
           >
-            <T>Estructura y equipo </T>
+            <T>Dirección y roles clave</T>
             <ArrowUpRight className="size-4" />
           </Link>
         </article>

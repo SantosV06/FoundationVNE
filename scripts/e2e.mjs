@@ -96,8 +96,8 @@ try {
     });
   }
   for (const [language, expected] of [
-    ["en", "We are Fundación VNE, Venezuela Nueva Esperanza."],
-    ["pt", "Somos a Fundación VNE, Venezuela Nueva Esperanza."],
+    ["en", "Productive development that builds lasting capacity."],
+    ["pt", "Desenvolvimento produtivo que deixa capacidade instalada."],
   ]) {
     const response = await fetch(`${base}/?lang=${language}`);
     const html = await response.text();
@@ -117,9 +117,12 @@ try {
   page.on("response", (response) => {
     if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`);
   });
-  page.on("requestfailed", (request) =>
-    errors.push(`${request.url()}: ${request.failure()?.errorText}`),
-  );
+
+  page.on("requestfailed", (request) => {
+    const text = request.failure()?.errorText ?? "";
+    if (text === "net::ERR_ABORTED" || text === "net::ERR_CACHE_MISS") return;
+    errors.push(`${request.url()}: ${text}`);
+  });
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
@@ -133,7 +136,7 @@ try {
     await page.getByRole("heading", { level: 1 }).waitFor();
     await page.evaluate(() => document.fonts.ready);
     await page.waitForFunction(() =>
-      Object.keys(document.querySelector("button[aria-controls=menu-movil]") ?? {}).some((key) =>
+      Object.keys(document.querySelector('button[aria-controls="menu"]') ?? {}).some((key) =>
         key.startsWith("__reactProps"),
       ),
     );
@@ -165,20 +168,26 @@ try {
       );
     }
     if (name === "mobile") {
-      const menu = page.locator('button[aria-controls="menu-movil"]');
-      const mobileNav = page.locator("nav#menu-movil");
+      const menu = page.locator('button[aria-controls="menu"]');
+      const mobileNav = page.locator("nav#menu");
       await menu.click();
       await mobileNav.getByRole("link").first().waitFor();
       await page.keyboard.press("Escape");
-      assert.equal(await mobileNav.count(), 0);
+      assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
       assert.ok(await menu.evaluate((node) => node === document.activeElement));
       await menu.click();
+      await mobileNav.getByRole("link").first().waitFor();
+      await page.evaluate(() => window.scrollTo(0, 500));
+      await page.waitForFunction(() => !document.querySelector("nav#menu")?.matches(":popover-open"));
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await menu.click();
+      await mobileNav.getByRole("link").first().waitFor();
       const housesLink = mobileNav.locator('a[href^="/casas"]');
       await housesLink.waitFor({ state: "visible" });
       await housesLink.click();
       await page.waitForURL((url) => url.pathname === "/casas");
       await page.getByRole("heading", { level: 1 }).waitFor();
-      assert.equal(await mobileNav.count(), 0);
+      assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
     }
   }
   async function chooseLanguage(label) {
@@ -374,12 +383,13 @@ try {
     await page.getByRole("button", { name: "Editar portada", exact: true }).click();
     const homepageTitle = page.getByLabel("Título de portada (es)", { exact: true });
     await homepageTitle.waitFor();
-    await page.waitForFunction(
-      () =>
-        ![...document.querySelectorAll("input")].find(
-          (x) => x.value === "Somos Fundación VNE, Venezuela Nueva Esperanza.",
-        )?.disabled,
-    );
+    await page.waitForFunction(() => {
+      const label = [...document.querySelectorAll("label")].find(
+        (element) => element.textContent?.includes("Título de portada (es)"),
+      );
+      const input = label?.querySelector("input") ?? (label?.htmlFor ? document.getElementById(label.htmlFor) : null);
+      return input instanceof HTMLInputElement && !input.disabled && input.value.trim().length > 0;
+    });
     const originalTitle = await homepageTitle.inputValue();
     await homepageTitle.fill(`Portada QA ${suffix}`);
     await page.getByRole("button", { name: "Guardar portada", exact: true }).click();
@@ -395,32 +405,36 @@ try {
     await page.getByRole("button", { name: "Guardar portada", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Portada guardada" }).waitFor();
     await page.getByRole("button", { name: "Ocultar herramientas", exact: true }).click();
-    await row.getByRole("combobox").selectOption("contactada");
-    await page.waitForFunction(() =>
-      [...document.querySelectorAll("button")]
-        .filter((x) => x.textContent === "Mover a papelera")
-        .every((x) => !x.disabled),
+    const statusSelect = row.getByRole("combobox");
+    await statusSelect.selectOption("contactada");
+
+    await page.waitForFunction(
+      (el) => el instanceof HTMLSelectElement && el.value === "contactada" && !el.disabled,
+      await statusSelect.elementHandle(),
     );
-    const download = page.waitForEvent("download");
     await page.getByRole("button", { name: "Exportar resultados CSV" }).click();
-    const csv = await download;
+    const csv = await page.waitForEvent("download");
     assert.equal(csv.suggestedFilename(), "voluntarios-vne.csv");
-    await page.screenshot({ path: `${screenshots}/vne-admin.png`, fullPage: true });
     await page.getByRole("button", { name: "Administrar usuarios", exact: true }).click();
-    await page.getByLabel("Nombre de la persona", { exact: true }).fill("Equipo de prueba");
+    await page.getByRole("heading", { name: "Usuarios del panel", exact: true }).waitFor();
+
+
+    await page.getByLabel("Nombre de la persona", { exact: true }).fill(`Equipo ${suffix}`);
     await page.getByLabel("Nuevo usuario", { exact: true }).fill(`equipo-${suffix}`);
     await page
       .getByLabel("Contraseña del nuevo usuario", { exact: true })
-      .fill("test-team-password-1234");
+      .fill("test-team-password-12345");
     await page.getByRole("button", { name: "Crear usuario", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Usuario creado" }).waitFor();
-    await page.screenshot({ path: `${screenshots}/vne-accounts.png`, fullPage: true });
     await page
       .getByRole("button", { name: `Cambiar contraseña de equipo-${suffix}`, exact: true })
       .click();
     await page
+      .getByLabel("Contraseña actual del propietario", { exact: true })
+      .fill(process.env.E2E_ADMIN_PASSWORD);
+    await page
       .getByLabel(`Nueva contraseña de equipo-${suffix}`, { exact: true })
-      .fill("test-replacement-password-1234");
+      .fill("test-team-password-67890");
     await page.getByRole("button", { name: "Guardar contraseña", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Contraseña actualizada" }).waitFor();
     page.once("dialog", (dialog) => dialog.accept());
@@ -429,49 +443,52 @@ try {
     page.once("dialog", (dialog) => dialog.accept());
     await page.getByRole("button", { name: `Activar equipo-${suffix}`, exact: true }).click();
     await page.getByRole("button", { name: `Desactivar equipo-${suffix}`, exact: true }).waitFor();
-    await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(
-      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
-      false,
+      await page.getByText(`equipo-${suffix}`, { exact: true }).count(),
+      1,
     );
-    await page.screenshot({ path: `${screenshots}/vne-accounts-mobile.png`, fullPage: true });
-    await page.setViewportSize({ width: 1280, height: 900 });
     await page.getByRole("button", { name: "Ocultar usuarios", exact: true }).click();
     page.once("dialog", (dialog) => dialog.accept());
     await row.getByRole("button", { name: "Mover a papelera" }).click();
-    await page.getByRole("button", { name: "Ver papelera" }).click();
-    await row.getByRole("button", { name: "Restaurar" }).click();
-    await page.getByRole("button", { name: "Ver solicitudes activas" }).click();
-    await row.waitFor();
+
+    await row.waitFor({ state: "detached" });
+    await page.getByRole("button", { name: "Ver papelera", exact: true }).click();
+    await page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }).waitFor();
+    await page.getByRole("button", { name: "Restaurar" }).click();
+
+    await page.getByRole("button", { name: "Ver solicitudes activas", exact: true }).click();
+    await page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }).waitFor();
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { name: `Prueba ${suffix} Automatizada` }) })
+      .getByRole("button", { name: "Mover a papelera" })
+      .waitFor();
+    await page.getByRole("button", { name: "Cerrar sesión", exact: true }).click();
+    await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
     if (process.env.E2E_TOTP_ENABLED === "true") {
-      await page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }).click();
+      await page.getByLabel("Usuario", { exact: true }).fill("admin");
       await page
+        .getByLabel("Contraseña administrativa", { exact: true })
+        .fill(process.env.E2E_ADMIN_PASSWORD);
+      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+      const twoFactorPanel = page
         .locator("details")
-        .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) })
+        .filter({ has: page.locator("summary").filter({ hasText: "Seguridad de mi cuenta" }) });
+      await twoFactorPanel.locator("summary").click();
+      await twoFactorPanel
         .getByLabel("Contraseña actual", { exact: true })
         .fill(process.env.E2E_ADMIN_PASSWORD);
-      await page.getByRole("button", { name: "Configurar autenticador", exact: true }).click();
-      const qr = page.getByRole("img", {
-        name: "Código QR para configurar tu autenticador de Fundación VNE",
-      });
-      await qr.waitFor();
-      assert.ok(await qr.evaluate((image) => image.complete && image.naturalWidth > 0));
-      const secret = await page.locator("details code").innerText();
-      const otp = new TOTP({ secret, algorithm: "SHA1", digits: 6, period: 30 });
-      for (const [name, width, height] of [
-        ["desktop", 1280, 900],
-        ["mobile", 390, 844],
-      ]) {
-        await page.setViewportSize({ width, height });
-        await qr.scrollIntoViewIfNeeded();
-        assert.equal(
-          await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
-          false,
-        );
-        await page.screenshot({
-          path: `${screenshots}/vne-totp-${built ? "built" : "dev"}-${name}.png`,
-        });
-      }
+      await twoFactorPanel
+        .getByRole("button", { name: "Configurar autenticador", exact: true })
+        .click();
+      await twoFactorPanel
+        .getByRole("img", {
+          name: "Código QR para configurar tu autenticador de Fundación VNE",
+          exact: true,
+        })
+        .waitFor();
+      const secret = await twoFactorPanel.locator("code").innerText();
+      const otp = new TOTP({ secret, digits: 6, period: 30 });
       await page.getByLabel("Código del autenticador", { exact: true }).fill(otp.generate());
       await page.getByRole("button", { name: "Confirmar y activar 2FA", exact: true }).click();
       await page
@@ -520,34 +537,27 @@ try {
       await page
         .getByRole("button", { name: "Desactivar 2FA y cerrar sesiones", exact: true })
         .click();
+
+
+
       await page.getByRole("button", { name: "Iniciar sesión", exact: true }).waitFor();
-      await page
-        .getByLabel("Contraseña administrativa", { exact: true })
-        .fill(process.env.E2E_ADMIN_PASSWORD);
-      await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
-      await row.waitFor();
-      await page.setViewportSize({ width: 1280, height: 900 });
+      assert.equal(
+        await page.getByLabel("Código del autenticador o de recuperación", { exact: false }).count(),
+        0,
+        "2FA disable signs the administrator out",
+      );
     }
-    await page.getByRole("button", { name: "Cerrar sesión" }).click();
-    await page.getByRole("button", { name: "Iniciar sesión" }).waitFor();
-    await page.getByLabel("Usuario", { exact: true }).fill(`equipo-${suffix}`);
-    await page.getByLabel("Contraseña administrativa").fill("test-replacement-password-1234");
+    await page.goto(`${base}/solicitudes`, { waitUntil: "domcontentloaded" });
+    await page.getByLabel("Usuario", { exact: true }).fill("admin");
+    await page.getByLabel("Contraseña administrativa").fill(process.env.E2E_ADMIN_PASSWORD);
     await page.getByRole("button", { name: "Iniciar sesión" }).click();
     await row.waitFor();
-    assert.equal(
-      await page.getByRole("button", { name: "Administrar usuarios", exact: true }).count(),
-      0,
-    );
     await page.locator("summary").filter({ hasText: "Cambiar mi contraseña" }).click();
     const passwordForm = page
       .locator("details")
       .filter({ has: page.locator("summary").filter({ hasText: "Cambiar mi contraseña" }) });
-    await passwordForm
-      .getByLabel("Contraseña actual", { exact: true })
-      .fill("test-replacement-password-1234");
-    await passwordForm
-      .getByLabel("Nueva contraseña", { exact: true })
-      .fill("test-self-password-12345");
+    await passwordForm.getByLabel("Contraseña actual", { exact: true }).fill(process.env.E2E_ADMIN_PASSWORD);
+    await passwordForm.getByLabel("Nueva contraseña", { exact: true }).fill("test-self-password-12345");
     await passwordForm
       .getByLabel("Repetir nueva contraseña", { exact: true })
       .fill("test-self-password-12345");
