@@ -24,7 +24,7 @@ if (process.env.VERCEL_ENV === "preview" && process.env.PREVIEW_DATABASE_ISOLATE
   process.exit(0);
 }
 
-const rawDatabaseUrl = process.env.DATABASE_URL?.trim();
+const rawDatabaseUrl = (process.env.VERCEL_ENV === "preview" ? process.env.PREVIEW_DATABASE_URL : process.env.DATABASE_URL)?.trim();
 if (!rawDatabaseUrl) {
   console.log("[migrate] DATABASE_URL not set — skipping (the PGLite fallback migrates itself).");
   process.exit(0);
