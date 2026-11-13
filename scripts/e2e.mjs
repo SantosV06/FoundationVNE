@@ -430,6 +430,9 @@ try {
       .getByRole("button", { name: `Cambiar contraseña de equipo-${suffix}`, exact: true })
       .click();
     await page
+      .getByLabel("Contraseña actual del propietario", { exact: true })
+      .fill(process.env.E2E_ADMIN_PASSWORD);
+    await page
       .getByLabel(`Nueva contraseña de equipo-${suffix}`, { exact: true })
       .fill("test-team-password-67890");
     await page.getByRole("button", { name: "Guardar contraseña", exact: true }).click();

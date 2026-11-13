@@ -171,8 +171,10 @@ export const updateAdminAccount = createServerFn({ method: "POST" })
         id: z.string().uuid(),
         enabled: z.boolean().optional(),
         password: accountPasswordSchema.optional(),
+        currentPassword: z.string().min(1).max(256).optional(),
       })
-      .refine((data) => (data.enabled !== undefined) !== (data.password !== undefined)),
+      .refine((data) => (data.enabled !== undefined) !== (data.password !== undefined))
+      .refine((data) => (data.password !== undefined) === (data.currentPassword !== undefined)),
   )
   .handler(async ({ data }) => {
     const { updateAdminAccount } = await import("./volunteer-service.server");
