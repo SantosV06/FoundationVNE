@@ -38,7 +38,11 @@ test("Preview requires a dedicated Neon branch and rejects the production databa
     /must not define DATABASE_URL/,
   );
   assert.throws(
-    () => validateDeployEnv({ ...preview, PRODUCTION_DATABASE_HOST: "ep-preview-pooler.us-east-2.aws.neon.tech" }),
+    () =>
+      validateDeployEnv({
+        ...preview,
+        PRODUCTION_DATABASE_HOST: "ep-preview-pooler.us-east-2.aws.neon.tech",
+      }),
     /must differ/,
   );
   assert.throws(
@@ -51,7 +55,6 @@ test("Preview requires a dedicated Neon branch and rejects the production databa
   );
 });
 
-});
 test("production rejects missing, malformed and incorrectly sized TOTP keys without leaking them", () => {
   for (const value of [
     undefined,
