@@ -201,7 +201,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
   const valid = user
     ? await verifyPassword(inputPassword, user.passwordHash)
     : (await hashPassword(inputPassword), false);
-  if (!user || !user.enabled || !valid) return rejectLogin(sql, "Usuario o contraseña incorrecta.");
+  if (!user || !user.enabled || !valid) return rejectLogin(sql, "Usuario o contraseña incorrecta.", username);
   const oldToken = getCookie(COOKIE);
   if (oldToken && validSessionToken(oldToken))
     await sql.query("DELETE FROM admin_sessions WHERE token_hash = $1", [tokenHash(oldToken)]);
