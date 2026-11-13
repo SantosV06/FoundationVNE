@@ -18,12 +18,12 @@ if (isPreviewDeployment) {
     } catch {
       throw new Error("Isolated Preview requires a valid PREVIEW_DATABASE_URL.");
     }
-    const productionHost = process.env.PRODUCTION_DATABASE_HOST?.trim().toLowerCase().replace(/\\.$/, "");
+    const productionHost = process.env.PRODUCTION_DATABASE_HOST?.trim().toLowerCase().replace(/\.$/, "");
     if (
       !productionHost ||
       !previewUrl.hostname.endsWith(".neon.tech") ||
       !previewUrl.hostname.includes("-pooler") ||
-      previewUrl.hostname.toLowerCase().replace(/\\.$/, "") === productionHost ||
+      previewUrl.hostname.toLowerCase().replace(/\.$/, "") === productionHost ||
       !["require", "verify-ca", "verify-full"].includes(
         previewUrl.searchParams.get("sslmode") ?? "",
       )
