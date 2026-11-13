@@ -9,7 +9,7 @@ export function validateDeployEnv(env) {
     } catch {
       throw new Error("An isolated Preview requires a valid PREVIEW_DATABASE_URL.");
     }
-    const productionHost = env.PRODUCTION_DATABASE_HOST?.trim().toLowerCase();
+    const productionHost = env.PRODUCTION_DATABASE_HOST?.trim().toLowerCase().replace(/\\.$/, "");
     if (!productionHost)
       throw new Error("An isolated Preview requires PRODUCTION_DATABASE_HOST for separation checks.");
     if (
@@ -19,7 +19,7 @@ export function validateDeployEnv(env) {
       !["require", "verify-ca", "verify-full"].includes(preview.searchParams.get("sslmode"))
     )
       throw new Error("PREVIEW_DATABASE_URL must use a pooled Neon endpoint with SSL.");
-    if (preview.hostname.toLowerCase() === productionHost)
+    if (preview.hostname.toLowerCase().replace(/\\.$/, "") === productionHost)
       throw new Error("Preview database host must differ from PRODUCTION_DATABASE_HOST.");
     return;
   }
