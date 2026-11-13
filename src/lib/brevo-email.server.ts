@@ -196,7 +196,7 @@ export async function notifyVolunteerStatus(input: {
     to: [{ email: input.correo, name: fullName }],
     subject: message.subject,
     htmlContent: brandedEmail(input.status === "aceptada" ? "¡Tu solicitud fue aceptada!" : "Actualización de tu solicitud", `<p style="font-size:18px;font-weight:bold;color:#174b3b;">Hola, ${safeName}.</p><p>${safeParagraph}</p><div style="margin:22px 0;padding:16px 18px;background:#f4f0e7;border-left:4px solid #c7a45b;border-radius:6px;"><p style="margin:0;color:#174b3b;font-weight:bold;">Fundación V.N.E.</p><p style="margin:6px 0 0;">Gracias por considerar aportar tu tiempo y talento a nuestra labor.</p></div>`, message.subject),
-    textContent: `Hola, ${fullName}\\n\\n${message.paragraph}\\n\\nFundación V.N.E.`,
+    textContent: `Hola, ${fullName}\n\n${message.paragraph}\n\nFundación V.N.E.`,
   };
   await sendBrevoMessage(apiKey, body, "volunteer-status-update");
 }
