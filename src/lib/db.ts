@@ -5,7 +5,40 @@ export type DbSource = "neon" | "pglite";
 
 
 
-const rawDatabaseUrl = typeof process !== "undefined" ? process.env.DATABASE_URL : undefined;
+const isPreviewDeployment =
+  typeof process !== "undefined" && process.env.VERCEL_ENV === "preview";
+
+if (isPreviewDeployment) {
+  if (process.env.DATABASE_URL?.trim())
+    throw new Error("Preview must not use DATABASE_URL. Configure PREVIEW_DATABASE_URL instead.");
+  if (process.env.PREVIEW_DATABASE_ISOLATED === "true") {
+    let previewUrl: URL;
+    try {
+      previewUrl = new URL(process.env.PREVIEW_DATABASE_URL ?? "");
+    } catch {
+      throw new Error("Isolated Preview requires a valid PREVIEW_DATABASE_URL.");
+    }
+    const productionHost = process.env.PRODUCTION_DATABASE_HOST?.trim().toLowerCase();
+    if (
+      !productionHost ||
+      !previewUrl.hostname.endsWith(".neon.tech") ||
+      !previewUrl.hostname.includes("-pooler") ||
+      previewUrl.hostname.toLowerCase() === productionHost ||
+      !["require", "verify-ca", "verify-full"].includes(
+        previewUrl.searchParams.get("sslmode") ?? "",
+      )
+    ) {
+      throw new Error("Preview database isolation validation failed.");
+    }
+  }
+}
+
+const rawDatabaseUrl =
+  typeof process !== "undefined"
+    ? isPreviewDeployment
+      ? process.env.PREVIEW_DATABASE_URL
+      : process.env.DATABASE_URL
+    : undefined;
 
 
 
