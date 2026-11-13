@@ -355,7 +355,6 @@ export function Footer() {
         <br />
         <T>Este sitio es informativo y no constituye un compromiso legal ni financiero.</T>
         <br />
-        <T>Desarrollo y seguridad: Felipe D. Santo</T>
       </div>
     </footer>
   );
