@@ -147,15 +147,23 @@ export async function saveVolunteerRequest(input: StoredVolunteerInput) {
   );
   return { ok: true, created: inserted.length > 0 };
 }
-async function rejectLogin(sql: Sql, message: string): Promise<never> {
-
-
+async function rejectLogin(sql: Sql, message: string, username: string): Promise<never> {
   try {
-    await sql.query("INSERT INTO admin_events (id, action) VALUES ($1, 'login:failure')", [
-      randomUUID(),
-    ]);
+    const fingerprint = (scope: string, value: string) =>
+      createHmac("sha256", sessionSecret())
+        .update(`login:${scope}:${value.toLowerCase()}`)
+        .digest("hex");
+    await sql.query(
+      "INSERT INTO admin_events (id, action, after_value) VALUES ($1, 'login:failure', $2::jsonb)",
+      [
+        randomUUID(),
+        JSON.stringify({
+          usernameFingerprint: fingerprint("username", username),
+          addressFingerprint: fingerprint("address", clientAddress()),
+        }),
+      ],
+    );
   } catch {
-
     console.error(JSON.stringify({ event: "audit:login-failure-unavailable" }));
   }
   throw new Error(message);
@@ -177,7 +185,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
     if (Number(count.total) === 0) {
       const { password } = adminSettings();
       if (!constantEquals(inputPassword, password))
-        return rejectLogin(sql, "Usuario o contraseña incorrecta.");
+        return rejectLogin(sql, "Usuario o contraseña incorrecta.", username);
       const hash = await hashPassword(inputPassword);
       await sql.query(
         `INSERT INTO admin_users (id, username, display_name, password_hash, role, bootstrap_key)
@@ -209,7 +217,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
     recovery = recoveryHash(user.id, code);
     step = recovery ? null : verifyTotpStep(decryptTotp(user.totp_secret, user.id), code);
     if (step === null && recovery === null)
-      return rejectLogin(sql, "Código de autenticación inválido o ya utilizado.");
+      return rejectLogin(sql, "Código de autenticación inválido o ya utilizado.", username);
   }
   const token = newSessionToken();
 
@@ -252,6 +260,7 @@ export async function loginAdministrator(inputPassword: string, username = "admi
     return rejectLogin(
       sql,
       "Código inválido o credenciales modificadas. Inicia sesión nuevamente.",
+      username,
     );
   setCookie(COOKIE, token, {
     httpOnly: true,
