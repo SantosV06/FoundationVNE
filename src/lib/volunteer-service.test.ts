@@ -91,9 +91,15 @@ test("volunteer and admin workflow: durable data, limits, revocation, pagination
   assert.equal(failures.length, 1, "a rejected bootstrap login is audited");
   for (const field of ["actor_id", "actor_username", "request_id", "before_value"])
     assert.equal(failures[0][field], null, "rejection audit does not retain submitted data");
-  assert.match(failures[0].after_value.usernameFingerprint, /^[a-f0-9]{64}$/);
-  assert.match(failures[0].after_value.addressFingerprint, /^[a-f0-9]{64}$/);
-  assert.doesNotMatch(JSON.stringify(failures[0].after_value), /nonexistent-user|192\.0\.2\.2/);
+  const failureAudit = failures[0].after_value as {
+    usernameFingerprint?: unknown;
+    addressFingerprint?: unknown;
+  };
+  assert.equal(typeof failureAudit.usernameFingerprint, "string");
+  assert.equal(typeof failureAudit.addressFingerprint, "string");
+  assert.match(failureAudit.usernameFingerprint as string, /^[a-f0-9]{64}$/);
+  assert.match(failureAudit.addressFingerprint as string, /^[a-f0-9]{64}$/);
+  assert.doesNotMatch(JSON.stringify(failureAudit), /nonexistent-user|192\.0\.2\.2/);
   await service.loginAdministrator(process.env.ADMIN_PASSWORD);
   await assert.rejects(service.loginAdministrator("wrong", "nonexistent-user"), /incorrecta/);
   failExportAudit = true;
