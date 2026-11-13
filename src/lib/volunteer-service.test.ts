@@ -331,7 +331,23 @@ test("volunteer and admin workflow: durable data, limits, revocation, pagination
     /propia cuenta/,
   );
   await service.updateAdminAccount({ id: member.id, enabled: true });
-  await service.updateAdminAccount({ id: member.id, password: "replacement-password-1234" });
+  await assert.rejects(
+    service.updateAdminAccount({ id: member.id, password: "replacement-password-1234" }),
+    /Confirma tu contraseña actual/,
+  );
+  await assert.rejects(
+    service.updateAdminAccount({
+      id: member.id,
+      password: "replacement-password-1234",
+      currentPassword: "incorrect-owner-password",
+    }),
+    /Contraseña actual incorrecta/,
+  );
+  await service.updateAdminAccount({
+    id: member.id,
+    password: "replacement-password-1234",
+    currentPassword: process.env.ADMIN_PASSWORD!,
+  });
   cookies.clear();
   await assert.rejects(
     service.loginAdministrator("individual-password-1234", "equipo"),
@@ -378,7 +394,11 @@ test("volunteer and admin workflow: durable data, limits, revocation, pagination
   const hashed = JSON.stringify((await pg.query("SELECT password_hash FROM admin_users")).rows);
   assert.ok(!hashed.includes("replacement-password-1234"));
 
-  await service.updateAdminAccount({ id: owner.id, password: "new-owner-password-12345" });
+  await service.updateAdminAccount({
+    id: owner.id,
+    password: "new-owner-password-12345",
+    currentPassword: "test-only-password-12345",
+  });
   assert.equal(await service.isAdminAuthenticated(), false);
   address = "192.0.2.4";
   await assert.rejects(service.loginAdministrator(process.env.ADMIN_PASSWORD), /incorrecta/);
