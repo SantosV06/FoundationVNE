@@ -290,18 +290,39 @@ export async function updateAdminAccount(input: {
   id: string;
   enabled?: boolean;
   password?: string;
+  currentPassword?: string;
 }) {
   const { sql, actor } = await requireOwner();
   if (input.id === actor.id && input.enabled !== undefined)
     throw new Error("No puedes desactivar tu propia cuenta.");
+  const [owner] = await sql.query<{ passwordHash: string }>(
+    "SELECT password_hash AS \"passwordHash\" FROM admin_users WHERE id=$1 AND enabled AND role='owner'",
+    [actor.id],
+  );
+  if (!owner) throw new Error("La cuenta propietaria ya no está disponible.");
+  if (input.password !== undefined) {
+    if (!input.currentPassword)
+      throw new Error("Confirma tu contraseña actual para restablecer una contraseña administrativa.");
+    if (!(await verifyPassword(input.currentPassword, owner.passwordHash)))
+      throw new Error("Contraseña actual incorrecta. No se modificó ninguna cuenta.");
+  }
   const hash = input.password ? await hashPassword(input.password) : null;
   const result = await sql.query(
-    `WITH changed AS (
+    `WITH owner AS MATERIALIZED (
+       SELECT id FROM admin_users
+       WHERE id=$8 AND enabled AND role='owner' AND password_hash=$9
+       FOR UPDATE
+     ), changed AS (
        UPDATE admin_users SET password_hash = COALESCE($2::text, password_hash), enabled = COALESCE($3::boolean, enabled)
-       WHERE id = $1 AND ($3::boolean IS NULL OR role <> 'owner') RETURNING id, username, enabled
-     ), revoked AS (DELETE FROM admin_sessions WHERE user_id IN (SELECT id FROM changed))
+       WHERE id = $1 AND EXISTS (SELECT 1 FROM owner)
+         AND ($3::boolean IS NULL OR role <> 'owner')
+       RETURNING id, username, enabled
+     ), revoked AS (
+       DELETE FROM admin_sessions WHERE user_id IN (SELECT id FROM changed)
+     )
      INSERT INTO admin_events (id, action, actor_id, actor_username, after_value)
-       SELECT $4, $5, $6, $7, jsonb_build_object('userId', id, 'username', username, 'enabled', enabled) FROM changed RETURNING id`,
+       SELECT $4, $5, $6, $7, jsonb_build_object('userId', id, 'username', username, 'enabled', enabled)
+       FROM changed RETURNING id`,
     [
       input.id,
       hash,
@@ -310,6 +331,8 @@ export async function updateAdminAccount(input: {
       hash ? "account:password" : "account:access",
       actor.id,
       actor.username,
+      actor.id,
+      owner.passwordHash,
     ],
   );
   if (!result.length) throw new Error("No se pudo modificar esa cuenta.");
