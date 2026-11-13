@@ -36,10 +36,12 @@ function privateResponse() {
   setResponseHeader("Cache-Control", "private, no-store");
 }
 export async function database(): Promise<Sql> {
-  if (process.env.VERCEL_ENV === "preview" && process.env.PREVIEW_DATABASE_ISOLATED !== "true") {
-    throw new Error(
-      "El formulario y el panel están desactivados en esta vista previa hasta configurar una base de datos de pruebas independiente.",
-    );
+  if (process.env.VERCEL_ENV === "preview") {
+    if (process.env.PREVIEW_DATABASE_ISOLATED !== "true" || dbSource !== "neon") {
+      throw new Error(
+        "El formulario y el panel están desactivados en esta vista previa hasta configurar una base de datos de pruebas independiente.",
+      );
+    }
   }
   if (
     process.env.NODE_ENV === "production" &&
