@@ -1,6 +1,6 @@
 # Fundación VNE
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![CI](https://github.com/SantosV06/FoundationVNE/actions/workflows/ci.yml/badge.svg)](https://github.com/SantosV06/FoundationVNE/actions/workflows/ci.yml)
 
 Sitio oficial de **Fundación Venezuela Nueva Esperanza** y panel de voluntariado.
@@ -51,6 +51,8 @@ Para reportar vulnerabilidades de seguridad, consulta [SECURITY.md](SECURITY.md)
 
 Este proyecto sigue el [Contributor Covenant](CODE_OF_CONDUCT.md).
 
-## Licencia
+## Licencia y derechos de uso
 
-Distribuido bajo la licencia [MIT](LICENSE).
+El código fuente, los diseños y los demás materiales originales de este repositorio están sujetos a la licencia propietaria incluida en [LICENSE](LICENSE). El repositorio es público únicamente para consulta. No se concede permiso para copiar, modificar, distribuir, reutilizar ni explotar sus contenidos sin autorización previa y expresa por escrito del titular de los derechos.
+
+Las licencias de terceros aplicables a dependencias, tipografías y otros recursos conservan sus propios términos.
