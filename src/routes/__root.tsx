@@ -12,9 +12,8 @@ import {
   retainSearchParams,
   useRouterState,
 } from "@tanstack/react-router";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import { LanguageProvider } from "@/lib/i18n";
+import { CookieConsent } from "@/components/cookie-consent";
 import appCss from "../styles.css?url";
 
 const themeBoot = `(function(){try{if(localStorage.getItem("vne-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();`;
@@ -51,7 +50,7 @@ export const Route = createRootRoute({
         ],
         links: [
           { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/favicon.svg?v=4" },
-          ...(__SITE_ORIGIN__
+          ...(__SITE_ORIGIN__ && matches.at(-1)?.pathname !== "/solicitudes"
             ? [
                 {
                   rel: "canonical",
@@ -81,6 +80,7 @@ export const Route = createRootRoute({
         ],
       },
       matches.at(-1)?.search ?? {},
+      false,
     ),
   component: RootDocument,
 });
@@ -95,9 +95,8 @@ function RootDocument() {
       <body>
         <LanguageProvider>
           <Outlet />
+          <CookieConsent />
         </LanguageProvider>
-        <Analytics beforeSend={(event) => (event.url.includes("/solicitudes") ? null : event)} />
-        <SpeedInsights />
         <Scripts />
       </body>
     </html>

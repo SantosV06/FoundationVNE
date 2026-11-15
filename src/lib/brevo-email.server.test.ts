@@ -273,6 +273,8 @@ test("sends applicant emails for accepted and rejected statuses without requirin
     assert.ok(rejected);
     assert.equal(accepted.to[0].email, volunteer.correo);
     assert.match(accepted.textContent, /La Fundación se pondrá en contacto contigo/);
+    assert.ok(accepted.textContent.includes("\n\n"), "plain-text status email uses real line breaks");
+    assert.doesNotMatch(accepted.textContent, /\\n/, "plain-text status email has no literal backslash-n");
     assert.match(rejected.textContent, /tu solicitud no ha sido seleccionada/i);
     assert.match(accepted.htmlContent, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
     assert.equal(accepted.htmlContent.toLowerCase().includes("<script"), false);

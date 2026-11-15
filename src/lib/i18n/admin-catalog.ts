@@ -82,6 +82,15 @@ export const adminCatalog: Record<string, readonly [string, string]> = {
   "Administrador activo": ["Active administrator", "Administrador ativo"],
   Desactivado: ["Disabled", "Desativado"],
   "Cambiar contraseña de": ["Change password for", "Alterar senha de"],
+  "Contraseña actual del propietario": ["Owner’s current password", "Senha atual do proprietário"],
+  "Confirma tu contraseña actual para restablecer una contraseña administrativa.": [
+    "Confirm your current password to reset an administrator password.",
+    "Confirme sua senha atual para redefinir uma senha administrativa.",
+  ],
+  "Contraseña actual incorrecta. No se modificó ninguna cuenta.": [
+    "Current password is incorrect. No account was changed.",
+    "A senha atual está incorreta. Nenhuma conta foi alterada.",
+  ],
   Desactivar: ["Disable", "Desativar"],
   Activar: ["Enable", "Ativar"],
   "¿Desactivar": ["Disable", "Desativar"],

@@ -28,6 +28,7 @@ export function AdminAccounts({
   const [password, setPassword] = useState("");
   const [target, setTarget] = useState("");
   const [replacement, setReplacement] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   useEffect(() => {
     let active = true;
     void getAdminAccounts()
@@ -157,6 +158,7 @@ export function AdminAccounts({
                 onClick={() => {
                   setTarget(account.id);
                   setReplacement("");
+                  setCurrentPassword("");
                   setNotice("");
                 }}
               >
@@ -196,9 +198,10 @@ export function AdminAccounts({
             if (target === currentId) {
               setBusy(true);
               setError("");
-              void updateAdminAccount({ data: { id: target, password: replacement } })
+              void updateAdminAccount({ data: { id: target, password: replacement, currentPassword } })
                 .then(() => {
                   setReplacement("");
+                  setCurrentPassword("");
                   onSignedOut();
                 })
                 .catch((cause) =>
@@ -209,16 +212,29 @@ export function AdminAccounts({
                 .finally(() => setBusy(false));
             } else
               void run(async () => {
-                await updateAdminAccount({ data: { id: target, password: replacement } });
+                await updateAdminAccount({ data: { id: target, password: replacement, currentPassword } });
                 setTarget("");
                 setReplacement("");
+                setCurrentPassword("");
               }, "Contraseña actualizada; sesiones anteriores revocadas.");
           }}
         >
           <label>
-            {t("Nueva contraseña de")} {accounts.find((account) => account.id === target)?.username}
+            {t("Contraseña actual del propietario")}
             <input
               autoFocus
+              type="password"
+              className={field}
+              autoComplete="current-password"
+              required
+              maxLength={256}
+              value={currentPassword}
+              onChange={(event) => setCurrentPassword(event.target.value)}
+            />
+          </label>
+          <label>
+            {t("Nueva contraseña de")} {accounts.find((account) => account.id === target)?.username}
+            <input
               type="password"
               className={field}
               autoComplete="new-password"
@@ -244,6 +260,7 @@ export function AdminAccounts({
               onClick={() => {
                 setTarget("");
                 setReplacement("");
+                setCurrentPassword("");
               }}
             >
               {t("Cancelar")}

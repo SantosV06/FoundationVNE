@@ -1,8 +1,8 @@
 import { T, useLanguage } from "@/lib/i18n";
 import { LanguageSelector } from "./language-selector";
 import { Link } from "@tanstack/react-router";
-import { Camera, Mail, Menu, Moon, Phone, Sun, X } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Mail, Menu, Moon, Phone, Sun } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
 import { legalLinks, nav, org } from "@/data/site";
 import { media } from "@/data/media";
 
@@ -59,48 +59,21 @@ export function Shell({ children }: { children: ReactNode }) {
 function Header() {
   const { t } = useLanguage();
   const { dark, toggle } = useTheme();
-  const [open, setOpen] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
-  const menuPanel = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!open) return;
-    const desktop = window.matchMedia("(min-width: 1280px)");
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    menuPanel.current?.querySelector<HTMLElement>("a")?.focus();
-    const close = () => setOpen(false);
-    const keyboard = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        close();
-        menuButton.current?.focus();
-      }
+    const closeMenuOnScroll = () => {
+      const menu = document.getElementById("menu");
+      if (menu?.matches(":popover-open")) menu.hidePopover();
     };
-    // This is a navigation disclosure, not a modal: Tab remains free to leave it.
-    const focus = (event: FocusEvent) => {
-      if (
-        event.target instanceof Node &&
-        !menuPanel.current?.contains(event.target) &&
-        !menuButton.current?.contains(event.target)
-      )
-        close();
-    };
-    document.addEventListener("keydown", keyboard);
-    document.addEventListener("focusin", focus);
-    desktop.addEventListener("change", close);
-    return () => {
-      document.body.style.overflow = overflow;
-      document.removeEventListener("keydown", keyboard);
-      document.removeEventListener("focusin", focus);
-      desktop.removeEventListener("change", close);
-    };
-  }, [open]);
+
+    window.addEventListener("scroll", closeMenuOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", closeMenuOnScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-paper/90 backdrop-blur-md dark:border-white/10 dark:bg-navy-deep/90">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:gap-3 sm:px-6">
-        <Link to="/" className="flex min-w-0 items-center gap-2.5" onClick={() => setOpen(false)}>
+        <Link to="/" className="flex min-w-0 items-center gap-2.5" >
           <Mark />
           <span className="min-w-0 leading-tight">
             <span className="block font-display text-sm sm:text-[15px] font-semibold tracking-tight text-navy dark:text-cream">
@@ -151,12 +124,10 @@ function Header() {
           <button
             type="button"
             className="grid size-11 place-items-center rounded-full text-navy xl:hidden dark:text-cream"
-            ref={menuButton}
-            aria-expanded={open}
-            aria-controls="menu-movil"
-            onClick={() => setOpen((value) => !value)}
+            popoverTarget="menu"
+            aria-controls="menu"
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            <Menu className="size-5" />
             <span className="sr-only">
               <T>Menú</T>
             </span>
@@ -164,10 +135,9 @@ function Header() {
         </div>
       </div>
 
-      {open ? (
-        <nav
-          ref={menuPanel}
-          id="menu-movil"
+      <nav
+          id="menu"
+          popover="auto"
           className="border-t border-line bg-paper px-4 py-3 xl:hidden dark:border-white/10 dark:bg-navy-deep"
           aria-label={t("Móvil")}
         >
@@ -176,7 +146,7 @@ function Header() {
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => event.currentTarget.closest("nav")?.hidePopover()}
                   className="block rounded-lg px-3 py-3 text-base font-semibold"
                   inactiveProps={{
                     className: "text-navy hover:bg-navy/5 dark:text-cream dark:hover:bg-white/10",
@@ -194,15 +164,14 @@ function Header() {
             <li>
               <Link
                 to="/donaciones"
-                onClick={() => setOpen(false)}
+                onClick={(event) => event.currentTarget.closest("nav")?.hidePopover()}
                 className="mt-1 block rounded-lg bg-navy px-3 py-3 text-center text-base font-semibold text-cream dark:bg-gold dark:text-navy"
               >
                 <T>Donar</T>
               </Link>
             </li>
           </ul>
-        </nav>
-      ) : null}
+      </nav>
     </header>
   );
 }
@@ -236,12 +205,14 @@ export function Footer() {
             <Phone className="size-4 text-gold" aria-hidden="true" />
             <T>{org.executivePhone}</T>
           </a>
-          <a
-            className="mt-4 flex w-fit max-w-full items-center gap-2 break-all text-sm font-semibold"
-            href={`mailto:${org.email}`}
-          >
+          <a className="mt-4 flex w-fit max-w-full items-center gap-2 break-all text-sm font-semibold underline-offset-4 hover:underline" href={"mailto:" + org.email}>
             <Mail className="size-4 shrink-0 text-gold" aria-hidden="true" />
             <T>{org.email}</T>
+          </a>
+          <p className="mt-4 text-sm leading-relaxed text-cream/80"><T>Soporte técnico</T></p>
+          <a className="mt-1 inline-flex max-w-full break-all text-sm font-semibold underline-offset-4 hover:underline" href={"mailto:" + org.supportEmail}>
+            <Mail className="mr-2 size-4 shrink-0 text-gold" aria-hidden="true" />
+            <T>{org.supportEmail}</T>
           </a>
           <div className="mt-5 flex gap-2">
             <a
@@ -251,23 +222,57 @@ export function Footer() {
               aria-label={t("Instagram de Fundación VNE")}
               className="grid size-11 place-items-center rounded-full border border-gold/50"
             >
-              <Camera className="size-4" aria-hidden="true" />
+              <svg
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                aria-hidden="true"
+              >
+                <defs>
+                  <linearGradient id="instagram-brand-gradient" x1="3" y1="21" x2="21" y2="3">
+                    <stop offset="0%" stopColor="#FEDA75" />
+                    <stop offset="48%" stopColor="#D62976" />
+                    <stop offset="100%" stopColor="#4F5BD5" />
+                  </linearGradient>
+                </defs>
+                <rect
+                  x="3"
+                  y="3"
+                  width="18"
+                  height="18"
+                  rx="5.2"
+                  stroke="url(#instagram-brand-gradient)"
+                  strokeWidth="1.8"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4.1"
+                  stroke="url(#instagram-brand-gradient)"
+                  strokeWidth="1.8"
+                />
+                <circle cx="17.55" cy="6.55" r="1.15" fill="#D62976" />
+              </svg>
             </a>
             <a
               href={`https://wa.me/${org.adminTel.replace("+", "")}`}
               target="_blank"
               rel="noreferrer"
               aria-label={t("WhatsApp de administración")}
-              className="grid size-11 place-items-center rounded-full border border-gold/50 text-xs font-bold"
+              className="grid size-11 place-items-center rounded-full border border-gold/50"
             >
-              <T>WA</T>
+              <svg viewBox="0 0 24 24" className="size-5" fill="#25D366" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+              </svg>
             </a>
             <Link
               to="/donaciones"
               aria-label={t("Donar por Zelle")}
-              className="grid size-11 place-items-center rounded-full border border-gold/50 text-xs font-bold"
+              className="grid size-11 place-items-center rounded-full border border-gold/50"
             >
-              <T>Zelle</T>
+              <svg viewBox="0 0 24 24" className="size-5" fill="#6D1ED4" aria-hidden="true">
+                <path d="M13.559 24h-2.841a.483.483 0 0 1-.483-.483v-2.765H5.638a.667.667 0 0 1-.666-.666v-2.234a.67.67 0 0 1 .142-.412l8.139-10.382h-7.25a.667.667 0 0 1-.667-.667V3.914c0-.367.299-.666.666-.666h4.23V.483c0-.266.217-.483.483-.483h2.841c.266 0 .483.217.483.483v2.765h4.323c.367 0 .666.299.666.666v2.137a.67.67 0 0 1-.141.41l-8.19 10.481h7.665c.367 0 .666.299.666.666v2.477a.667.667 0 0 1-.666.667h-4.32v2.765a.483.483 0 0 1-.483.483Z" />
+              </svg>
             </Link>
           </div>
         </div>
@@ -316,6 +321,15 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("vne:open-cookie-preferences"))}
+                className="text-left text-gold underline-offset-4 hover:underline"
+              >
+                <T>Preferencias de cookies</T>
+              </button>
+            </li>
           </ul>
           <Link
             to="/"
@@ -340,6 +354,7 @@ export function Footer() {
         <T>. Todos los derechos reservados.</T>
         <br />
         <T>Este sitio es informativo y no constituye un compromiso legal ni financiero.</T>
+        <br />
       </div>
     </footer>
   );
