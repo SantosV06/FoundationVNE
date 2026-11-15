@@ -14,7 +14,7 @@ Please **do not** open public GitHub issues for security vulnerabilities.
 
 Report security issues privately by emailing:
 
-**info@foundationvne.com**
+**soporte@foundationvne.com**
 
 Include as much detail as possible (steps to reproduce, impact, affected components).
 
