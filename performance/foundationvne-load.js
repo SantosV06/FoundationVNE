@@ -1,6 +1,8 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
+/* global __ENV */
+
 const BASE_URL = __ENV.TARGET_URL || 'https://foundationvne.com';
 const MAX_VUS = Number(__ENV.MAX_VUS || 5);
 
