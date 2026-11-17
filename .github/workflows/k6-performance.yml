@@ -1,19 +1,18 @@
-name: k6 performance test
+name: k6 progressive capacity test
 
 on:
   workflow_dispatch:
     inputs:
-      max_vus:
-        description: 'Maximum virtual users (keep production tests gentle)'
+      confirm_production_test:
+        description: 'Confirm that this run will generate real traffic to production (up to 100 VUs)'
         required: true
         type: choice
-        default: '5'
+        default: 'no'
         options:
-          - '2'
-          - '5'
-          - '10'
+          - 'no'
+          - 'yes'
       target_url:
-        description: 'Target base URL'
+        description: 'Production target (fixed to the official site)'
         required: true
         type: choice
         default: 'https://foundationvne.com'
@@ -29,9 +28,10 @@ concurrency:
 
 jobs:
   load-test:
-    name: Gentle production load test
+    name: Progressive production capacity test
+    if: inputs.confirm_production_test == 'yes'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -41,15 +41,13 @@ jobs:
       - name: Prepare results directory
         run: mkdir -p results
 
-      - name: Run k6
+      - name: Run progressive k6 test
         env:
-          MAX_VUS: ${{ inputs.max_vus }}
           TARGET_URL: ${{ inputs.target_url }}
         run: |
           docker run --rm \
             --volume "$PWD:/work" \
             --workdir /work \
-            --env MAX_VUS \
             --env TARGET_URL \
             grafana/k6:0.56.0 run \
             --summary-export=/work/results/k6-summary.json \
@@ -59,7 +57,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: foundationvne-k6-results-${{ github.run_id }}
+          name: foundationvne-k6-capacity-results-${{ github.run_id }}
           path: results/k6-summary.json
           if-no-files-found: warn
           retention-days: 14
