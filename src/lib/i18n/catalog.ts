@@ -1286,20 +1286,6 @@ export const catalog: Record<string, readonly [string, string]> = {
   "Felipe D. Santo": ["Felipe D. Santo","Felipe D. Santo"],
   "Desarrollo tecnológico": ["Technology Development","Desenvolvimento tecnológico"],
   "Responsable del desarrollo de plataformas digitales, infraestructura tecnológica y seguridad informática.": ["Responsible for developing digital platforms, technology infrastructure, and information security.","Responsável pelo desenvolvimento de plataformas digitais, infraestrutura tecnológica e segurança da informação."],
-  "Dirección de Operaciones": ["Operations", "Direção de Operações"],
-  "COO": ["COO", "COO"],
-  "Coordina los procesos de la organización, supervisa a diario los flujos de trabajo y logra el mayor rendimiento posible mediante la optimización de recursos.":
-    [
-      "Coordinates the organization's processes, oversees daily workflows and achieves the highest possible performance through the optimization of resources.",
-      "Coordena os processos da organização, supervisiona diariamente os fluxos de trabalho e alcança o maior desempenho possível por meio da otimização de recursos.",
-    ],
-  "Tecnología e Información": ["Technology and Information", "Tecnologia e Informação"],
-  "CIO y CTO": ["CIO and CTO", "CIO e CTO"],
-  "Como CIO administra el uso de las tecnologías de la información para generar el mejor desempeño económico posible. Como CTO aplica los medios tecnológicos, informáticos y técnicos al funcionamiento de la organización.":
-    [
-      "As CIO, manages the use of information technologies to generate the best possible economic performance. As CTO, applies technological, computing and technical means to the organization's operations.",
-      "Como CIO, administra o uso das tecnologias da informação para gerar o melhor desempenho econômico possível. Como CTO, aplica os meios tecnológicos, informáticos e técnicos ao funcionamento da organização.",
-    ],
   "Fotografía pendiente de Felipe D. Santo": ["Photo of Felipe D. Santo pending","Fotografia de Felipe D. Santo pendente"],
   "Desarrollo productivo · autonomía · capacidad instalada": ["Productive development · autonomy · lasting capacity","Desenvolvimento produtivo · autonomia · capacidade instalada"],
   "Desarrollo productivo que deja capacidad instalada.": ["Productive development that builds lasting capacity.","Desenvolvimento produtivo que deixa capacidade instalada."],
