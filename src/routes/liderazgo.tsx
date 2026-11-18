@@ -34,18 +34,18 @@ const people = [
   {
     initials: "SS",
     photo: media.coordinator,
-    role: "Coordinación General",
+    role: "Dirección de Operaciones",
     name: "Stefany V. Solorzano",
-    charge: "Planificación estratégica",
-    text: "Planificación institucional, coordinación de proyectos y alineación entre las áreas de la organización.",
+    charge: "COO",
+    text: "Coordina los procesos de la organización, supervisa a diario los flujos de trabajo y logra el mayor rendimiento posible mediante la optimización de recursos.",
   },
   {
     initials: "FD",
     photo: null,
-    role: "DESARROLLO Y SEGURIDAD",
+    role: "Tecnología e Información",
     name: "Felipe D. Santo",
-    charge: "Desarrollo tecnológico",
-    text: "Responsable del desarrollo de plataformas digitales, infraestructura tecnológica y seguridad informática.",
+    charge: "CIO y CTO",
+    text: "Como CIO administra el uso de las tecnologías de la información para generar el mejor desempeño económico posible. Como CTO aplica los medios tecnológicos, informáticos y técnicos al funcionamiento de la organización.",
   },
 ];
 
