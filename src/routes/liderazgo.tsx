@@ -41,7 +41,7 @@ const people = [
   },
   {
     initials: "FD",
-    photo: null,
+    photo: media.felipe,
     role: "DESARROLLO Y SEGURIDAD",
     name: "Felipe D. Santo",
     charge: "CTO",

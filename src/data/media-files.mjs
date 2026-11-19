@@ -11,6 +11,7 @@ export const mediaFiles = {
   ceo: "FotoCEO.png",
   director: "FotoCEO_1.png",
   coordinator: "FotoSolorzano.png",
+  felipe: "Felipe.webp",
   scalability: "Escalabilidad.png",
   impact: "ProgramImpact.png",
   genesisPdf: "ProyectoGénesis.pdf",
