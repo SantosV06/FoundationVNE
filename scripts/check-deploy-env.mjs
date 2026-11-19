@@ -24,6 +24,12 @@ export function validateDeployEnv(env) {
     return;
   }
   if (env.VERCEL_ENV !== "production") return;
+  if (!env.BREVO_API_KEY?.trim())
+    throw new Error("Production support email requires BREVO_API_KEY.");
+  if (env.SUPPORT_SENDER_EMAIL?.trim().toLowerCase() !== "soporte@foundationvne.com")
+    throw new Error("SUPPORT_SENDER_EMAIL must be soporte@foundationvne.com.");
+  if (env.SUPPORT_NOTIFICATION_EMAIL?.trim().toLowerCase() !== "soporte@foundationvne.com")
+    throw new Error("SUPPORT_NOTIFICATION_EMAIL must be soporte@foundationvne.com.");
   if (!env.DATABASE_URL?.trim())
     throw new Error("Production requires DATABASE_URL (Neon pooled connection with SSL).");
   let url;
