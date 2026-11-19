@@ -1316,7 +1316,6 @@ export const catalog: Record<string, readonly [string, string]> = {
   "El desarrollo y la seguridad técnica del sitio están a cargo de Felipe D. Santo, responsable del mantenimiento de las plataformas digitales, la infraestructura tecnológica y la aplicación de medidas de seguridad informática. Este rol no sustituye el canal institucional para ejercer derechos sobre datos personales: info@foundationvne.com.": ["Technical development and security for this site are handled by Felipe D. Santo, who maintains the digital platforms and technology infrastructure and implements information security measures. This role does not replace the institutional channel for exercising personal data rights: info@foundationvne.com.","O desenvolvimento e a segurança técnica deste site estão a cargo de Felipe D. Santo, responsável pela manutenção das plataformas digitais, da infraestrutura tecnológica e pela implementação de medidas de segurança da informação. Essa função não substitui o canal institucional para exercer direitos sobre dados pessoais: info@foundationvne.com."],
 
   "Apellido": ["Last name", "Sobrenome"],
-  "Correo electrónico": ["Email address", "Endereço de e-mail"],
   "Descripción del problema": ["Problem description", "Descrição do problema"],
   "Describe el error, dónde ocurrió y qué estabas intentando hacer.": [
     "Describe the error, where it happened and what you were trying to do.",
