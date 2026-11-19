@@ -1,5 +1,4 @@
-import { languageFromSearch, localizedHead } from "@/lib/i18n/seo";
-import { defaultHomeContent } from "@/lib/home-content";
+import { localizedHead } from "@/lib/i18n/seo";
 import { getPublicHomeContent } from "@/lib/home-content-functions";
 import { T, useLanguage } from "@/lib/i18n";
 import { MediaVideo } from "@/components/media-video";
@@ -12,14 +11,14 @@ import { Shell } from "@/components/shell";
 export const Route = createFileRoute("/")({
   head: ({ matches }) => {
     const search = matches.at(-1)?.search ?? {};
-    const language = languageFromSearch(search);
     return localizedHead(
       {
         meta: [
-          { title: "Fundación VNE | Desarrollo social y económico sostenible" },
+          { title: "VNE | Fundación Venezuela Nueva Esperanza" },
           {
             name: "description",
-            content: defaultHomeContent.description[language],
+            content:
+              "VNE es Fundación Venezuela Nueva Esperanza, una organización con propósito social que impulsa proyectos productivos, Casas VNE y Proyecto Génesis.",
           },
         ],
       },
