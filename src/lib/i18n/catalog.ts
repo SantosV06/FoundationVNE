@@ -1351,9 +1351,9 @@ export const catalog: Record<string, readonly [string, string]> = {
   "Enviando…": ["Sending…", "Enviando…"],
   "Enviar reporte": ["Send report", "Enviar relato"],
 
-  "Nombre, apellido, correo, teléfono y el país o código que elija en los formularios.": [
-    "First name, last name, email, phone number and the country or calling code selected in the forms.",
-    "Nome, sobrenome, e-mail, telefone e o país ou código selecionado nos formulários.",
+  "Nombre, apellido y correo; en el formulario de voluntariado también se solicita teléfono y país o código.": [
+    "First name, last name and email; the volunteer form also asks for a phone number and country or calling code.",
+    "Nome, sobrenome e e-mail; o formulário de voluntariado também solicita telefone e país ou código.",
   ],
   "El texto de la consulta, del reporte de soporte o de la solicitud de voluntariado, incluidas las opciones que marque.": [
     "The text of the inquiry, support report or volunteer application, including any selected options.",
