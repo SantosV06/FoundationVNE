@@ -70,7 +70,7 @@ export const legalPages: Record<
         paragraphs: ["Cuando escribe o completa un formulario, podemos recibir:"],
         list: [
           "Nombre, correo, teléfono y el país o código que elija en el formulario.",
-          "El texto de la consulta o de la solicitud de voluntariado, incluidas las opciones que marque.",
+          "El texto de la consulta, del reporte de soporte o de la solicitud de voluntariado, incluidas las opciones que marque.",
           "El idioma y el tema de color, si los guarda en el navegador. Esa preferencia permanece en su dispositivo.",
         ],
       },
@@ -81,7 +81,7 @@ export const legalPages: Record<
           "Registros de seguridad y disponibilidad: dirección IP, fecha, hora y datos del navegador o del dispositivo.",
           "Medición de visitas y rendimiento con Vercel Analytics y Speed Insights, únicamente cuando la persona acepta las analíticas.",
           "La sesión del personal que entra al panel de solicitudes. Esa sesión no es pública.",
-          "El resultado de Cloudflare Turnstile en el formulario de voluntariado, solo para distinguir un envío de una persona de uno automático. No guardamos ese comprobante.",
+          "El resultado de Cloudflare Turnstile en los formularios de voluntariado y soporte, solo para distinguir un envío de una persona de uno automático. No guardamos ese comprobante.",
         ],
       },
       {
