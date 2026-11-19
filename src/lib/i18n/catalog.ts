@@ -1332,19 +1332,9 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Describe the problem in at least 10 characters.",
     "Descreva o problema com pelo menos 10 caracteres.",
   ],
-  "Completa la verificación de seguridad de Cloudflare.": [
-    "Complete the Cloudflare security check.",
-    "Conclua a verificação de segurança da Cloudflare.",
-  ],
-  "No se pudo enviar el reporte. Inténtalo nuevamente.": [
     "The report could not be sent. Please try again.",
     "Não foi possível enviar o relato. Tente novamente.",
   ],
-  "La verificación expiró. Vuelve a verificarte.": [
-    "The security check expired. Please verify again.",
-    "A verificação expirou. Verifique novamente.",
-  ],
-  "No se pudo cargar la verificación de seguridad.": [
     "The security check could not be loaded.",
     "Não foi possível carregar a verificação de segurança.",
   ],
