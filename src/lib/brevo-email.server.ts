@@ -223,7 +223,7 @@ export async function notifyNewSupportRequest(input: {
   const fullName = `${input.nombre} ${input.apellido}`;
   const safeName = escapeHtml(fullName);
   const safeEmail = escapeHtml(input.correo);
-  const safeDescription = escapeHtml(input.descripcion).replace(/\\r?\\n/g, "<br>");
+  const safeDescription = escapeHtml(input.descripcion).replace(/\\r?\n/g, "<br>");
   const sender = { name: senderName, email: senderEmail };
 
   const confirmation: BrevoMessage = {
@@ -235,7 +235,7 @@ export async function notifyNewSupportRequest(input: {
       `<p>Hola <strong>${safeName}</strong>:</p><p>Hemos recibido tu reporte de soporte. El equipo de Fundación VNE revisará la información y utilizará el correo que proporcionaste si necesita ponerse en contacto contigo.</p><p>Gracias por ayudarnos a mejorar el sitio.</p>`,
       "Confirmación de recepción de tu reporte de soporte.",
     ),
-    textContent: `Hola ${fullName},\\n\\nHemos recibido tu reporte de soporte. El equipo de Fundación VNE revisará la información y utilizará este correo si necesita ponerse en contacto contigo.\\n\\nGracias por ayudarnos a mejorar el sitio.\\n\\nFundación Venezuela Nueva Esperanza`,
+    textContent: `Hola ${fullName},\n\nHemos recibido tu reporte de soporte. El equipo de Fundación VNE revisará la información y utilizará este correo si necesita ponerse en contacto contigo.\n\nGracias por ayudarnos a mejorar el sitio.\n\nFundación Venezuela Nueva Esperanza`,
   };
 
   const notification: BrevoMessage = {
@@ -255,7 +255,7 @@ export async function notifyNewSupportRequest(input: {
       "",
       "Descripción:",
       input.descripcion,
-    ].join("\\n"),
+    ].join("\n"),
   };
 
   await Promise.all([
