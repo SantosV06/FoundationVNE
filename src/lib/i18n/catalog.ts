@@ -1332,11 +1332,9 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Describe the problem in at least 10 characters.",
     "Descreva o problema com pelo menos 10 caracteres.",
   ],
+  "No se pudo enviar el reporte. Inténtalo nuevamente.": [
     "The report could not be sent. Please try again.",
     "Não foi possível enviar o relato. Tente novamente.",
-  ],
-    "The security check could not be loaded.",
-    "Não foi possível carregar a verificação de segurança.",
   ],
   "Reporte recibido": ["Report received", "Relato recebido"],
   "Tu reporte quedó registrado. Hemos enviado una confirmación al correo indicado. Gracias por ayudarnos a mejorar el sitio.": [
