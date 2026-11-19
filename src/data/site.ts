@@ -69,7 +69,7 @@ export const legalPages: Record<
         heading: "Datos que usted envía",
         paragraphs: ["Cuando escribe o completa un formulario, podemos recibir:"],
         list: [
-          "Nombre, correo, teléfono y el país o código que elija en el formulario.",
+          "Nombre, apellido, correo, teléfono y el país o código que elija en los formularios.",
           "El texto de la consulta, del reporte de soporte o de la solicitud de voluntariado, incluidas las opciones que marque.",
           "El idioma y el tema de color, si los guarda en el navegador. Esa preferencia permanece en su dispositivo.",
         ],
