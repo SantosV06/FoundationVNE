@@ -39,11 +39,46 @@ export const Route = createRootRoute({
         meta: [
           { charSet: "utf-8" },
           { name: "viewport", content: "width=device-width, initial-scale=1" },
-          { title: "Fundación VNE | Desarrollo social y económico sostenible" },
+          { title: "VNE | Fundación Venezuela Nueva Esperanza" },
+          { name: "application-name", content: "Fundación VNE" },
           {
             name: "description",
             content:
-              "Fundación Venezuela Nueva Esperanza. Proyectos productivos, Casas VNE y Proyecto Génesis para autonomía y desarrollo sostenible.",
+              "VNE es Fundación Venezuela Nueva Esperanza: organización con propósito social que impulsa proyectos productivos, Casas VNE y Proyecto Génesis para fortalecer la autonomía y el desarrollo sostenible.",
+          },
+          {
+            "script:ld+json": {
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://foundationvne.com/#organization",
+                  name: "Fundación Venezuela Nueva Esperanza LLC",
+                  legalName: "Fundación Venezuela Nueva Esperanza LLC",
+                  alternateName: [
+                    "Fundación VNE",
+                    "VNE",
+                    "Venezuela Nueva Esperanza",
+                  ],
+                  url: "https://foundationvne.com/",
+                  description:
+                    "VNE es Fundación Venezuela Nueva Esperanza, una organización con propósito social dedicada al desarrollo social y económico mediante proyectos productivos.",
+                  email: "info@foundationvne.com",
+                  sameAs: ["https://www.instagram.com/fundacionv.n.e/"],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://foundationvne.com/#website",
+                  url: "https://foundationvne.com/",
+                  name: "Fundación VNE",
+                  alternateName: ["VNE", "Venezuela Nueva Esperanza"],
+                  publisher: {
+                    "@id": "https://foundationvne.com/#organization",
+                  },
+                  inLanguage: ["es", "en", "pt"],
+                },
+              ],
+            },
           },
           { name: "theme-color", content: "#131e3d" },
           ...(requestNonce() ? [{ name: "vne-csp-nonce", content: requestNonce()! }] : []),
