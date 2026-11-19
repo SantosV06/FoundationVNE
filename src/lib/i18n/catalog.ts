@@ -1314,4 +1314,50 @@ export const catalog: Record<string, readonly [string, string]> = {
   "No se pudo verificar la seguridad. Inténtalo nuevamente.": ["The security check could not be completed. Please try again.","Não foi possível concluir a verificação de segurança. Tente novamente."],
   "La verificación de seguridad ha fallado. Inténtalo nuevamente.": ["The security check failed. Please try again.","A verificação de segurança falhou. Tente novamente."],
   "El desarrollo y la seguridad técnica del sitio están a cargo de Felipe D. Santo, responsable del mantenimiento de las plataformas digitales, la infraestructura tecnológica y la aplicación de medidas de seguridad informática. Este rol no sustituye el canal institucional para ejercer derechos sobre datos personales: info@foundationvne.com.": ["Technical development and security for this site are handled by Felipe D. Santo, who maintains the digital platforms and technology infrastructure and implements information security measures. This role does not replace the institutional channel for exercising personal data rights: info@foundationvne.com.","O desenvolvimento e a segurança técnica deste site estão a cargo de Felipe D. Santo, responsável pela manutenção das plataformas digitais, da infraestrutura tecnológica e pela implementação de medidas de segurança da informação. Essa função não substitui o canal institucional para exercer direitos sobre dados pessoais: info@foundationvne.com."],
+
+  "Descripción del problema": ["Problem description", "Descrição do problema"],
+  "Describe el error, dónde ocurrió y qué estabas intentando hacer.": [
+    "Describe the error, where it happened and what you were trying to do.",
+    "Descreva o erro, onde aconteceu e o que você estava tentando fazer.",
+  ],
+  "Cuéntanos qué ocurrió": ["Tell us what happened", "Conte-nos o que aconteceu"],
+  "Completa el formulario. Guardaremos tu reporte y enviaremos una confirmación a tu correo.": [
+    "Complete the form. We will save your report and send a confirmation to your email.",
+    "Preencha o formulário. Guardaremos seu relato e enviaremos uma confirmação para seu e-mail.",
+  ],
+  "Completa todos los campos.": ["Complete all fields.", "Preencha todos os campos."],
+  "Escribe un correo electrónico válido.": ["Enter a valid email address.", "Insira um endereço de e-mail válido."],
+  "Describe el problema con al menos 10 caracteres.": [
+    "Describe the problem in at least 10 characters.",
+    "Descreva o problema com pelo menos 10 caracteres.",
+  ],
+  "No se pudo enviar el reporte. Inténtalo nuevamente.": [
+    "The report could not be sent. Please try again.",
+    "Não foi possível enviar o relato. Tente novamente.",
+  ],
+  "Reporte recibido": ["Report received", "Relato recebido"],
+  "Tu reporte quedó registrado. Hemos enviado una confirmación al correo indicado. Gracias por ayudarnos a mejorar el sitio.": [
+    "Your report has been recorded. We sent a confirmation to the email address provided. Thank you for helping us improve the website.",
+    "Seu relato foi registrado. Enviamos uma confirmação para o e-mail informado. Obrigado por nos ajudar a melhorar o site.",
+  ],
+  "Enviar otro reporte": ["Send another report", "Enviar outro relato"],
+  "Usaremos estos datos únicamente para revisar y responder tu reporte. Consulta la": [
+    "We will use this information only to review and respond to your report. See our",
+    "Usaremos esses dados apenas para analisar e responder ao seu relato. Consulte a",
+  ],
+  "Enviando…": ["Sending…", "Enviando…"],
+  "Enviar reporte": ["Send report", "Enviar relato"],
+
+  "Nombre, apellido y correo; en el formulario de voluntariado también se solicita teléfono y país o código.": [
+    "First name, last name and email; the volunteer form also asks for a phone number and country or calling code.",
+    "Nome, sobrenome e e-mail; o formulário de voluntariado também solicita telefone e país ou código.",
+  ],
+  "El texto de la consulta, del reporte de soporte o de la solicitud de voluntariado, incluidas las opciones que marque.": [
+    "The text of the inquiry, support report or volunteer application, including any selected options.",
+    "O texto da consulta, do relato de suporte ou da inscrição de voluntariado, incluindo as opções selecionadas.",
+  ],
+  "El resultado de Cloudflare Turnstile en los formularios de voluntariado y soporte, solo para distinguir un envío de una persona de uno automático. No guardamos ese comprobante.": [
+    "The Cloudflare Turnstile result on volunteer and support forms, used only to distinguish a person’s submission from an automated one. We do not store that verification token.",
+    "O resultado do Cloudflare Turnstile nos formulários de voluntariado e suporte, usado apenas para distinguir envios de pessoas de envios automatizados. Não armazenamos esse comprovante.",
+  ],
 };

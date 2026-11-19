@@ -33,7 +33,7 @@ async function main() {
     const {
       rows: [counts],
     } = await client.query(
-      "SELECT (SELECT count(*)::integer FROM volunteer_requests) AS applications, (SELECT count(*)::integer FROM admin_users) AS accounts, (SELECT count(*)::integer FROM admin_users WHERE totp_secret IS NOT NULL) AS protected",
+      "SELECT (SELECT count(*)::integer FROM volunteer_requests) AS applications, (SELECT count(*)::integer FROM support_requests) AS support_reports, (SELECT count(*)::integer FROM admin_users) AS accounts, (SELECT count(*)::integer FROM admin_users WHERE totp_secret IS NOT NULL) AS protected",
     );
 
     let keyReadable = counts.protected === 0;

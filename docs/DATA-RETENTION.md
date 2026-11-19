@@ -21,7 +21,7 @@ To execute deletion, an operator must explicitly pass:
 npm run data:retention -- --apply
 ```
 
-The apply operation permanently deletes eligible soft-deleted rows from `volunteer_requests` and records a retention event in `admin_events`. It does not purge active requests and does not currently define a purge policy for `admin_events`.
+The apply operation permanently deletes eligible soft-deleted rows from `volunteer_requests` and records a retention event in `admin_events`. It does not purge active requests and does not currently define a purge policy for `admin_events` or the new `support_requests` table. Support reports remain stored until the organization approves and implements a specific retention procedure; the volunteer trash-retention setting does not delete them.
 
 ## No automatic deletion
 

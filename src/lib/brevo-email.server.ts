@@ -6,6 +6,7 @@ type BrevoMessage = {
   subject: string;
   htmlContent: string;
   textContent: string;
+  replyTo?: { email: string; name?: string };
 };
 
 const API_URL = "https://api.brevo.com/v3/smtp/email";
@@ -67,7 +68,7 @@ function emailConfig() {
 async function sendBrevoMessage(
   apiKey: string,
   message: BrevoMessage,
-  event: "volunteer-confirmation" | "volunteer-admin-notification" | "volunteer-status-update",
+  event: "volunteer-confirmation" | "volunteer-admin-notification" | "volunteer-status-update" | "support-confirmation" | "support-admin-notification",
 ): Promise<void> {
   try {
     const response = await fetch(API_URL, {
@@ -199,4 +200,66 @@ export async function notifyVolunteerStatus(input: {
     textContent: `Hola, ${fullName}\n\n${message.paragraph}\n\nFundación V.N.E.`,
   };
   await sendBrevoMessage(apiKey, body, "volunteer-status-update");
+}
+
+
+export async function notifyNewSupportRequest(input: {
+  nombre: string;
+  apellido: string;
+  correo: string;
+  descripcion: string;
+}): Promise<void> {
+  const apiKey = process.env.BREVO_API_KEY?.trim();
+  const senderEmail = process.env.SUPPORT_SENDER_EMAIL?.trim();
+  const senderName =
+    process.env.SUPPORT_SENDER_NAME?.trim() || "Soporte · Fundación VNE";
+  const notificationEmail = process.env.SUPPORT_NOTIFICATION_EMAIL?.trim();
+
+  if (!apiKey || !senderEmail || !notificationEmail) {
+    console.error(JSON.stringify({ event: "support:email-not-configured" }));
+    throw new Error("El correo de soporte no está configurado.");
+  }
+
+  const fullName = `${input.nombre} ${input.apellido}`;
+  const safeName = escapeHtml(fullName);
+  const safeEmail = escapeHtml(input.correo);
+  const safeDescription = escapeHtml(input.descripcion).replace(/\r?\n/g, "<br>");
+  const sender = { name: senderName, email: senderEmail };
+
+  const confirmation: BrevoMessage = {
+    sender,
+    to: [{ email: input.correo, name: fullName }],
+    subject: "Hemos recibido tu reporte de soporte · Fundación VNE",
+    htmlContent: brandedEmail(
+      "Reporte recibido",
+      `<p>Hola <strong>${safeName}</strong>:</p><p>Hemos recibido tu reporte de soporte. El equipo de Fundación VNE revisará la información y utilizará el correo que proporcionaste si necesita ponerse en contacto contigo.</p><p>Gracias por ayudarnos a mejorar el sitio.</p>`,
+      "Confirmación de recepción de tu reporte de soporte.",
+    ),
+    textContent: `Hola ${fullName},\n\nHemos recibido tu reporte de soporte. El equipo de Fundación VNE revisará la información y utilizará este correo si necesita ponerse en contacto contigo.\n\nGracias por ayudarnos a mejorar el sitio.\n\nFundación Venezuela Nueva Esperanza`,
+  };
+
+  const notification: BrevoMessage = {
+    sender,
+    to: [{ email: notificationEmail }],
+    replyTo: { email: input.correo, name: fullName },
+    subject: `Nuevo reporte de soporte · ${fullName}`,
+    htmlContent: brandedEmail(
+      "Nuevo reporte de soporte",
+      `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#f4f0e7;border-radius:10px;"><tr><td style="padding:12px;border-bottom:1px solid #e5dccb;color:#66756f;">Nombre</td><td style="padding:12px;border-bottom:1px solid #e5dccb;font-weight:bold;">${escapeHtml(input.nombre)}</td></tr><tr><td style="padding:12px;border-bottom:1px solid #e5dccb;color:#66756f;">Apellido</td><td style="padding:12px;border-bottom:1px solid #e5dccb;font-weight:bold;">${escapeHtml(input.apellido)}</td></tr><tr><td style="padding:12px;color:#66756f;">Correo</td><td style="padding:12px;">${safeEmail}</td></tr></table><h2 style="margin:24px 0 8px;color:#174b3b;">Descripción del problema</h2><div style="padding:16px;background:#f4f0e7;border-left:4px solid #c7a45b;border-radius:6px;white-space:normal;">${safeDescription}</div><p style="margin-top:22px;color:#66756f;font-size:13px;">Puedes responder directamente a este mensaje para contactar a la persona.</p>`,
+      "Nuevo reporte enviado desde el formulario de soporte de foundationvne.com.",
+    ),
+    textContent: [
+      "NUEVO REPORTE DE SOPORTE",
+      `Nombre: ${fullName}`,
+      `Correo: ${input.correo}`,
+      "",
+      "Descripción:",
+      input.descripcion,
+    ].join("\n"),
+  };
+
+  await Promise.all([
+    sendBrevoMessage(apiKey, confirmation, "support-confirmation"),
+    sendBrevoMessage(apiKey, notification, "support-admin-notification"),
+  ]);
 }

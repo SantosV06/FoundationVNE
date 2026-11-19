@@ -37,6 +37,9 @@ Use the scopes shown below. Never copy production database credentials or privat
 | `BREVO_SENDER_EMAIL` | Verified sender address in Brevo | No | Must be authorized by the Brevo account. |
 | `BREVO_SENDER_NAME` | `Fundación Venezuela Nueva Esperanza` | No | Display name. |
 | `VOLUNTEER_NOTIFICATION_EMAIL` | Approved internal notification mailbox | No | Receives new-volunteer alerts. |
+| `SUPPORT_SENDER_EMAIL` | `soporte@foundationvne.com` | No | Verified Brevo sender used by the support form. Production build requires this exact address. |
+| `SUPPORT_SENDER_NAME` | `Soporte · Fundación VNE` | No | Display name for support confirmations and alerts. |
+| `SUPPORT_NOTIFICATION_EMAIL` | `soporte@foundationvne.com` | No | Receives the complete support report: first name, last name, email and description. Production build requires this exact address. |
 | `CITIBANK_GATEWAY_TOKEN` | Only when the bank integration is approved and enabled | Treat as sensitive until bank confirms exposure model | The current application sends this token to the browser; it is not a server API secret. Do not enable without bank confirmation. |
 | `CITIBANK_IFRAME_URL` | Bank-provided HTTPS iframe URL with required token placeholder | No | Do not invent or substitute a URL. |
 
