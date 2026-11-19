@@ -1,4 +1,4 @@
-import { languageFromSearch, localizedHead } from "@/lib/i18n/seo";
+import { localizedHead } from "@/lib/i18n/seo";
 import { getPublicHomeContent } from "@/lib/home-content-functions";
 import { T, useLanguage } from "@/lib/i18n";
 import { MediaVideo } from "@/components/media-video";
@@ -11,7 +11,6 @@ import { Shell } from "@/components/shell";
 export const Route = createFileRoute("/")({
   head: ({ matches }) => {
     const search = matches.at(-1)?.search ?? {};
-    const language = languageFromSearch(search);
     return localizedHead(
       {
         meta: [
