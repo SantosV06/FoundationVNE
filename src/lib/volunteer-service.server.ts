@@ -109,7 +109,7 @@ function clientAddress() {
 }
 export async function enforceLimit(
   sql: Sql,
-  scope: "login" | "volunteer",
+  scope: "login" | "volunteer" | "support",
   allowed: number,
   minutes: number,
   identity = clientAddress(),
