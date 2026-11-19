@@ -28,7 +28,7 @@ const people = [
     photo: media.director,
     role: "Dirección y Liderazgo",
     name: "Wilmer J. Solorzano",
-    charge: "CEO y fundador",
+    charge: "CEO",
     text: "Responsable de la visión estratégica, las decisiones institucionales y la proyección de largo plazo.",
   },
   {
@@ -36,7 +36,7 @@ const people = [
     photo: media.coordinator,
     role: "Coordinación General",
     name: "Stefany V. Solorzano",
-    charge: "Planificación estratégica",
+    charge: "COO",
     text: "Planificación institucional, coordinación de proyectos y alineación entre las áreas de la organización.",
   },
   {
@@ -44,7 +44,7 @@ const people = [
     photo: null,
     role: "DESARROLLO Y SEGURIDAD",
     name: "Felipe D. Santo",
-    charge: "Desarrollo tecnológico",
+    charge: "CTO",
     text: "Responsable del desarrollo de plataformas digitales, infraestructura tecnológica y seguridad informática.",
   },
 ];
