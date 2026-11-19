@@ -223,7 +223,7 @@ export async function notifyNewSupportRequest(input: {
   const fullName = `${input.nombre} ${input.apellido}`;
   const safeName = escapeHtml(fullName);
   const safeEmail = escapeHtml(input.correo);
-  const safeDescription = escapeHtml(input.descripcion).replace(/\\r?\n/g, "<br>");
+  const safeDescription = escapeHtml(input.descripcion).replace(/\r?\n/g, "<br>");
   const sender = { name: senderName, email: senderEmail };
 
   const confirmation: BrevoMessage = {
