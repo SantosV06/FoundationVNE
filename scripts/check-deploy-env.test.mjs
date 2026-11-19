@@ -9,10 +9,16 @@ const env = {
   ADMIN_PASSWORD: "test-password-only",
   ADMIN_SESSION_SECRET: "x".repeat(32),
   ADMIN_TOTP_ENCRYPTION_KEY: Buffer.alloc(32, 1).toString("base64"),
+  BREVO_API_KEY: "test-brevo-key",
+  SUPPORT_SENDER_EMAIL: "soporte@foundationvne.com",
+  SUPPORT_NOTIFICATION_EMAIL: "soporte@foundationvne.com",
 };
 test("production validation fails closed without exposing credentials", () => {
   assert.doesNotThrow(() => validateDeployEnv(env));
   assert.throws(() => validateDeployEnv({ ...env, DATABASE_URL: "" }), /DATABASE_URL/);
+  assert.throws(() => validateDeployEnv({ ...env, BREVO_API_KEY: "" }), /BREVO_API_KEY/);
+  assert.throws(() => validateDeployEnv({ ...env, SUPPORT_SENDER_EMAIL: "wrong@example.com" }), /SUPPORT_SENDER_EMAIL/);
+  assert.throws(() => validateDeployEnv({ ...env, SUPPORT_NOTIFICATION_EMAIL: "wrong@example.com" }), /SUPPORT_NOTIFICATION_EMAIL/);
   assert.throws(() => validateDeployEnv({ ...env, ADMIN_PASSWORD: "short" }), /ADMIN_PASSWORD/);
   assert.throws(
     () => validateDeployEnv({ ...env, ADMIN_SESSION_SECRET: "short" }),
