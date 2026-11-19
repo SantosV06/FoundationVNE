@@ -1350,4 +1350,17 @@ export const catalog: Record<string, readonly [string, string]> = {
   ],
   "Enviando…": ["Sending…", "Enviando…"],
   "Enviar reporte": ["Send report", "Enviar relato"],
+
+  "Nombre, apellido, correo, teléfono y el país o código que elija en los formularios.": [
+    "First name, last name, email, phone number and the country or calling code selected in the forms.",
+    "Nome, sobrenome, e-mail, telefone e o país ou código selecionado nos formulários.",
+  ],
+  "El texto de la consulta, del reporte de soporte o de la solicitud de voluntariado, incluidas las opciones que marque.": [
+    "The text of the inquiry, support report or volunteer application, including any selected options.",
+    "O texto da consulta, do relato de suporte ou da inscrição de voluntariado, incluindo as opções selecionadas.",
+  ],
+  "El resultado de Cloudflare Turnstile en los formularios de voluntariado y soporte, solo para distinguir un envío de una persona de uno automático. No guardamos ese comprobante.": [
+    "The Cloudflare Turnstile result on volunteer and support forms, used only to distinguish a person’s submission from an automated one. We do not store that verification token.",
+    "O resultado do Cloudflare Turnstile nos formulários de voluntariado e suporte, usado apenas para distinguir envios de pessoas de envios automatizados. Não armazenamos esse comprovante.",
+  ],
 };
