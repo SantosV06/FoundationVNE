@@ -18,6 +18,7 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Ocorreu um erro inesperado. Você pode tentar novamente ou voltar à página inicial.",
   ],
   "Intentar nuevamente": ["Try again", "Tentar novamente"],
+  "I'm a teapot": ["I'm a teapot", "Sou um bule"],
   "La tetera se niega, de manera deliberada, a preparar café. Es una referencia al código HTTP 418.": [
     "The teapot deliberately refuses to brew coffee. This is a reference to HTTP status code 418.",
     "O bule se recusa deliberadamente a preparar café. Esta é uma referência ao código HTTP 418.",
