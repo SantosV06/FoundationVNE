@@ -14,7 +14,6 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { LanguageProvider, T } from "@/lib/i18n";
-import { Link } from "@tanstack/react-router";
 import { ErrorPage } from "@/components/error-page";
 import { CookieConsent } from "@/components/cookie-consent";
 import appCss from "../styles.css?url";
