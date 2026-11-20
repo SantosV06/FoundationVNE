@@ -5,8 +5,19 @@ import { legalPages, type LegalSlug } from "@/data/site";
 import { Shell } from "@/components/shell";
 
 export const Route = createFileRoute("/legal/$slug")({
+  loader: ({ params }) => {
+    const page = Object.hasOwn(legalPages, params.slug)
+      ? legalPages[params.slug as LegalSlug]
+      : undefined;
+
+    if (!page) throw notFound();
+    return page;
+  },
   head: ({ params, matches }) => {
-    const page = legalPages[params.slug as LegalSlug];
+    const page = Object.hasOwn(legalPages, params.slug)
+      ? legalPages[params.slug as LegalSlug]
+      : undefined;
+
     return localizedHead(
       {
         meta: [
@@ -24,9 +35,7 @@ export const Route = createFileRoute("/legal/$slug")({
 });
 
 function LegalPage() {
-  const { slug } = Route.useParams();
-  const page = legalPages[slug as LegalSlug];
-  if (!page) throw notFound();
+  const page = Route.useLoaderData();
 
   return (
     <Shell>
