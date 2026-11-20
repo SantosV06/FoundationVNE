@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TeapotRouteImport } from './routes/418'
 import { Route as CasasRouteImport } from './routes/casas'
 import { Route as DonacionesRouteImport } from './routes/donaciones'
 import { Route as GenesisRouteImport } from './routes/genesis'
@@ -20,6 +21,11 @@ import { Route as VoluntariadoRouteImport } from './routes/voluntariado'
 import { Route as ApiHealthRouteImport } from './routes/api.health'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
 
+const TeapotRoute = TeapotRouteImport.update({
+  id: '/418',
+  path: '/418',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -72,6 +78,7 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/418': typeof TeapotRoute
   '/': typeof IndexRoute
   '/casas': typeof CasasRoute
   '/donaciones': typeof DonacionesRoute
@@ -84,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/legal/$slug': typeof LegalSlugRoute
 }
 export interface FileRoutesByTo {
+  '/418': typeof TeapotRoute
   '/': typeof IndexRoute
   '/casas': typeof CasasRoute
   '/donaciones': typeof DonacionesRoute
@@ -96,6 +104,7 @@ export interface FileRoutesByTo {
   '/legal/$slug': typeof LegalSlugRoute
 }
 export interface FileRoutesById {
+  '/418': typeof TeapotRoute
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/casas': typeof CasasRoute
@@ -111,6 +120,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/418'
     | '/'
     | '/casas'
     | '/donaciones'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/legal/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/418'
     | '/'
     | '/casas'
     | '/donaciones'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/legal/$slug'
   id:
     | '__root__'
+    | '/418'
     | '/'
     | '/casas'
     | '/donaciones'
@@ -148,6 +160,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  TeapotRoute: typeof TeapotRoute
   IndexRoute: typeof IndexRoute
   CasasRoute: typeof CasasRoute
   DonacionesRoute: typeof DonacionesRoute
@@ -162,6 +175,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/418': {
+      id: '/418'
+      path: '/418'
+      fullPath: '/418'
+      preLoaderRoute: typeof TeapotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -236,6 +256,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  TeapotRoute: TeapotRoute,
   IndexRoute: IndexRoute,
   CasasRoute: CasasRoute,
   DonacionesRoute: DonacionesRoute,
