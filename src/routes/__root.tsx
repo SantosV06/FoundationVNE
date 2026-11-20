@@ -130,11 +130,11 @@ function NotFoundPage() {
   return (
     <RootDocument>
       <ErrorPage
-      code="404"
-      eyebrow="VNE · NOT FOUND"
-      title={<T>Esta dirección no existe</T>}
-      description={<T>La página que buscas no está disponible o la dirección fue escrita incorrectamente.</T>}
-      actionLabel={<T>Volver al inicio</T>}
+        code="404"
+        eyebrow="VNE · NOT FOUND"
+        title={<T>Esta dirección no existe</T>}
+        description={<T>La página que buscas no está disponible o la dirección fue escrita incorrectamente.</T>}
+        actionLabel={<T>Volver al inicio</T>}
       />
     </RootDocument>
   );
