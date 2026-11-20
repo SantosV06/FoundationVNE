@@ -11,8 +11,10 @@ import {
   Scripts,
   retainSearchParams,
   useRouterState,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { LanguageProvider } from "@/lib/i18n";
+import { LanguageProvider, T } from "@/lib/i18n";
+import { ErrorPage } from "@/components/error-page";
 import { CookieConsent } from "@/components/cookie-consent";
 import appCss from "../styles.css?url";
 
@@ -118,7 +120,35 @@ export const Route = createRootRoute({
       false,
     ),
   component: RootDocument,
+  notFoundComponent: NotFoundPage,
+  errorComponent: RootErrorPage,
 });
+
+function NotFoundPage() {
+  return (
+    <ErrorPage
+      code="404"
+      eyebrow="VNE · NOT FOUND"
+      title={<T>Esta dirección no existe</T>}
+      description={<T>La página que buscas no está disponible o la dirección fue escrita incorrectamente.</T>}
+      actionLabel={<T>Volver al inicio</T>}
+    />
+  );
+}
+
+function RootErrorPage({ reset }: ErrorComponentProps) {
+  return (
+    <ErrorPage
+      code="500"
+      eyebrow="VNE · SERVER ERROR"
+      title={<T>Algo salió mal</T>}
+      description={<T>Se produjo un error inesperado. Puedes intentarlo de nuevo o regresar al inicio.</T>}
+      actionLabel={<T>Volver al inicio</T>}
+      onRetry={reset}
+      retryLabel={<T>Intentar nuevamente</T>}
+    />
+  );
+}
 function RootDocument() {
   const search = useRouterState({ select: (state) => state.matches.at(-1)?.search ?? {} });
   return (

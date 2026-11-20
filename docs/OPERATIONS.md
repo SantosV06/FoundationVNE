@@ -53,6 +53,48 @@ The email module can derive the production origin from Vercel's `VERCEL_PROJECT_
 
 The volunteer flow saves the request independently of email delivery. Brevo failures are logged without exposing message bodies, recipient addresses, or API keys. The internal notification includes a link to `/solicitudes` when a valid production origin is available.
 
+## Support form and error reports
+
+The public support channel is available at `/soporte`. Visitors can use **Reportar un problema** to submit a website error, broken link, display issue, or navigation problem. The form collects:
+
+- First name (`nombre`) and last name (`apellido`).
+- Contact email (`correo`).
+- Problem description (`descripcion`), between 10 and 5,000 characters.
+
+### Request handling
+
+1. The server validates the submitted fields and verifies the Cloudflare Turnstile token against the expected production hostname.
+2. A hidden honeypot field is used to discard automated submissions. A request UUID prevents the same submission from being stored twice.
+3. Rate limits are applied globally and per email address.
+4. A valid report is stored in Neon in the `support_requests` table. The schema is introduced by `migrations/0009_support_requests.sql`.
+5. Brevo sends a receipt confirmation to the address supplied by the visitor and a complete internal notification to the support mailbox. The internal notification contains the name, email, and full description; its `Reply-To` is set to the visitor's email so the team can reply directly.
+
+The report is saved before the email notifications are attempted. Email delivery is therefore a separate operation: Brevo API/network failures are logged and do not roll back the saved report. If the support email configuration is missing, the request may already be stored even though the form displays an error. Check Neon and the Vercel runtime logs before asking a visitor to submit the same report again.
+
+### Support-specific Brevo configuration
+
+Set these variables in Vercel → Project → Settings → Environment Variables, with the **Production** scope:
+
+| Variable | Required value | Purpose |
+| --- | --- | --- |
+| `BREVO_API_KEY` | Private Brevo API key | Authenticates server-side transactional email requests. Reuse the existing key; never expose it to the browser or commit it. |
+| `SUPPORT_SENDER_EMAIL` | `soporte@foundationvne.com` | Verified sender address used for both support emails. This exact address is enforced by the Production deployment check. |
+| `SUPPORT_SENDER_NAME` | `Soporte · Fundación VNE` | Display name shown as the sender. If omitted, the application uses this default. |
+| `SUPPORT_NOTIFICATION_EMAIL` | `soporte@foundationvne.com` | Destination mailbox for the complete internal report. This exact address is enforced by the Production deployment check. |
+
+**Variable naming:** the application uses `SUPPORT_SENDER_EMAIL`. Do not create a second variable with the reversed name; it is not read by the application. The support sender is separate from the volunteer-flow variables `BREVO_SENDER_EMAIL` and `BREVO_SENDER_NAME`.
+
+Before enabling the flow in Production:
+
+1. Verify `soporte@foundationvne.com` as a sender in Brevo under Settings → Senders & IP → Senders.
+2. Confirm the Brevo API key is valid and stored only as a Vercel server-side environment variable.
+3. Confirm all four variables above are set in the Production scope. The sender and notification addresses must match the exact values shown.
+4. Deploy the application and submit one controlled test report using a mailbox you can access.
+5. Verify the report appears in Neon `support_requests`, the visitor receives a confirmation, and the support mailbox receives the full report.
+6. Review Vercel runtime logs if either email is missing. Do not include real personal data or report contents in public issues or CI logs.
+
+The Production build check requires `BREVO_API_KEY`, `SUPPORT_SENDER_EMAIL`, and `SUPPORT_NOTIFICATION_EMAIL`. `SUPPORT_SENDER_NAME` is optional because the application supplies a default.
+
 ## Database migrations
 
 The Vercel build command runs the application build and then `db:migrate`. Before merging database schema changes:
