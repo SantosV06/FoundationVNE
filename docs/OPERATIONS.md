@@ -82,7 +82,7 @@ Set these variables in Vercel → Project → Settings → Environment Variables
 | `SUPPORT_SENDER_NAME` | `Soporte · Fundación VNE` | Display name shown as the sender. If omitted, the application uses this default. |
 | `SUPPORT_NOTIFICATION_EMAIL` | `soporte@foundationvne.com` | Destination mailbox for the complete internal report. This exact address is enforced by the Production deployment check. |
 
-**Variable naming:** the application uses `SUPPORT_SENDER_EMAIL` (not `SUPPORT_EMAIL_SENDER`). Do not create a second variable with the reversed name; it is not read by the application. The support sender is separate from the volunteer-flow variables `BREVO_SENDER_EMAIL` and `BREVO_SENDER_NAME`.
+**Variable naming:** the application uses `SUPPORT_SENDER_EMAIL`. Do not create a second variable with the reversed name; it is not read by the application. The support sender is separate from the volunteer-flow variables `BREVO_SENDER_EMAIL` and `BREVO_SENDER_NAME`.
 
 Before enabling the flow in Production:
 
