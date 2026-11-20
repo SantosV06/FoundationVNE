@@ -12,7 +12,6 @@ export const catalog: Record<string, readonly [string, string]> = {
     "The page you are looking for is unavailable or the address was entered incorrectly.",
     "A página que procura não está disponível ou o endereço foi digitado incorretamente.",
   ],
-  "Volver al inicio": ["Back to home", "Voltar ao início"],
   "Algo salió mal": ["Something went wrong", "Algo deu errado"],
   "Se produjo un error inesperado. Puedes intentarlo de nuevo o regresar al inicio.": [
     "An unexpected error occurred. You can try again or return to the home page.",
