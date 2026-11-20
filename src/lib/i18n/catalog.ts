@@ -7,6 +7,22 @@ export const catalog: Record<string, readonly [string, string]> = {
     "Administração de inscrições | Fundación VNE",
   ],
   "Ocurrió un problema": ["Something went wrong", "Ocorreu um problema"],
+  "Esta dirección no existe": ["This address does not exist", "Este endereço não existe"],
+  "La página que buscas no está disponible o la dirección fue escrita incorrectamente.": [
+    "The page you are looking for is unavailable or the address was entered incorrectly.",
+    "A página que procura não está disponível ou o endereço foi digitado incorretamente.",
+  ],
+  "Volver al inicio": ["Back to home", "Voltar ao início"],
+  "Algo salió mal": ["Something went wrong", "Algo deu errado"],
+  "Se produjo un error inesperado. Puedes intentarlo de nuevo o regresar al inicio.": [
+    "An unexpected error occurred. You can try again or return to the home page.",
+    "Ocorreu um erro inesperado. Você pode tentar novamente ou voltar à página inicial.",
+  ],
+  "Intentar nuevamente": ["Try again", "Tentar novamente"],
+  "La tetera se niega, de manera deliberada, a preparar café. Es una referencia al código HTTP 418.": [
+    "The teapot deliberately refuses to brew coffee. This is a reference to HTTP status code 418.",
+    "O bule se recusa deliberadamente a preparar café. Esta é uma referência ao código HTTP 418.",
+  ],
   "No pudimos cargar esta página. Inténtalo de nuevo o vuelve al inicio.": [
     "We could not load this page. Try again or return home.",
     "Não foi possível carregar esta página. Tente novamente ou volte ao início.",
