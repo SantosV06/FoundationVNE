@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { getDefaultLanguage } from "@/lib/i18n/default-language";
 import { browserLanguage, preferredLanguage } from "@/lib/i18n/preference";
 import { requestNonce } from "@/lib/csp-nonce";
@@ -10,6 +11,7 @@ import {
   Outlet,
   Scripts,
   retainSearchParams,
+  useRouter,
   useRouterState,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
@@ -119,7 +121,7 @@ export const Route = createRootRoute({
       matches.at(-1)?.search ?? {},
       false,
     ),
-  component: RootDocument,
+  component: RootContent,
   notFoundComponent: NotFoundPage,
   errorComponent: RootErrorPage,
 });
@@ -136,20 +138,37 @@ function NotFoundPage() {
   );
 }
 
-function RootErrorPage({ reset }: ErrorComponentProps) {
+function RootErrorPage({ error, reset }: ErrorComponentProps) {
+  const router = useRouter();
+  const isRouteLoadError = router.state.matches.some(
+    (match) => match.status === "error" && match.error === error,
+  );
+
   return (
-    <ErrorPage
+    <RootDocument>
+      <ErrorPage
       code="500"
       eyebrow="VNE · SERVER ERROR"
       title={<T>Algo salió mal</T>}
       description={<T>Se produjo un error inesperado. Puedes intentarlo de nuevo o regresar al inicio.</T>}
       actionLabel={<T>Volver al inicio</T>}
-      onRetry={reset}
+      onRetry={isRouteLoadError ? () => void router.invalidate() : reset}
       retryLabel={<T>Intentar nuevamente</T>}
-    />
+      />
+    </RootDocument>
   );
 }
-function RootDocument() {
+
+function RootContent() {
+  return (
+    <RootDocument>
+      <Outlet />
+      <CookieConsent />
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: { children: ReactNode }) {
   const search = useRouterState({ select: (state) => state.matches.at(-1)?.search ?? {} });
   return (
     <html lang={languageFromSearch(search)} suppressHydrationWarning>
@@ -158,10 +177,7 @@ function RootDocument() {
         <script nonce={requestNonce()} dangerouslySetInnerHTML={{ __html: themeBoot }} />
       </head>
       <body>
-        <LanguageProvider>
-          <Outlet />
-          <CookieConsent />
-        </LanguageProvider>
+        <LanguageProvider>{children}</LanguageProvider>
         <Scripts />
       </body>
     </html>
