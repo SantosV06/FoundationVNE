@@ -10,7 +10,7 @@ export const org = {
   zelle: "+1 (347) 819 5521",
   bank: "Citibank",
   infoWa: "https://wa.me/13479577821",
-  webWa: "https://wa.me/50762305711",
+  webWa: "https://wa.me/50761628549",
   instagram: "https://www.instagram.com/fundacionv.n.e",
   addressNy: "433 Sackett St, Brooklyn, NY 11231",
   addressCcs: "Av. Andrés Bello, tercera transversal de Guaicaipuro, Quinta Raquel, Caracas 1050",
