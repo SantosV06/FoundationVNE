@@ -163,7 +163,9 @@ function Soporte() {
             {org.supportEmail}
           </a>
           <a
-            href="#formulario-soporte"
+            href={org.webWa}
+            target="_blank"
+            rel="noreferrer"
             className="mt-3 inline-flex h-12 items-center rounded-full border border-navy px-5 text-sm font-bold text-navy dark:border-gold dark:text-gold"
           >
             <T>Reportar un problema</T>
