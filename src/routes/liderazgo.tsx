@@ -80,7 +80,7 @@ function Liderazgo() {
           </p>
           <p>
             <T>
-              Ese enfoque se materializa en dos programas. Casas VNE es nuestro modelo territorial: formación para niños y jóvenes, participación activa de adultos, colaboración comunitaria y articulación de sectores productivos en un mismo espacio, hasta conformar una microeconomía capaz de sostenerse sola. Proyecto Génesis es la inversión social privada que lo valida: un piloto agroturístico en zona rural de Nueva York concebido como núcleo productivo, con ingresos propios, reinversión y evidencia para escalar. Ambos responden a la misma lógica: producir antes que depender.
+              Este enfoque se articula en un solo proyecto integral. Proyecto Génesis reúne el desarrollo de capacidades, la organización comunitaria y la actividad productiva. Dentro de él, Casas VNE es la dimensión territorial: un modelo de formación para niñas, niños y jóvenes, participación de adultos, colaboración comunitaria y articulación de sectores productivos. El piloto agroturístico propuesto en una zona rural de Nueva York permitirá validar, con alcance controlado, la relación entre producción, servicios, ingresos y reinversión. La expansión dependerá de resultados y viabilidad demostrables.
             </T>
           </p>
           <p>
