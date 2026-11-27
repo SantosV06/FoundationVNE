@@ -19,7 +19,6 @@ export function siteOrigin(env) {
 }
 export const publicPages = [
   "/",
-  "/casas",
   "/genesis",
   "/liderazgo",
   "/soporte",
