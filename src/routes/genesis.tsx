@@ -27,7 +27,7 @@ export const Route = createFileRoute("/genesis")({
 function Section({ title, eyebrow, children }: { title: string; eyebrow?: string; children: ReactNode }) {
   return (
     <section className="mx-auto max-w-6xl px-5 py-16 sm:px-6 lg:py-20">
-      {eyebrow ? <p className="text-xs font-bold tracking-[0.2em] text-gold-deep uppercase">{eyebrow}</p> : null}
+      {eyebrow ? <p className="text-xs font-bold tracking-[0.2em] text-gold-deep uppercase"><T>{eyebrow}</T></p> : null}
       <h2 className="mt-2 max-w-4xl font-display text-3xl leading-tight text-navy dark:text-cream sm:text-4xl">
         <T>{title}</T>
       </h2>
