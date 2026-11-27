@@ -182,10 +182,10 @@ try {
       await page.evaluate(() => window.scrollTo(0, 0));
       await menu.click();
       await mobileNav.getByRole("link").first().waitFor();
-      const housesLink = mobileNav.locator('a[href^="/casas"]');
-      await housesLink.waitFor({ state: "visible" });
-      await housesLink.click();
-      await page.waitForURL((url) => url.pathname === "/casas");
+      const genesisLink = mobileNav.locator('a[href^="/genesis"]');
+      await genesisLink.waitFor({ state: "visible" });
+      await genesisLink.click();
+      await page.waitForURL((url) => url.pathname === "/genesis");
       await page.getByRole("heading", { level: 1 }).waitFor();
       assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
     }
