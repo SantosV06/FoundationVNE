@@ -237,7 +237,7 @@ function Home() {
             <T>Formación, producción y organización comunitaria en un mismo modelo.</T>
           </p>
           <Link
-            to="/casas"
+            to="/genesis"
             className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy dark:text-gold"
           >
             <T>Conocer el proyecto </T>
