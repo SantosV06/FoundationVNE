@@ -1,5 +1,3 @@
-import type { Language } from "./translate";
-
 export const genesisCatalog: Record<string, readonly [string, string]> = {
   "Un proyecto integral de desarrollo social y económico": ["An integrated social and economic development project", "Um projeto integrado de desenvolvimento social e econômico"],
   "Génesis: convertir el potencial de una comunidad en oportunidades sostenibles.": ["Genesis: turning a community's potential into sustainable opportunities.", "Génesis: transformar o potencial de uma comunidade em oportunidades sustentáveis."],
