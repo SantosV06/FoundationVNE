@@ -201,9 +201,9 @@ try {
   await page.waitForFunction(() => document.documentElement.lang === "en");
   assert.equal(
     await page.getByRole("heading", { level: 1 }).innerText(),
-    "An integrated system for social and economic development.",
+    "Genesis: turning a community's potential into sustainable opportunities.",
   );
-  assert.ok((await page.title()).includes("Self-sustaining"));
+  assert.ok((await page.title()).includes("VNE | Fundación Venezuela Nueva Esperanza"));
   const paths = [
     "/",
     "/casas",
