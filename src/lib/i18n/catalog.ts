@@ -1378,6 +1378,10 @@ export const catalog: Record<string, readonly [string, string]> = {
   ],
 
   "Conocer el proyecto": ["Explore the project", "Conheça o projeto"],
+  "Proyecto Génesis | Desarrollo productivo y autonomía comunitaria": [
+    "Genesis Project | Productive development and community autonomy",
+    "Projeto Génesis | Desenvolvimento produtivo e autonomia comunitária",
+  ],
   "Cómo se construye": ["How it is built", "Como é construído"],
   "Sostenibilidad": ["Sustainability", "Sustentabilidade"],
   "Que el impacto pueda mantenerse en el tiempo": [
