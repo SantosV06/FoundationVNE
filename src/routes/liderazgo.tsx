@@ -13,7 +13,7 @@ export const Route = createFileRoute("/liderazgo")({
           {
             name: "description",
             content:
-              "Fundación Venezuela Nueva Esperanza, organización con propósito social fundada en 2022, con sede en Nueva York y operaciones en Caracas. Impulsa Casas VNE y Proyecto Génesis para desarrollar autonomía, capacidad productiva y modelos sostenibles y replicables.",
+              "Fundación Venezuela Nueva Esperanza, organización con propósito social fundada en 2022, con sede en Nueva York y operaciones en Caracas. Impulsa Proyecto Génesis, un modelo integrado de desarrollo social, comunitario y productivo.",
           },
         ],
       },
