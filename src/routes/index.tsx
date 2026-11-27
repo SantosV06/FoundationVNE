@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
           {
             name: "description",
             content:
-              "VNE es Fundación Venezuela Nueva Esperanza, una organización con propósito social que impulsa proyectos productivos, Casas VNE y Proyecto Génesis.",
+              "VNE es Fundación Venezuela Nueva Esperanza, una organización con propósito social que impulsa Proyecto Génesis: un modelo integrado de formación, organización comunitaria y desarrollo productivo.",
           },
         ],
       },
