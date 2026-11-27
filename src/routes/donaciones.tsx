@@ -89,7 +89,7 @@ function Donaciones() {
           <T>De dónde sale y a dónde va</T>
         </h2>
         <p className="editorial-justify mt-3 max-w-3xl leading-relaxed text-mist dark:text-cream/75">
-          <T>El aporte va a Casas VNE y Proyecto Génesis.</T>
+          <T>El aporte apoya Proyecto Génesis y sus componentes integrados de formación, organización comunitaria y desarrollo productivo.</T>
         </p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">

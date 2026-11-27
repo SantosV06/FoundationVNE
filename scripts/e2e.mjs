@@ -182,10 +182,10 @@ try {
       await page.evaluate(() => window.scrollTo(0, 0));
       await menu.click();
       await mobileNav.getByRole("link").first().waitFor();
-      const housesLink = mobileNav.locator('a[href^="/casas"]');
-      await housesLink.waitFor({ state: "visible" });
-      await housesLink.click();
-      await page.waitForURL((url) => url.pathname === "/casas");
+      const genesisLink = mobileNav.locator('a[href^="/genesis"]');
+      await genesisLink.waitFor({ state: "visible" });
+      await genesisLink.click();
+      await page.waitForURL((url) => url.pathname === "/genesis");
       await page.getByRole("heading", { level: 1 }).waitFor();
       assert.equal(await mobileNav.evaluate((node) => node.matches(":popover-open")), false);
     }
@@ -201,9 +201,9 @@ try {
   await page.waitForFunction(() => document.documentElement.lang === "en");
   assert.equal(
     await page.getByRole("heading", { level: 1 }).innerText(),
-    "An integrated system for social and economic development.",
+    "Genesis: turning a community's potential into sustainable opportunities.",
   );
-  assert.ok((await page.title()).includes("Self-sustaining"));
+  assert.ok((await page.title()).includes("Genesis Project | Productive development and community autonomy"));
   const paths = [
     "/",
     "/casas",

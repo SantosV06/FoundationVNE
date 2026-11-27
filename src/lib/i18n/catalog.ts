@@ -1376,4 +1376,24 @@ export const catalog: Record<string, readonly [string, string]> = {
     "The Cloudflare Turnstile result on volunteer and support forms, used only to distinguish a person’s submission from an automated one. We do not store that verification token.",
     "O resultado do Cloudflare Turnstile nos formulários de voluntariado e suporte, usado apenas para distinguir envios de pessoas de envios automatizados. Não armazenamos esse comprovante.",
   ],
+
+  "Conocer el proyecto": ["Explore the project", "Conheça o projeto"],
+  "Proyecto Génesis | Desarrollo productivo y autonomía comunitaria": [
+    "Genesis Project | Productive development and community autonomy",
+    "Projeto Génesis | Desenvolvimento produtivo e autonomia comunitária",
+  ],
+  "Cómo se construye": ["How it is built", "Como é construído"],
+  "Sostenibilidad": ["Sustainability", "Sustentabilidade"],
+  "Que el impacto pueda mantenerse en el tiempo": [
+    "Making the impact last over time",
+    "Para que o impacto possa se manter ao longo do tempo",
+  ],
+  "Génesis integra formación, organización comunitaria y actividad productiva en una estrategia de desarrollo social y económico sostenible.": [
+    "Génesis brings together education, community organization and productive activity in a sustainable social and economic development strategy.",
+    "Génesis integra formação, organização comunitária e atividade produtiva em uma estratégia sustentável de desenvolvimento social e econômico.",
+  ],
+  "Este enfoque se articula en un solo proyecto integral. Proyecto Génesis reúne el desarrollo de capacidades, la organización comunitaria y la actividad productiva. Dentro de él, Casas VNE es la dimensión territorial: un modelo de formación para niñas, niños y jóvenes, participación de adultos, colaboración comunitaria y articulación de sectores productivos. El piloto agroturístico propuesto en una zona rural de Nueva York permitirá validar, con alcance controlado, la relación entre producción, servicios, ingresos y reinversión. La expansión dependerá de resultados y viabilidad demostrables.": [
+    "This approach is brought together in a single, integrated project. Proyecto Génesis combines capacity-building, community organization and productive activity. Within it, Casas VNE is the territorial dimension: a model for educating children and young people, engaging adults, fostering community collaboration and connecting productive sectors. The proposed agritourism pilot in rural New York will test, on a controlled scale, the relationship between production, services, revenue and reinvestment. Expansion will depend on demonstrable results and feasibility.",
+    "Essa abordagem se articula em um único projeto integrado. O Proyecto Génesis reúne o desenvolvimento de capacidades, a organização comunitária e a atividade produtiva. Nele, as Casas VNE constituem a dimensão territorial: um modelo de formação para crianças e jovens, participação de adultos, colaboração comunitária e articulação de setores produtivos. O projeto-piloto de agroturismo proposto em uma zona rural de Nova York permitirá validar, em escala controlada, a relação entre produção, serviços, receitas e reinvestimento. A expansão dependerá de resultados e viabilidade demonstráveis.",
+  ],
 };

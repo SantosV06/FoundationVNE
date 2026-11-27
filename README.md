@@ -30,7 +30,7 @@ Variables en `.env.example`. **No subas secretos.**
 
 ## Qué incluye
 
-Páginas públicas (inicio, Casas VNE, Génesis, liderazgo, soporte, donaciones, voluntariado y textos legales), español / English / português, formulario con Turnstile y panel `/solicitudes`.
+Páginas públicas (inicio, Proyecto Génesis, liderazgo, soporte, donaciones, voluntariado y textos legales), español / English / português, formulario con Turnstile y panel `/solicitudes`.
 
 El formulario de soporte en `/soporte` permite reportar errores del sitio. Verifica Turnstile, aplica controles antiabuso, guarda cada reporte en Neon (`support_requests`) y usa Brevo para enviar una confirmación al usuario y la notificación completa al buzón de soporte. Requiere `BREVO_API_KEY`, `SUPPORT_SENDER_EMAIL`, `SUPPORT_NOTIFICATION_EMAIL` y la configuración de Turnstile; `SUPPORT_SENDER_NAME` es opcional. La dirección del remitente debe estar verificada en Brevo. Consulta [la guía de operaciones](docs/OPERATIONS.md#support-form-and-error-reports) para el flujo, las variables y la verificación en producción.
 

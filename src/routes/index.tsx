@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
           {
             name: "description",
             content:
-              "VNE es Fundación Venezuela Nueva Esperanza, una organización con propósito social que impulsa proyectos productivos, Casas VNE y Proyecto Génesis.",
+              "VNE es Fundación Venezuela Nueva Esperanza, una organización con propósito social que impulsa Proyecto Génesis: un modelo integrado de formación, organización comunitaria y desarrollo productivo.",
           },
         ],
       },
@@ -91,10 +91,10 @@ function Home() {
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
-                to="/casas"
+                to="/genesis"
                 className="inline-flex min-h-12 items-center justify-center rounded-full border border-cream/40 bg-cream/5 px-7 py-3 text-sm font-semibold text-cream backdrop-blur-sm transition-colors hover:bg-cream/10"
               >
-                <T>Conocer Casas VNE</T>
+                <T>Conocer Proyecto Génesis</T>
               </Link>
             </div>
             <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/20 pt-6 text-sm text-cream/75">
@@ -166,7 +166,7 @@ function Home() {
         </div>
         <div className="editorial-justify space-y-5 text-lg leading-relaxed text-mist lg:col-span-8 dark:text-cream/80">
           <p>
-            <T>Proyectos productivos en Nueva York y Caracas: Casas VNE y Proyecto Génesis.</T>
+            <T>Génesis integra formación, organización comunitaria y actividad productiva en una estrategia de desarrollo social y económico sostenible.</T>
           </p>
           <MediaVideo src={media.aboutVideo} title={t("Conoce Fundación VNE")} />
         </div>
@@ -222,25 +222,25 @@ function Home() {
         </article>
         <article className="flex flex-col rounded-card border border-line bg-card p-8 dark:border-white/10 dark:bg-navy">
           <img
-            src={media.houses}
-            alt={t("Modelo de Casas VNE")}
+            src={media.genesisLogo}
+            alt={t("Identidad del Proyecto Génesis")}
             loading="lazy"
             className="mb-6 w-full rounded-card object-contain"
           />
           <p className="text-xs font-bold tracking-[0.2em] text-gold-deep uppercase">
-            <T>Modelo territorial</T>
+            <T>Proyecto integral</T>
           </p>
           <h2 className="mt-3 font-display text-3xl text-navy dark:text-cream">
-            <T>Casas VNE</T>
+            <T>Génesis</T>
           </h2>
           <p className="editorial-justify mt-4 leading-relaxed text-mist dark:text-cream/80">
-            <T>Formación, producción y trabajo comunitario.</T>
+            <T>Formación, producción y organización comunitaria en un mismo modelo.</T>
           </p>
           <Link
-            to="/casas"
+            to="/genesis"
             className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-navy dark:text-gold"
           >
-            <T>Explorar el modelo </T>
+            <T>Conocer el proyecto </T>
             <ArrowUpRight className="size-4" />
           </Link>
         </article>

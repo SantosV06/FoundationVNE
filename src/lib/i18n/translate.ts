@@ -1,4 +1,5 @@
 import { catalog } from "./catalog.ts";
+import { genesisCatalog } from "./genesis-catalog.ts";
 
 export type Language = "es" | "en" | "pt";
 export const languageOptions = [
@@ -31,7 +32,7 @@ export function negotiateLanguage(header: string | null | undefined): Language |
 export function translate(source: string, language: Language) {
   if (language === "es") return source;
   const key = source.replace(/\s+/g, " ").trim();
-  const translated = catalog[key]?.[language === "en" ? 0 : 1];
+  const translated = (genesisCatalog[key] ?? catalog[key])?.[language === "en" ? 0 : 1];
   if (translated === undefined) return source;
   return (source.match(/^\s*/)?.[0] ?? "") + translated + (source.match(/\s*$/)?.[0] ?? "");
 }

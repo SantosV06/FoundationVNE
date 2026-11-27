@@ -24,7 +24,6 @@ export const org = {
 
 export const nav = [
   { to: "/", label: "Inicio" },
-  { to: "/casas", label: "Casas VNE" },
   { to: "/genesis", label: "Génesis" },
   { to: "/liderazgo", label: "Liderazgo" },
   { to: "/soporte", label: "Soporte" },

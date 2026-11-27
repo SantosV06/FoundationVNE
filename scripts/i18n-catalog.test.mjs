@@ -5,6 +5,7 @@ import { join, relative } from "node:path";
 import test from "node:test";
 import ts from "typescript";
 import { catalog } from "../src/lib/i18n/catalog.ts";
+import { genesisCatalog } from "../src/lib/i18n/genesis-catalog.ts";
 import { adminCatalog } from "../src/lib/i18n/admin-catalog.ts";
 import { messageCatalog } from "../src/lib/i18n/message-catalog.ts";
 
@@ -54,7 +55,7 @@ test("all literal translations in public routes and UI components exist in both 
     function check(value, kind) {
       const key = normalize(value);
       if (!key) return;
-      const entry = catalog[key] ?? (isAdmin ? adminCatalog[key] : undefined);
+      const entry = catalog[key] ?? genesisCatalog[key] ?? (isAdmin ? adminCatalog[key] : undefined);
       if (!entry || !entry[0]?.trim() || !entry[1]?.trim()) {
         missing.push(`${relativePath}: missing ${kind} translation: ${key}`);
       }
