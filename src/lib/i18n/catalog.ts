@@ -1377,6 +1377,7 @@ export const catalog: Record<string, readonly [string, string]> = {
     "O resultado do Cloudflare Turnstile nos formulários de voluntariado e suporte, usado apenas para distinguir envios de pessoas de envios automatizados. Não armazenamos esse comprovante.",
   ],
 
+  "Conocer el proyecto": ["Explore the project", "Conheça o projeto"],
   "Cómo se construye": ["How it is built", "Como é construído"],
   "Sostenibilidad": ["Sustainability", "Sustentabilidade"],
   "Que el impacto pueda mantenerse en el tiempo": [
