@@ -203,7 +203,7 @@ try {
     await page.getByRole("heading", { level: 1 }).innerText(),
     "Genesis: turning a community's potential into sustainable opportunities.",
   );
-  assert.ok((await page.title()).includes("VNE | Fundación Venezuela Nueva Esperanza"));
+  assert.ok((await page.title()).includes("Genesis Project | Productive development and community autonomy"));
   const paths = [
     "/",
     "/casas",
